@@ -1,0 +1,81 @@
+﻿using GraphQL;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using HttpMultipartParser;
+using Newtonsoft.Json;
+using System.IO;
+using GraphQL.Relay.Utilities;
+
+namespace GraphQL.Relay.Http
+{
+    static public class Deserializer
+    {
+        public static async Task<RelayRequest> Deserialize(HttpContent content)
+        {
+            RelayRequest queries = null;
+            string mediaType = content.Headers.ContentType.MediaType;
+
+            switch (mediaType)
+            {
+                case "multipart/form-data":
+                    queries = await DeserializeFormData(content);
+                    break;
+                case "application/json":
+                    queries = await DeserializeJson(content);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Unknown media type: {mediaType}. Cannot deserialize the Http request");
+            }
+
+            return queries;
+        }
+
+        private static async Task<RelayRequest> DeserializeJson(HttpContent content)
+        {
+            var stringContent = await content.ReadAsStringAsync();
+
+            if (stringContent[0] == '[')
+                return new RelayRequest(
+                    JsonConvert.DeserializeObject<RelayQuery[]>(stringContent),
+                    isBatched: true
+                );
+
+            if (stringContent[0] == '{')
+                return new RelayRequest() {
+                    JsonConvert.DeserializeObject<RelayQuery>(stringContent)
+                };
+
+            throw new Exception("Unrecognized request json. GraphQl requests should be a single object, or an array of objects");
+        }
+
+        private static async Task<RelayRequest> DeserializeFormData(HttpContent content)
+        {
+            var form = new MultipartFormDataParser(await content.ReadAsStreamAsync());
+
+            var req = new RelayRequest()
+            {
+                Files = form.Files.Select(f => new HttpFile {
+                    ContentDisposition = f.ContentDisposition,
+                    ContentType = f.ContentType,
+                    Data = f.Data,
+                    FileName = f.FileName,
+                    Name = f.Name
+                })
+            };
+
+            req.Add(new RelayQuery {
+                Query = form.Parameters.Find(p => p.Name == "query").Data,
+                Variables = JsonConvert.DeserializeObject<Inputs>(
+                    form.Parameters.Find(p => p.Name == "variables").Data,
+                    new InputConverter()
+                )
+            });
+
+            return req;
+        }
+    }
+}
