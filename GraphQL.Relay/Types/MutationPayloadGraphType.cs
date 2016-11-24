@@ -16,10 +16,10 @@ namespace GraphQL.Relay.Types
 
     public abstract class MutationPayloadGraphType<TSource> : ObjectGraphType<TSource>, IMutationPayload
     {
-        public abstract TSource MutationAndGetPayload(MutationInputs inputs);
+        public abstract TSource MutateAndGetPayload(MutationInputs inputs);
 
         object IMutationPayload.MutationAndGetPayload(MutationInputs inputs) {
-            return MutationAndGetPayload(inputs);
+            return MutateAndGetPayload(inputs);
         }
 
         public MutationPayloadGraphType()

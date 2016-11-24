@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 
 namespace GraphQL.Relay.Types
 {
-    public interface IRelayNode<out T>
+    public interface IRelayNode
     {
-        T GetById(string id);
+        object GetById(string id);
     }
 
     public static class Node
@@ -28,9 +28,9 @@ namespace GraphQL.Relay.Types
         }
     }
 
-    public abstract class NodeGraphType<T> : ObjectGraphType<T>, IRelayNode<T>
+    public abstract class NodeGraphType<T> : ObjectGraphType<T>, IRelayNode
     {
-        public abstract T GetById(string id);
+        public abstract object GetById(string id);
 
         public NodeGraphType()
         {
@@ -57,6 +57,11 @@ namespace GraphQL.Relay.Types
                 // if there is a field called "ID" on the object, namespace it to "contactId"
                 if (name.ToLower() == "id")
                 {
+                    if (string.IsNullOrWhiteSpace(Name))
+                        throw new InvalidOperationException(
+                            "The parent GraphQL type must define a Name before declaring the Id field " +
+                            "in order to properly prefix the local id field");
+
                     name = StringUtils.ToCamelCase(Name + "Id");
                 }
 
