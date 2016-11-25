@@ -1,9 +1,8 @@
 {
-  "version": "0.1.0",
+  "version": "0.1.0-beta1",
   "authors": [
     "Jason Quense"
   ],
-
   "packOptions": {
     "authors": [
       "Jason Quense"
@@ -16,13 +15,11 @@
     "projectUrl": "https://github.com/graphql-dotnet/relay",
     "licenseUrl": "https://github.com/graphql-dotnet/relay/blob/master/LICENSE.md"
   },
-
   "dependencies": {
     "GraphQL": "0.13.1.601",
     "HttpMultipartParser": "2.1.7",
     "Panic.StringUtils": "1.0.1"
   },
-
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {

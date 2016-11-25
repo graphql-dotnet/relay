@@ -7,11 +7,10 @@ const set = require('lodash/set');
 const glob = require('glob');
 const semver = require('semver');
 
-let { _, path, preid } = yargs
+let { _, path } = yargs
   .help()
   .usage('$0 <source> [args]')
   .option('path', { string: true, required: true, 'default': 'version' })
-  .option('preid', { string: true })
   .argv;
 
 const version = _.pop();
@@ -22,8 +21,9 @@ files.forEach(file => {
   const oldVersion = get(json, path);
 
   let nextVersion;
-  if (preid)
-    nextVersion = semver.inc(oldVersion, 'pre', preid)
+  if (['alpha', 'beta', 'rc'].includes(version))
+    nextVersion = semver.inc(oldVersion, 'pre', version)
+      .replace(new RegExp(`(${version})\\.(.+)`), (_, a, b) => a + b) // nuget doesn't like semver2
   else if (['major', 'minor', 'patch'].includes(version))
     nextVersion = semver.inc(oldVersion, version)
   else
