@@ -10,13 +10,13 @@ namespace GraphQL.Relay.Types
 {
     public interface IMutationPayload<out T>
     {
-        T MutateAndGetPayload(MutationInputs inputs);
+        T MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context);
     }
 
 
     public abstract class MutationPayloadGraphType<TSource, TOut> : ObjectGraphType<TSource>, IMutationPayload<TOut>
     {
-        public abstract TOut MutateAndGetPayload(MutationInputs inputs);
+        public abstract TOut MutateAndGetPayload(MutationInputs inputs, ResolveFieldResult<object> context);
 
         public MutationPayloadGraphType()
         {

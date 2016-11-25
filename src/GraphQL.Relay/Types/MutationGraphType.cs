@@ -28,7 +28,7 @@ namespace GraphQL.Relay.Types
                 resolve: c => {
                     var inputs = c.GetArgument<Dictionary<string, object>>("input");
 
-                    return ((TMutationType)c.ReturnType).MutateAndGetPayload(new MutationInputs(inputs));
+                    return ((TMutationType)c.ReturnType).MutateAndGetPayload(new MutationInputs(inputs), c);
                 }
             );
         }
