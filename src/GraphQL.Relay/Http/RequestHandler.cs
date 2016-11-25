@@ -53,6 +53,13 @@ namespace GraphQL.Relay.Http
 
             var options = executionOptions(queries);
 
+            if (options.RootContext != null && options.RootContext is RelayRootContext)
+            {
+                RelayRootContext ctx = options.RootContext as RelayRootContext;
+                if (ctx.Files == null)
+                    ctx.Files = queries.Files;
+            }
+
             var result = await Task.WhenAll(
                 queries.Select(q => executor.ExecuteAsync(
                     options.Schema,

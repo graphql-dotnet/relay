@@ -6,13 +6,19 @@ using System.Linq.Expressions;
 
 namespace GraphQL.Relay.Types
 {
-    public interface IRelayNode
+    public interface IRelayNode<out T>
     {
-        object GetById(string id);
+        T GetById(string id);
     }
 
     public static class Node
     {
+        public static NodeGraphType<TSource, TOut> For<TSource, TOut>(Func<string, TOut> getById)
+        {
+            var type = new DefaultNodeGraphType<TSource, TOut>(getById);
+            return type;
+        }
+
         public static string ToGlobalId(string name, object id)
         {
             return StringUtils.Base64Encode("{0}:{1}".ToFormat(name, id));
@@ -28,9 +34,10 @@ namespace GraphQL.Relay.Types
         }
     }
 
-    public abstract class NodeGraphType<T> : ObjectGraphType<T>, IRelayNode
+
+    public abstract class NodeGraphType<T, TOut> : ObjectGraphType<T>, IRelayNode<TOut>
     {
-        public abstract object GetById(string id);
+        public abstract TOut GetById(string id);
 
         public NodeGraphType()
         {
@@ -81,4 +88,24 @@ namespace GraphQL.Relay.Types
             );
         }
     }
+
+    public abstract class NodeGraphType<TSource> : NodeGraphType<TSource, TSource> { }
+    public abstract class NodeGraphType : NodeGraphType<object> { }
+
+
+    public class DefaultNodeGraphType<TSource, TOut> : NodeGraphType<TSource, TOut>
+    {
+        private readonly Func<string, TOut> _getById;
+
+        public DefaultNodeGraphType(Func<string, TOut> getById)
+        {
+            _getById = getById;
+        }
+
+        public override TOut GetById(string id)
+        {
+            return _getById(id);
+        }
+    }
+
 }

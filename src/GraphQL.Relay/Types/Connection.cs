@@ -54,7 +54,7 @@ namespace GraphQL.Relay.Types
             var edges = slice.Select((item, i) => new Edge<TSource>
             {
                 Node = item,
-                Cursor = OffsetToCursor(i),
+                Cursor = OffsetToCursor(startOffset + i),
             })
             .ToList();
 

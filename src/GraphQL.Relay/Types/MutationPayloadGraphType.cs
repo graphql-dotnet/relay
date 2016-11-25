@@ -8,19 +8,15 @@ using System.Threading.Tasks;
 
 namespace GraphQL.Relay.Types
 {
-    public interface IMutationPayload
+    public interface IMutationPayload<out T>
     {
-        object MutationAndGetPayload(MutationInputs inputs);
+        T MutateAndGetPayload(MutationInputs inputs);
     }
 
 
-    public abstract class MutationPayloadGraphType<TSource> : ObjectGraphType<TSource>, IMutationPayload
+    public abstract class MutationPayloadGraphType<TSource, TOut> : ObjectGraphType<TSource>, IMutationPayload<TOut>
     {
-        public abstract TSource MutateAndGetPayload(MutationInputs inputs);
-
-        object IMutationPayload.MutationAndGetPayload(MutationInputs inputs) {
-            return MutateAndGetPayload(inputs);
-        }
+        public abstract TOut MutateAndGetPayload(MutationInputs inputs);
 
         public MutationPayloadGraphType()
         {
@@ -61,7 +57,6 @@ namespace GraphQL.Relay.Types
     }
 
 
-    public abstract class MutationPayloadGraphType : MutationPayloadGraphType<object>
-    {
-    }
+    public abstract class MutationPayloadGraphType<TSource> : MutationPayloadGraphType<TSource, TSource> { }
+    public abstract class MutationPayloadGraphType : MutationPayloadGraphType<object> { }
 }

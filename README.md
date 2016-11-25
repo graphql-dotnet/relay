@@ -32,7 +32,7 @@ public class StarWarsSchema : Schema
 }
 ```
 
-#### `NodeGraphType<TSource>`
+#### `NodeGraphType<TSource, TOut>`, `NodeGraphType<TSource>`, `NodeGraphType`
 
 NodeTypes, are `ObjectGraphType`s that implement the [`NodeInterface`](https://facebook.github.io/relay/docs/graphql-object-identification.html#content)
 and provide a `GetById` method, which allows Relay (via the `node()` Query) to refetch nodes when it needs to.
@@ -59,7 +59,7 @@ public class DroidType : NodeGraphType<Droid>
     Field<StringGraphType>("name", "The name of the droid.");
   }
 
-  public override object GetById(string droidId) {
+  public override Droid GetById(string droidId) {
     return StarWarsData.GetDroidByIdAsync(droidId);
   }
 }
@@ -97,13 +97,13 @@ public class StarWarsSchema : Schema
 
 An simple base class that defines a `clientMutationId` field. functionally identical to `InputObjectGraphType` otherwise
 
-#### `MutationPayloadGraphType<TSource>`
+#### `MutationPayloadGraphType<TSource, TOut>`, `MutationPayloadGraphType<TSource>`, `MutationPayloadGraphType`
 
 The output ObjectGraphType containing the mutation payload, functionally similar to an `ObjectGraphType` with the
 addition of requiing a `MutateAndGetPayload()` method used to resolve the payload from the inputs.
 
 ```csharp
-public class CreateDroidPayload : MutationPayloadGraphType
+public class CreateDroidPayload : MutationPayloadGraphType<DroidPayload, Task<DroidPayload>>
 {
   public CreateDroidPayload()
   {
@@ -114,15 +114,61 @@ public class CreateDroidPayload : MutationPayloadGraphType
       type: typeof(Droid));        
   }
 
-  public override object MutateAndGetPayload(MutationInputs inputs)
+  public override async Task<DroidPayload> MutateAndGetPayload(MutationInputs inputs)
   {
     string name = inputs.Get<string>("name");
 
-    Droid newDroid = StarWarsData.CreateDroid(name)
+    Droid newDroid = await StarWarsData.CreateDroidAsync(name)
 
-    return new {
+    return new DroidPayload {
       Droid = newDroid
     };
   }
 }
 ```
+
+### Connections
+
+Luckily `GraphQL-dotnet` already provides helpful utilities for creating connection fields, on GraphTypes. In addition
+included here are a few more helpful methods for creating relay compatible Connections from IEnumerables.
+
+#### `Connection.ToConnection(IEnumerable items, ResolveConnectionContext context)`
+
+Creates a connection from an existing list of objects.
+
+```csharp
+public class Droid
+{
+  public string DroidId { get; set; }
+  public string Name { get; set; }
+  public IEnumerable<Droid> Friends { get; set; }
+}
+
+public class DroidType : ObjectGraphType<Droid>
+{
+  public DroidType()
+  {
+    Name = "Droid";
+
+    Field<StringGraphType>("name", "The name of the droid.");
+
+    Connection<DroidType>()
+      .Name("friends")
+      .Resolve(context =>
+        Connection.ToConnection(c.Source.Friends, context));
+  }
+}
+```
+
+#### `Connection.ToConnection(IEnumerable items, ResolveConnectionContext context, int sliceStartIndex, int totalCount)`
+
+Similar to the above, but creates a connection with the correct cursors, when you only have a slice of the entire set
+of items. Windowing the items based on the arguments.
+
+#### `Connection.CursorToOffset(string cursor)`
+
+Convert a connection item cursor to the `int` index of the item in the set.
+
+#### `Connection.OffsetToCursor(int offset)`
+
+Convert an index offset to a connection cursor.

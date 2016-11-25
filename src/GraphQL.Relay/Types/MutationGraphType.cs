@@ -16,7 +16,7 @@ namespace GraphQL.Relay.Types
         }
 
         public FieldType Mutation<TMutationInput, TMutationType>(string name)
-            where TMutationType : IMutationPayload
+            where TMutationType : IMutationPayload<object>
             where TMutationInput : MutationInputGraphType
         {
             return Field(
@@ -28,7 +28,7 @@ namespace GraphQL.Relay.Types
                 resolve: c => {
                     var inputs = c.GetArgument<Dictionary<string, object>>("input");
 
-                    return ((TMutationType)c.ReturnType).MutationAndGetPayload(new MutationInputs(inputs));
+                    return ((TMutationType)c.ReturnType).MutateAndGetPayload(new MutationInputs(inputs));
                 }
             );
         }

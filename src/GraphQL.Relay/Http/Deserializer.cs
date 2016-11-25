@@ -49,7 +49,7 @@ namespace GraphQL.Relay.Http
                     JsonConvert.DeserializeObject<RelayQuery>(stringContent)
                 };
 
-            throw new Exception("Unrecognized request json. GraphQl requests should be a single object, or an array of objects");
+            throw new Exception("Unrecognized request json. GraphQL queries requests should be a single object, or an array of objects");
         }
 
         private static async Task<RelayRequest> DeserializeFormData(HttpContent content)
@@ -69,10 +69,7 @@ namespace GraphQL.Relay.Http
 
             req.Add(new RelayQuery {
                 Query = form.Parameters.Find(p => p.Name == "query").Data,
-                Variables = JsonConvert.DeserializeObject<Inputs>(
-                    form.Parameters.Find(p => p.Name == "variables").Data,
-                    new InputConverter()
-                )
+                Variables = form.Parameters.Find(p => p.Name == "variables").Data.ToInputs(),
             });
 
             return req;
