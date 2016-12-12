@@ -16,7 +16,7 @@ namespace GraphQL.Relay.Types
 
     public abstract class MutationPayloadGraphType<TSource, TOut> : ObjectGraphType<TSource>, IMutationPayload<TOut>
     {
-        public abstract TOut MutateAndGetPayload(MutationInputs inputs, ResolveFieldResult<object> context);
+        public abstract TOut MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context);
 
         public MutationPayloadGraphType()
         {
