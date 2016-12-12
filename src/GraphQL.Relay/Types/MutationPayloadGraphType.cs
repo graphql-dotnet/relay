@@ -52,7 +52,7 @@ namespace GraphQL.Relay.Types
 
         private bool isCorrectSelection(ResolveFieldContext<TSource> context, Field field)
         {
-            return field.SelectionSet.Selections.Any(s => s.SourceLocation.Equals(context.FieldAst.SourceLocation));
+            return Enumerable.Any(field.SelectionSet.Selections, s => s.SourceLocation.Equals(context.FieldAst.SourceLocation));
         }
     }
 

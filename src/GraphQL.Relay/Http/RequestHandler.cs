@@ -71,7 +71,7 @@ namespace GraphQL.Relay.Http
                 ))
             );
 
-            if (result.Any(r => r.Errors?.Count > 0))
+            if (Enumerable.Any(result, r => r.Errors?.Count > 0))
                 statusCode = HttpStatusCode.BadRequest;
 
             try {
