@@ -72,8 +72,7 @@ namespace GraphQL.Relay.Types
                     name = StringUtils.ToCamelCase(Name + "Id");
                 }
 
-                Field(expression, nullable: false)
-                    .Name(name)
+                Field(name, expression)
                     .Description($"The Id of the {Name ?? "node"}");
             }
             
