@@ -18,12 +18,15 @@ const files = _.reduce((arr, pattern) => arr.concat(glob.sync(pattern)), []);
 
 files.forEach(file => {
   const json = require(join(process.cwd(), file))
-  const oldVersion = get(json, path);
+  let oldVersion = get(json, path);
 
   let nextVersion;
-  if (['alpha', 'beta', 'rc'].includes(version))
+  if (['alpha', 'beta', 'rc'].includes(version)) {
+    oldVersion = oldVersion.replace(/(.+[a-z])(\d)/g, (_, a, b) => `${a}.${b}`) // nuget doesn't like semver2
     nextVersion = semver.inc(oldVersion, 'pre', version)
-      .replace(new RegExp(`(${version})\\.(.+)`), (_, a, b) => a + b) // nuget doesn't like semver2
+    nextVersion = nextVersion
+      .replace(new RegExp(`(${version})\\.(.+)`), (_, a, b) => a + b)
+  }
   else if (['major', 'minor', 'patch'].includes(version))
     nextVersion = semver.inc(oldVersion, version)
   else
