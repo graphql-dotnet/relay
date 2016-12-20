@@ -33,8 +33,9 @@ namespace GraphQL.Relay.Utilities
                 return null;
 
             var value = serializer.Deserialize(reader);
+            var dict = GetValue(value) as Dictionary<string, object>;
 
-            return new Inputs(GetValue(value) as Dictionary<string, object>);
+            return new Inputs(dict ?? new Dictionary<string, object>());
         }
 
         // copied from: https://github.com/graphql-dotnet/graphql-dotnet/blob/1f486e52f5891d9e1202d3b05b360644ab189ed1/src/GraphQL/StringExtensions.cs#L80
