@@ -72,7 +72,7 @@ namespace GraphQL.Relay.Types
                     StartCursor = firstEdge?.Cursor,
                     EndCursor = lastEdge?.Cursor,
                     HasPreviousPage = context.Last.HasValue ? startOffset > lowerBound : false,
-                    HasNextPage = context.First.HasValue ? endOffset > upperBound : false,
+                    HasNextPage = context.First.HasValue ? endOffset < upperBound : false,
                 }
             };
         }
