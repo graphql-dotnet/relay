@@ -12,44 +12,43 @@ let { _ } = yargs
   .usage('$0 <version>')
   .argv;
 
-const version = _.pop();
-function getNextVersion() {
-  let nextVersion;
-  if (['alpha', 'beta', 'rc'].includes(version)) {
-    //oldVersion = oldVersion.replace(/(.+[a-z])(\d)/g, (_, a, b) => `${a}.${b}`) // nuget doesn't like semver2
-    nextVersion = semver.inc(oldVersion, 'pre', version)
-    // nextVersion = nextVersion
-    //   .replace(new RegExp(`(${version})\\.(.+)`), (_, a, b) => a + b)
-  }
-  else if (['major', 'minor', 'patch'].includes(version))
-    nextVersion = semver.inc(oldVersion, version)
-  else
-    nextVersion = version
-
-  return nextVersion
-}
-
-async function updateFile(filePath, updater) {
-  filePath = resolve(filePath)
-  let data = await (filePath.endsWith('.json') ?
-    readJson(filePath) :
-    readFile(filePath, 'utf8')
-  )
-
-  let result = updater(data)
-  return typeof result !== 'string' ?
-    writeJson(filePath, result, { spaces: 2 })
-    writeFile(filePath, result)
-}
 
 (async () => {
   let version = getNextVersion()
 
   await updateFile('package.json', d => Object.assign(d, { version }))
 
-
-  await updateFile('./src/GraphQL/GraphQL.Relay.csproj', d => d.replace(
+  await updateFile('./src/GraphQL.Relay/GraphQL.Relay.csproj', d => d.replace(
     /<VersionPrefix>(.*)<\/VersionPrefix>/,
-    `<VersionPrefix>${nextVersion}<\/VersionPrefix>`
+    `<VersionPrefix>${version}<\/VersionPrefix>`
   ))
 })()
+
+
+const version = _.pop();
+function getNextVersion() {
+  let currentVersion = require('../package.json').version
+  let [nextVersion] = _;
+
+  if (['alpha', 'beta', 'rc'].includes(nextVersion))
+    nextVersion = semver.inc(currentVersion, 'pre', nextVersion)
+
+  else if (['major', 'minor', 'patch'].includes(nextVersion))
+    nextVersion = semver.inc(currentVersion, nextVersion)
+
+  return nextVersion
+}
+
+async function updateFile(filePath, updater) {
+  let target = resolve(filePath)
+  let data = await (filePath.endsWith('.json') ?
+    readJson(target) :
+    readFile(target, 'utf8')
+  )
+  console.log(`Updating ${filePath}`)
+  let result = updater(data)
+  return typeof result !== 'string' ?
+    writeJson(target, result, { spaces: 2 }) :
+    writeFile(target, result)
+}
+

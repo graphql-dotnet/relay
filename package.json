@@ -6,7 +6,7 @@
   "scripts": {
     "test": "dotnet test src/GraphQL.Relay.Tests",
     "pack": "rimraf nuget/* && dotnet pack src/GraphQL.Relay -o nuget -c Release --include-source --include-symbols",
-    "version": "node tools/version package.json src/**/project.json",
+    "version": "node tools/version",
     "release": "npm run test && npm run pack && cd nuget && nuget push *.symbols.nupkg -s https://www.nuget.org/api/v2/package"
   },
   "repository": {
@@ -26,5 +26,8 @@
     "semver": "^5.3.0",
     "shells": "^2.0.0",
     "yargs": "^6.4.0"
+  },
+  "dependencies": {
+    "fs-extra": "^4.0.1"
   }
 }
