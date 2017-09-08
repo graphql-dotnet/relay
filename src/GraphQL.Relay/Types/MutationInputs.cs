@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GraphQL.Relay.Types
 {
     public class MutationInputs : Dictionary<string, object>
     {
-        public MutationInputs() { }
-        public MutationInputs(IDictionary<string, object> dict) : base(dict) { }
+        public MutationInputs()
+        {
+        }
+
+        public MutationInputs(IDictionary<string, object> dict) : base(dict)
+        {
+        }
 
         public object Get(string key)
         {
@@ -19,11 +21,9 @@ namespace GraphQL.Relay.Types
         {
             object value;
             if (!TryGetValue(key, out value))
-            {
                 return defaultValue;
-            }
 
-            return (T)value;
+            return (T) value;
         }
     }
 }

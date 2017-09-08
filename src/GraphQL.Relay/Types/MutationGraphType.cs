@@ -1,10 +1,5 @@
-﻿using GraphQL.Language.AST;
+﻿using System.Collections.Generic;
 using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphQL.Relay.Types
 {
@@ -23,12 +18,13 @@ namespace GraphQL.Relay.Types
                 name: name,
                 type: typeof(TMutationType),
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<TMutationInput>>() { Name = "input" }
+                    new QueryArgument<NonNullGraphType<TMutationInput>> {Name = "input"}
                 ),
-                resolve: c => {
+                resolve: c =>
+                {
                     var inputs = c.GetArgument<Dictionary<string, object>>("input");
 
-                    return ((TMutationType)c.ReturnType).MutateAndGetPayload(new MutationInputs(inputs), c);
+                    return ((TMutationType) c.ReturnType).MutateAndGetPayload(new MutationInputs(inputs), c);
                 }
             );
         }

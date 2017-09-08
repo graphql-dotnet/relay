@@ -1,11 +1,11 @@
 {
   "name": "graphql-relay",
-  "version": "0.1.0-beta4",
+  "version": "0.4.1",
   "private": true,
   "main": "index.js",
   "scripts": {
     "test": "dotnet test src/GraphQL.Relay.Tests",
-    "pack": "rimraf nuget/* && dotnet pack src/GraphQL.Relay -o nuget -c Release",
+    "pack": "rimraf nuget/* && dotnet pack src/GraphQL.Relay -o nuget -c Release --include-source --include-symbols",
     "version": "node tools/version package.json src/**/project.json",
     "release": "npm run test && npm run pack && cd nuget && nuget push *.symbols.nupkg -s https://www.nuget.org/api/v2/package"
   },

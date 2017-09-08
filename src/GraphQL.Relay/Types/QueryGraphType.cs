@@ -1,10 +1,4 @@
-﻿using GraphQL.Language.AST;
-using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GraphQL.Types;
 
 namespace GraphQL.Relay.Types
 {
@@ -23,9 +17,9 @@ namespace GraphQL.Relay.Types
 
         private object ResolveObjectFromGlobalId(ResolveFieldContext<object> context)
         {
-            string globalId = context.GetArgument<string>("id");
+            var globalId = context.GetArgument<string>("id");
             var parts = Node.FromGlobalId(globalId);
-            var node = (IRelayNode<object>)context.Schema.FindType(parts.Item1);
+            var node = (IRelayNode<object>) context.Schema.FindType(parts.Item1);
 
             return node.GetById(parts.Item2);
         }

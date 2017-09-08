@@ -1,8 +1,9 @@
-﻿using GraphQL.Types;
-using Panic.StringUtils;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using GraphQL.Types;
+using GraphQL.Types.Relay;
+using Panic.StringUtils;
 
 namespace GraphQL.Relay.Types
 {
@@ -29,7 +30,7 @@ namespace GraphQL.Relay.Types
             var parts = StringUtils.Base64Decode(globalId).Split(':');
             return new Tuple<string, string>(
                 parts[0],
-                string.Join(":", parts.Skip(1))
+                string.Join(":", parts.Skip(count: 1))
             );
         }
     }
@@ -37,12 +38,16 @@ namespace GraphQL.Relay.Types
 
     public abstract class NodeGraphType<T, TOut> : ObjectGraphType<T>, IRelayNode<TOut>
     {
-        public abstract TOut GetById(string id);
+        public static Type Edge => typeof(EdgeType<NodeGraphType<T, TOut>>);
 
-        public NodeGraphType()
+        public static Type Connection => typeof(ConnectionType<NodeGraphType<T, TOut>>);
+
+        protected NodeGraphType()
         {
             Interface<NodeInterface>();
         }
+
+        public abstract TOut GetById(string id);
 
         public FieldType Id<TReturnType>(Expression<Func<T, TReturnType>> expression)
         {
@@ -51,7 +56,9 @@ namespace GraphQL.Relay.Types
             {
                 name = StringUtils.ToCamelCase(expression.NameOf());
             }
-            catch { }
+            catch
+            {
+            }
 
 
             return Id(name, expression);
@@ -73,10 +80,11 @@ namespace GraphQL.Relay.Types
                 }
 
                 Field(name, expression)
-                    .Description($"The Id of the {Name ?? "node"}");
+                    .Description($"The Id of the {Name ?? "node"}")
+                    .FieldType.Metadata["RelayLocalIdField"] = true;
             }
-            
-            return Field(
+
+            var field = Field(
                 name: "id",
                 description: $"The Global Id of the {Name ?? "node"}",
                 type: typeof(NonNullGraphType<IdGraphType>),
@@ -85,11 +93,23 @@ namespace GraphQL.Relay.Types
                     expression.Compile()(context.Source)
                 )
             );
+
+            field.Metadata["RelayGlobalIdField"] = true;
+
+            if (!string.IsNullOrWhiteSpace(name))
+                field.Metadata["RelayRelatedLocalIdField"] = name;
+
+            return field;
         }
     }
 
-    public abstract class NodeGraphType<TSource> : NodeGraphType<TSource, TSource> { }
-    public abstract class NodeGraphType : NodeGraphType<object> { }
+    public abstract class NodeGraphType<TSource> : NodeGraphType<TSource, TSource>
+    {
+    }
+
+    public abstract class NodeGraphType : NodeGraphType<object>
+    {
+    }
 
 
     public class DefaultNodeGraphType<TSource, TOut> : NodeGraphType<TSource, TOut>
@@ -106,5 +126,4 @@ namespace GraphQL.Relay.Types
             return _getById(id);
         }
     }
-
 }

@@ -1,16 +1,7 @@
-﻿using GraphQL;
-using GraphQL.Relay.Utilities;
+﻿using GraphQL.Relay.Utilities;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GraphQL.Relay.Http
 {
@@ -25,13 +16,13 @@ namespace GraphQL.Relay.Http
 
     public class RelayRequest : List<RelayQuery>
     {
-        public bool IsBatched { get; private set; } = false;
+        public bool IsBatched { get; private set; }
     
         public IEnumerable<HttpFile> Files { get; set; }
 
         public RelayRequest() {}
 
-        public RelayRequest(bool isBatched) : base()
+        public RelayRequest(bool isBatched)
         {
             IsBatched = isBatched;
         }
@@ -50,4 +41,5 @@ namespace GraphQL.Relay.Http
         [JsonConverter(typeof(InputConverter))]
         public Inputs Variables { get; set; }
     }
+
 }

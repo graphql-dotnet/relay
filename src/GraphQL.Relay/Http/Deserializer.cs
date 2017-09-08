@@ -12,12 +12,12 @@ using GraphQL.Relay.Utilities;
 
 namespace GraphQL.Relay.Http
 {
-    static public class Deserializer
+    public static class Deserializer
     {
         public static async Task<RelayRequest> Deserialize(HttpContent content)
         {
-            RelayRequest queries = null;
-            string mediaType = content.Headers.ContentType.MediaType;
+            RelayRequest queries;
+            var mediaType = content.Headers.ContentType.MediaType;
 
             switch (mediaType)
             {

@@ -1,10 +1,7 @@
-﻿using GraphQL.Language.AST;
-using GraphQL.Types;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GraphQL.Language.AST;
+using GraphQL.Types;
 
 namespace GraphQL.Relay.Types
 {
@@ -16,47 +13,51 @@ namespace GraphQL.Relay.Types
 
     public abstract class MutationPayloadGraphType<TSource, TOut> : ObjectGraphType<TSource>, IMutationPayload<TOut>
     {
-        public abstract TOut MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context);
-
-        public MutationPayloadGraphType()
+        protected MutationPayloadGraphType()
         {
             Field(
                 name: "clientMutationId",
                 type: typeof(StringGraphType),
-                resolve: c =>
-                {
-                    return GetClientId(c);
-                });
+                resolve: GetClientId);
         }
+
+        public abstract TOut MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context);
 
         private string GetClientId(ResolveFieldContext<TSource> context)
         {
-            var Field = context.Operation.SelectionSet.Selections
+            var field = context.Operation.SelectionSet.Selections
                 .Where(s => s is Field)
                 .Cast<Field>()
-                .First(s => isCorrectSelection(context, s));
+                .First(s => IsCorrectSelection(context, s));
 
-            var Arg = Field.Arguments.First(a => a.Name == "input") as Argument;
+            var arg = field.Arguments.First(a => a.Name == "input");
 
-            if (Arg.Value is VariableReference)
+            if (arg.Value is VariableReference)
             {
-                string name = ((VariableReference) Arg.Value).Name;
+                var name = ((VariableReference) arg.Value).Name;
                 var inputs = context.Variables.First(v => v.Name == name).Value as Dictionary<string, object>;
 
                 return inputs["clientMutationId"] as string;
             }
 
-            var Value = ((ObjectValue)Arg.Value).ObjectFields.First(f => f.Name == "clientMutationId").Value as StringValue;
-            return Value.Value;
+            var value =
+                ((ObjectValue) arg.Value).ObjectFields.First(f => f.Name == "clientMutationId").Value as StringValue;
+            return value.Value;
         }
 
-        private bool isCorrectSelection(ResolveFieldContext<TSource> context, Field field)
+        private bool IsCorrectSelection(ResolveFieldContext<TSource> context, Field field)
         {
-            return Enumerable.Any(field.SelectionSet.Selections, s => s.SourceLocation.Equals(context.FieldAst.SourceLocation));
+            return Enumerable.Any(field.SelectionSet.Selections,
+                s => s.SourceLocation.Equals(context.FieldAst.SourceLocation));
         }
     }
 
 
-    public abstract class MutationPayloadGraphType<TSource> : MutationPayloadGraphType<TSource, TSource> { }
-    public abstract class MutationPayloadGraphType : MutationPayloadGraphType<object> { }
+    public abstract class MutationPayloadGraphType<TSource> : MutationPayloadGraphType<TSource, TSource>
+    {
+    }
+
+    public abstract class MutationPayloadGraphType : MutationPayloadGraphType<object>
+    {
+    }
 }
