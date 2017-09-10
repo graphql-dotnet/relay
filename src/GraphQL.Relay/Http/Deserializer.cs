@@ -14,30 +14,29 @@ namespace GraphQL.Relay.Http
 {
     public static class Deserializer
     {
-        public static async Task<RelayRequest> Deserialize(HttpContent content)
+        public static async Task<RelayRequest> Deserialize(Stream body, string contentType)
         {
             RelayRequest queries;
-            var mediaType = content.Headers.ContentType.MediaType;
 
-            switch (mediaType)
+            switch (contentType)
             {
                 case "multipart/form-data":
-                    queries = await DeserializeFormData(content);
+                    queries = DeserializeFormData(body);
                     break;
                 case "application/json":
-                    queries = await DeserializeJson(content);
+                    var stream = new StreamReader(body);
+                    queries = DeserializeJson(await stream.ReadToEndAsync());
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException($"Unknown media type: {mediaType}. Cannot deserialize the Http request");
+                    throw new ArgumentOutOfRangeException($"Unknown media type: {contentType}. Cannot deserialize the Http request");
             }
 
             return queries;
         }
 
-        private static async Task<RelayRequest> DeserializeJson(HttpContent content)
-        {
-            var stringContent = await content.ReadAsStringAsync();
 
+        private static RelayRequest DeserializeJson(string stringContent)
+        {
             if (stringContent[0] == '[')
                 return new RelayRequest(
                     JsonConvert.DeserializeObject<RelayQuery[]>(stringContent),
@@ -52,9 +51,9 @@ namespace GraphQL.Relay.Http
             throw new Exception("Unrecognized request json. GraphQL queries requests should be a single object, or an array of objects");
         }
 
-        private static async Task<RelayRequest> DeserializeFormData(HttpContent content)
+        private static RelayRequest DeserializeFormData(Stream body)
         {
-            var form = new MultipartFormDataParser(await content.ReadAsStreamAsync());
+            var form = new MultipartFormDataParser(body);
 
             var req = new RelayRequest()
             {
