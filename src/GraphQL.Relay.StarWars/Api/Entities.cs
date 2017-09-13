@@ -14,8 +14,9 @@ namespace GraphQL.Relay.StarWars.Api
                 .Select(url => url?.ToString().Split('/')[5]);
         }
     }
+    public interface ISwapiResponse {}
 
-    public class EntityList<TEntity> {
+    public class EntityList<TEntity>: ISwapiResponse {
 
         public int Count { get; set; }
         public Uri Next { get; set; }
@@ -23,12 +24,12 @@ namespace GraphQL.Relay.StarWars.Api
         public List<TEntity> Results = new List<TEntity>();
     }
 
-    public class Entity
+    public class Entity: ISwapiResponse
     {
-        public string Id => Url?.Split('/')[5];
+        public string Id => Url.ToString()?.Split('/')[5];
         public DateTime Created { get; set; }
         public DateTime Edited { get; set; }
-        public string Url { get; set; }
+        public Uri Url { get; set; }
     }
 
     public class Films : Entity
@@ -71,7 +72,7 @@ namespace GraphQL.Relay.StarWars.Api
         public string HairColors { get; set; }
         public string EyeColors { get; set; }
         public string AverageLifespan { get; set; }
-        public string Homeworld { get; set; }
+        public Uri Homeworld { get; set; }
         public string Language { get; set; }
         public IList<Uri> People { get; set; }
         public IList<Uri> Films { get; set; }
@@ -88,7 +89,7 @@ namespace GraphQL.Relay.StarWars.Api
         public string EyeColor { get; set; }
         public string BirthYear { get; set; }
         public string Gender { get; set; }
-        public string Homeworld { get; set; }
+        public Uri Homeworld { get; set; }
         public IList<Uri> Films { get; set; }
         public IList<Uri> Species { get; set; }
         public IList<Uri> Vehicles { get; set; }

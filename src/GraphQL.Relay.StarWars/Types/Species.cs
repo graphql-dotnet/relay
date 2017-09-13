@@ -3,8 +3,6 @@ using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 
-using ConnectionUtils = GraphQL.Relay.Types.Connection;
-
 namespace GraphQL.Relay.StarWars.Types
 {
   public class SpeciesGraphType : NodeGraphType<Species, Task<Species>>
@@ -26,8 +24,12 @@ namespace GraphQL.Relay.StarWars.Types
         Field(p => p.HairColors);
         Field(p => p.EyeColors);
         Field(p => p.AverageLifespan);
-        Field(p => p.Homeworld);
         Field(p => p.Language);
+        Field(
+          name: "homeworld",
+          type: typeof(PlanetGraphType),
+          resolve: ctx => _api.GetEntity<Planets>(ctx.Source.Homeworld)
+        );
 
         Connection<PeopleGraphType>()
             .Name("people")
@@ -47,7 +49,7 @@ namespace GraphQL.Relay.StarWars.Types
     }
 
     public override Task<Species> GetById(string id) =>
-        _api.Get<Species>(id);
+        _api.GetEntity<Species>(id);
 
   }
 }

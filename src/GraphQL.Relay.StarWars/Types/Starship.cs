@@ -3,8 +3,6 @@ using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 
-using ConnectionUtils = GraphQL.Relay.Types.Connection;
-
 namespace GraphQL.Relay.StarWars.Types
 {
   public class StarshipGraphType : NodeGraphType<Starships, Task<Starships>>
@@ -49,7 +47,7 @@ namespace GraphQL.Relay.StarWars.Types
     }
 
     public override Task<Starships> GetById(string id) =>
-        _api.Get<Starships>(id);
+        _api.GetEntity<Starships>(id);
 
   }
 }

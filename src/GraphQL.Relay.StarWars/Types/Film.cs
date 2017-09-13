@@ -3,8 +3,6 @@ using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 
-using ConnectionUtils = GraphQL.Relay.Types.Connection;
-
 namespace GraphQL.Relay.StarWars.Types
 {
   public class FilmGraphType : AsyncNodeGraphType<Films>
@@ -66,6 +64,6 @@ namespace GraphQL.Relay.StarWars.Types
     }
 
     public override Task<Films> GetById(string id) =>
-        _api.Get<Films>(id);
+        _api.GetEntity<Films>(id);
   }
 }

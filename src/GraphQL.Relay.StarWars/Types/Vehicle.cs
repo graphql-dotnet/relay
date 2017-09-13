@@ -3,7 +3,6 @@ using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 
-using ConnectionUtils = GraphQL.Relay.Types.Connection;
 
 namespace GraphQL.Relay.StarWars.Types
 {
@@ -47,7 +46,7 @@ namespace GraphQL.Relay.StarWars.Types
     }
 
     public override Task<Vehicles> GetById(string id) =>
-        _api.Get<Vehicles>(id);
+        _api.GetEntity<Vehicles>(id);
 
   }
 }

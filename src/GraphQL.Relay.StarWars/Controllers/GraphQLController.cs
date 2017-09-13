@@ -4,9 +4,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using DataLoader;
 using GraphQL.Conversion;
 using GraphQL.Relay.Http;
+using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
+using GraphQL.Relay.StarWars.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraphQL.Relay.StarWars.Controllers
@@ -16,10 +19,12 @@ namespace GraphQL.Relay.StarWars.Controllers
   {
     private readonly RequestExecutor _executor;
     public StarWarsSchema Schema { get; }
+    private readonly Swapi _api;
 
-    public GraphQLController(RequestExecutor executor, StarWarsSchema schema)
+    public GraphQLController(RequestExecutor executor, Swapi api, StarWarsSchema schema)
     {
-      this.Schema = schema;
+      Schema = schema;
+      _api = api;
       _executor = executor;
     }
 
@@ -27,19 +32,21 @@ namespace GraphQL.Relay.StarWars.Controllers
     [HttpPost]
     public async Task<IActionResult> Post()
     {
-      var response = await _executor.ExecuteAsync(Request.Body, Request.ContentType, (_, files) =>
-      {
-        _.Schema = Schema;
-        _.ExposeExceptions = true;
-        _.Root = new
-        {
-          Files = files,
-        };
-        _.FieldNameConverter = new CamelCaseFieldNameConverter();
-      });
+      var response = await _executor
+        .ExecuteAsync(Request.Body, Request.ContentType, (_, files) => {
+            _.Schema = Schema;
+            _.ExposeExceptions = true;
+            _.UserContext = new GraphQLContext(_api);
+
+            _.Root = new
+            {
+              Files = files,
+            };
+            _.FieldNameConverter = new CamelCaseFieldNameConverter();
+        });
 
 
-      return Content(response.Write(), "application/json", Encoding.UTF8) ;
+      return Content(response.Write(), "application/json", Encoding.UTF8);
     }
   }
 }
