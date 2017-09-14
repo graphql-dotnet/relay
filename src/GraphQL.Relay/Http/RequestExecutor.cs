@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace GraphQL.Relay.Http
         private readonly IDocumentWriter _writer = new DocumentWriter();
 
         public RequestExecutor()
-        {    
+        {
         }
 
         public RequestExecutor(IDocumentExecuter executer, IDocumentWriter writer)
@@ -23,10 +24,11 @@ namespace GraphQL.Relay.Http
         }
 
         public async Task<RelayResponse> ExecuteAsync(
-            HttpRequestMessage request, 
+            Stream body,
+            string contentType,
             Action<GraphQL.ExecutionOptions, IEnumerable<HttpFile>> configure
         ) {
-            var queries = await Deserializer.Deserialize(request.Content);
+            var queries = await Deserializer.Deserialize(body, contentType);
 
             var results = await Task.WhenAll(
                 queries.Select(q => _executer.ExecuteAsync(options =>
@@ -34,7 +36,7 @@ namespace GraphQL.Relay.Http
                     options.Query = q.Query;
                     options.OperationName = q.OperationName;
                     options.Inputs = q.Variables;
-   
+
                     configure(options, queries.Files);
                 }))
             );
@@ -43,9 +45,20 @@ namespace GraphQL.Relay.Http
             {
                 Writer = _writer,
                 IsBatched = queries.IsBatched,
-                Request = request,
                 Results = results
             };
+        }
+
+
+        public async Task<RelayResponse> ExecuteAsync(
+            HttpRequestMessage request,
+            Action<GraphQL.ExecutionOptions, IEnumerable<HttpFile>> configure
+        ) {
+            return await ExecuteAsync(
+                await request.Content.ReadAsStreamAsync(),
+                request.Content.Headers.ContentType.MediaType,
+                configure
+            );
         }
     }
 }

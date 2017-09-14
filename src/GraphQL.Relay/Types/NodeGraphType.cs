@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
 using Panic.StringUtils;
@@ -111,6 +112,9 @@ namespace GraphQL.Relay.Types
     {
     }
 
+    public abstract class AsyncNodeGraphType<T> : NodeGraphType<T, Task<T>>
+    {
+    }
 
     public class DefaultNodeGraphType<TSource, TOut> : NodeGraphType<TSource, TOut>
     {
