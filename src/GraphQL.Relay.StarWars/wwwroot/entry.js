@@ -8,4 +8,6 @@ function graphQLFetcher(graphQLParams) {
 }
 
 ReactDOM.render(
-  React.createElement(GraphiQL, { fetcher: graphQLFetcher }, null), document.getElementById('root'));
+  React.createElement(GraphiQL, { fetcher: graphQLFetcher }, null),
+  document.getElementById('root')
+);

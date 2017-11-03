@@ -1,0 +1,8 @@
+{
+  "presets": [
+    "jason"
+  ],
+  "plugins": [
+    "relay"
+  ]
+}

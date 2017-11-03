@@ -9,9 +9,9 @@
     "type": "coreclr",
     "request": "launch",
     "preLaunchTask": "build",
-    "program": "${workspaceRoot}/src/GraphQL.Relay.Starwars/bin/Debug/netcoreapp2.0/GraphQL.Relay.StarWars.dll",
+    "program": "${workspaceRoot}/src/GraphQL.Relay.Todo/bin/Debug/netcoreapp2.0/GraphQL.Relay.Todo.dll",
     "args": [],
-    "cwd": "${workspaceRoot}/src/GraphQL.Relay.Starwars",
+    "cwd": "${workspaceRoot}/src/GraphQL.Relay.Todo",
     "stopAtEntry": false,
     "requireExactSource": false,
     "launchBrowser": {

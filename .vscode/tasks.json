@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}/src/GraphQL.Relay.Test/GraphQL.Relay.Test.csproj"
+                "${workspaceRoot}/src/GraphQL.Relay.Todo/GraphQL.Relay.Todo.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

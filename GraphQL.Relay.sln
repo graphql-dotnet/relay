@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
@@ -9,10 +9,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.Test", "src\G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.StarWars", "src\GraphQL.Relay.StarWars\GraphQL.Relay.StarWars.csproj", "{43F14E11-5D11-427C-B4F7-D68B2339E837}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9146BB10-87F1-4F09-94A6-2A91F4E83998}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphQL.Relay.Todo", "src\GraphQL.Relay.Todo\GraphQL.Relay.Todo.csproj", "{15AFC7EC-11E6-469F-87DF-D1E396463BE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{46076F16-C4F7-4879-903D-70D75DD8B3EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -27,11 +35,26 @@ Global
 		{43F14E11-5D11-427C-B4F7-D68B2339E837}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43F14E11-5D11-427C-B4F7-D68B2339E837}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43F14E11-5D11-427C-B4F7-D68B2339E837}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x64.ActiveCfg = Debug|x64
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x64.Build.0 = Debug|x64
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x86.ActiveCfg = Debug|x86
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x86.Build.0 = Debug|x86
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x64.ActiveCfg = Release|x64
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x64.Build.0 = Release|x64
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x86.ActiveCfg = Release|x86
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26C9760C-72D8-43A7-B0D6-FA4AE10D5F06}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{15AFC7EC-11E6-469F-87DF-D1E396463BE9} = {9146BB10-87F1-4F09-94A6-2A91F4E83998}
 	EndGlobalSection
 EndGlobal

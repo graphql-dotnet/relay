@@ -55,6 +55,14 @@ namespace GraphQL.Relay.Types
             };
         }
 
+        public static string CursorForObjectInConnection<T>(
+            IEnumerable<T> slice,
+            T item
+        ) {
+            var idx = slice.ToList().IndexOf(item);
+
+            return idx == -1 ? null : OffsetToCursor(idx);
+        }
         public static int CursorToOffset(string cursor)
         {
             return int.Parse(

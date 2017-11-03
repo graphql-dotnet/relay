@@ -1,0 +1,29 @@
+{
+  "name": "realy-example-todo",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "compile": "relay-compiler --src ./ClientApp --schema ./wwwroot/schema.json"
+  },
+  "devDependencies": {
+    "@dhau/relay-compiler-webpack-plugin": "^0.5.3",
+    "aspnet-webpack": "^2.0.1",
+    "relay-compiler": "^1.4.1",
+    "webpack": "^3.8.1",
+    "webpack-atoms": "^4.1.2"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-relay": "^1.4.1",
+    "babel-preset-jason": "^3.1.1",
+    "babel-preset-react": "^6.11.1",
+    "classnames": "2.2.5",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-relay": "^1.4.0",
+    "relay-compiler": "^1.4.1",
+    "todomvc-app-css": "^2.1.0",
+    "todomvc-common": "^1.0.3"
+  }
+}
