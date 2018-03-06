@@ -1,9 +1,30 @@
-GraphQL.Relay
-===
+# GraphQL.Relay
 
 A collection of classes, tools, and utilities for creating Relay.js compatible GraphQL servers in dotnet.
 
 ## Usage
+
+### Setup
+
+Add the Nuget package:
+
+```bash
+$> dotnet add package GraphQL.Relay
+```
+
+Ensure your resolver for GraphQL can resolve:
+
+* `ConnectionType<>`
+* `EdgeType<>`
+* `PageInfoType`
+
+If you're using the resolver from MVC (`IServiceProvider`), that might look like this:
+
+```csharp
+services.AddTransient(typeof(ConnectionType<>));
+services.AddTransient(typeof(EdgeType<>));
+services.AddTransient<PageInfoType>
+```
 
 ### GraphTypes
 
@@ -111,7 +132,7 @@ public class CreateDroidPayload : MutationPayloadGraphType<DroidPayload, Task<Dr
 
     Field(
       name: "droid",
-      type: typeof(Droid));        
+      type: typeof(Droid));
   }
 
   public override async Task<DroidPayload> MutateAndGetPayload(MutationInputs inputs)
