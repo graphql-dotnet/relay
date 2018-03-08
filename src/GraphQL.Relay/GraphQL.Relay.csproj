@@ -14,7 +14,7 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="0.14.0.633" />
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-863" />
     <PackageReference Include="HttpMultipartParser" Version="2.2.4" />
     <PackageReference Include="Panic.StringUtils" Version="1.0.1" />
   </ItemGroup>
