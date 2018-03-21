@@ -24,8 +24,8 @@ If you're using the resolver from MVC (`IServiceProvider`), that might look like
 ```csharp
 services.AddTransient(typeof(ConnectionType<>));
 services.AddTransient(typeof(EdgeType<>));
-services.AddTransient<PageInfoType>
-services.AddTransient<NodeInterface>
+services.AddTransient<PageInfoType>();
+services.AddTransient<NodeInterface>();
 ```
 
 ### GraphTypes
