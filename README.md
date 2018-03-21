@@ -16,6 +16,7 @@ Ensure your resolver for GraphQL can resolve:
 
 * `ConnectionType<>`
 * `EdgeType<>`
+* `NodeInterface`
 * `PageInfoType`
 
 If you're using the resolver from MVC (`IServiceProvider`), that might look like this:
@@ -23,7 +24,8 @@ If you're using the resolver from MVC (`IServiceProvider`), that might look like
 ```csharp
 services.AddTransient(typeof(ConnectionType<>));
 services.AddTransient(typeof(EdgeType<>));
-services.AddTransient<PageInfoType>
+services.AddTransient<NodeInterface>();
+services.AddTransient<PageInfoType>();
 ```
 
 ### GraphTypes
