@@ -2,25 +2,21 @@
   <PropertyGroup>
     <Authors>Jason Quense</Authors>
     <VersionPrefix>0.4.1</VersionPrefix>
-    <TargetFrameworks>netcoreapp1.0;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
     <AssemblyName>GraphQL.Relay</AssemblyName>
     <PackageId>GraphQL.Relay</PackageId>
     <PackageTags>GraphQL;Relay;React</PackageTags>
     <PackageProjectUrl>https://github.com/graphql-dotnet/relay</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/graphql-dotnet/relay/blob/master/LICENSE.md</PackageLicenseUrl>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">$(PackageTargetFallback);portable-net45+win8</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="2.0.0-alpha-863" />
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-938" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="HttpMultipartParser" Version="2.2.4" />
     <PackageReference Include="Panic.StringUtils" Version="1.0.1" />
-  </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
-    <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
-    <PackageReference Include="System.Reflection.Extensions" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.Net.Http" />
