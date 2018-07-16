@@ -18,6 +18,9 @@ namespace GraphQL.Relay.Test.Types
         {
             var ex = new IncompleteSliceException("Test");
             Assert.Equal("Test", ex.Message);
+            ex = new IncompleteSliceException("Test", "paramName");
+            Assert.StartsWith($"Test{Environment.NewLine}", ex.Message);
+            Assert.Equal("paramName", ex.ParamName);
         }
 
         [Fact]
@@ -26,6 +29,11 @@ namespace GraphQL.Relay.Test.Types
             var inner = new Exception();
             var ex = new IncompleteSliceException("Test", inner);
             Assert.Equal("Test", ex.Message);
+            Assert.Equal(inner, ex.InnerException);
+            
+            ex = new IncompleteSliceException("Test", "paramName", inner);
+            Assert.StartsWith($"Test{Environment.NewLine}", ex.Message);
+            Assert.Equal("paramName", ex.ParamName);
             Assert.Equal(inner, ex.InnerException);
         }
     }

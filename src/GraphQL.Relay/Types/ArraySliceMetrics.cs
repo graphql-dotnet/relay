@@ -149,7 +149,7 @@ namespace GraphQL.Relay.Types
                 {
                     throw new IncompleteSliceException(
                         $"Provided slice data with index range [{StartIndex},{EndIndex}] does not " +
-                        $"completely contain the expected data range [{range.StartOffset}, {range.EndOffset}]");
+                        $"completely contain the expected data range [{range.StartOffset}, {range.EndOffset}]", nameof(slice));
                 }
             }
 
