@@ -120,7 +120,7 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(true, con.PageInfo.HasNextPage);
             Assert.Equal(true, con.PageInfo.HasPreviousPage);
             Assert.Equal(6, con.Edges.Count);
-            Assert.Equal(new[] {6,7,8,9,10,11}, con.Items);
+            Assert.Equal(new[] {6, 7, 8, 9, 10, 11}, con.Items);
         }
 
         [Fact]
@@ -163,6 +163,22 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(false, con.PageInfo.HasPreviousPage);
             Assert.Equal(4, con.Edges.Count);
             Assert.Equal(new[] {0, 1, 2, 3}, con.Items);
+        }
+
+        [Fact]
+        public void ToConnection_WhenBeforeCursorIsAheadOfAfterCursor_ReturnsEmptyList()
+        {
+            var list = new[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+            // this should specifically NOT throw, even though the input is somewhat nonsensical
+            var con = ToConnection(list, CreateContext(first: 4, after: OffsetToCursor(8), before: OffsetToCursor(2)),
+                0, 14);
+            Assert.Equal(14, con.TotalCount);
+            Assert.Equal(0, con.Edges.Count);
+            Assert.Null(con.PageInfo.StartCursor);
+            Assert.Null(con.PageInfo.EndCursor);
+            Assert.False(con.PageInfo.HasNextPage);
+            Assert.False(con.PageInfo.HasPreviousPage);
         }
     }
 }

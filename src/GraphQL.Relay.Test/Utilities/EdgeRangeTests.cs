@@ -13,9 +13,9 @@ namespace GraphQL.Relay.Test.Utilities
         }
 
         [Fact]
-        public void Ctor_WhenEndOffsetIsNegative_ThrowsArgumentOutOfRangeException()
+        public void Ctor_WhenEndOffsetIsLessThanMinusOne_ThrowsArgumentOutOfRangeException()
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new EdgeRange(0, -1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new EdgeRange(0, -2));
         }
 
         [Theory]
@@ -40,14 +40,14 @@ namespace GraphQL.Relay.Test.Utilities
         }
 
         [Fact]
-        public void LimitTail_IfMaxLengthIsNegative_ThrowsException()
+        public void LimitCountFromStart_IfMaxLengthIsNegative_ThrowsException()
         {
             var range = new EdgeRange(0, 10);
             Assert.Throws<ArgumentOutOfRangeException>(() => range.LimitCountFromStart(-1));
         }
 
         [Fact]
-        public void LimitTail_WhenProvidingMaxLengthLessThanCount_MovesEndOffet()
+        public void LimitCountFromStart_WhenProvidingMaxLengthLessThanCount_MovesEndOffet()
         {
             var range = new EdgeRange(0, 9);
             Assert.Equal(10, range.Count);
@@ -61,7 +61,7 @@ namespace GraphQL.Relay.Test.Utilities
 
 
         [Fact]
-        public void LimitHead_IfMaxLengthIsNegative_ThrowsException()
+        public void LimitCountToEnd_IfMaxLengthIsNegative_ThrowsException()
         {
             var range = new EdgeRange(0, 10);
             Assert.Throws<ArgumentOutOfRangeException>(() => range.LimitCountToEnd(-1));
@@ -69,7 +69,7 @@ namespace GraphQL.Relay.Test.Utilities
 
 
         [Fact]
-        public void LimitHead_WhenProvidingMaxLengthLessThanCount_MovesStartOffet()
+        public void LimitCountToEnd_WhenProvidingMaxLengthLessThanCount_MovesStartOffet()
         {
             var range = new EdgeRange(0, 9);
             Assert.Equal(10, range.Count);
