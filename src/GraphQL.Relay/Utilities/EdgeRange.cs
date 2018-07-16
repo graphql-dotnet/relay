@@ -10,8 +10,7 @@ namespace GraphQL.Relay.Utilities
         public EdgeRange(int startOffset, int endOffset)
         {
             if (startOffset < 0) throw new ArgumentOutOfRangeException(nameof(startOffset));
-            if (endOffset < 0) throw new ArgumentOutOfRangeException(nameof(endOffset));
-
+            if (endOffset < -1) throw new ArgumentOutOfRangeException(nameof(endOffset));
             this.startOffset = startOffset;
             this.endOffset = Math.Max(startOffset - 1, endOffset);
         }
@@ -54,3 +53,4 @@ namespace GraphQL.Relay.Utilities
         }
     }
 }
+s
