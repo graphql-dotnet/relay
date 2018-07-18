@@ -6,34 +6,40 @@ using Panic.StringUtils;
 
 namespace GraphQL.Relay.Types
 {
-  public static class ConnectionUtils
+    public static class ConnectionUtils
     {
         private const string Prefix = "arrayconnection";
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> items,
-            ResolveConnectionContext<TParent> context
-        ) {
+            ResolveConnectionContext<TParent> context,
+            bool strictCheck = true
+        )
+        {
             var list = items.ToList();
-            return ToConnection(list, context, sliceStartIndex: 0, totalCount: list.Count);
+            return ToConnection(list, context, sliceStartIndex: 0, totalCount: list.Count, strictCheck: true);
         }
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> slice,
             ResolveConnectionContext<TParent> context,
             int sliceStartIndex,
-            int totalCount
-        ) {
+            int totalCount,
+            bool strictCheck = true
+        )
+        {
             var sliceList = slice as IList<TSource> ?? slice.ToList();
 
-            var metrics = new ArraySliceMetrics<TSource, TParent>(
+            var metrics = ArraySliceMetrics.Create(
                 sliceList,
                 context,
                 sliceStartIndex,
-                totalCount
+                totalCount,
+                strictCheck
             );
 
-            var edges = metrics.Slice.Select((item, i) => new Edge<TSource> {
+            var edges = metrics.Slice.Select((item, i) => new Edge<TSource>
+                {
                     Node = item,
                     Cursor = OffsetToCursor(metrics.StartOffset + i)
                 })
@@ -46,7 +52,8 @@ namespace GraphQL.Relay.Types
             {
                 Edges = edges,
                 TotalCount = totalCount,
-                PageInfo = new PageInfo {
+                PageInfo = new PageInfo
+                {
                     StartCursor = firstEdge?.Cursor,
                     EndCursor = lastEdge?.Cursor,
                     HasPreviousPage = metrics.HasPrevious,
@@ -58,11 +65,13 @@ namespace GraphQL.Relay.Types
         public static string CursorForObjectInConnection<T>(
             IEnumerable<T> slice,
             T item
-        ) {
+        )
+        {
             var idx = slice.ToList().IndexOf(item);
 
             return idx == -1 ? null : OffsetToCursor(idx);
         }
+
         public static int CursorToOffset(string cursor)
         {
             return int.Parse(
