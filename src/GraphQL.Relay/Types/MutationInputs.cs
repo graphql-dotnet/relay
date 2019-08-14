@@ -19,11 +19,7 @@ namespace GraphQL.Relay.Types
 
         public T Get<T>(string key, T defaultValue = default(T))
         {
-            object value;
-            if (!TryGetValue(key, out value))
-                return defaultValue;
-
-            return (T) value;
+            return TryGetValue(key, out object value) ? (T)value : defaultValue;
         }
     }
 }

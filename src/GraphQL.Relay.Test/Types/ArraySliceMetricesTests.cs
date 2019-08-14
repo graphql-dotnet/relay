@@ -18,8 +18,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(0, slice.StartOffset);
             Assert.Equal(3, slice.EndIndex);
             Assert.Equal(3, slice.EndOffset);
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.False(slice.HasPrevious);
         }
 
         [Fact]
@@ -34,8 +34,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(0, slice.StartOffset);
             Assert.Equal(3, slice.EndIndex);
             Assert.Equal(3, slice.EndOffset);
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.False(slice.HasPrevious);
         }
 
 
@@ -52,8 +52,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(4, slice.StartOffset);
             Assert.Equal(list.Length - 1, slice.EndIndex);
             Assert.Equal(7, slice.EndOffset);
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.True(slice.HasPrevious);
             Assert.Equal(new[] {4, 5, 6, 7}, slice.Slice);
         }
 
@@ -71,8 +71,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(4, slice.StartOffset);
             Assert.Equal(list.Length - 1, slice.EndIndex);
             Assert.Equal(5, slice.EndOffset);
-            Assert.Equal(true, slice.HasNext);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.True(slice.HasNext);
+            Assert.True(slice.HasPrevious);
             Assert.Equal(new[] {4, 5}, slice.Slice);
         }
 
@@ -107,8 +107,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(4, slice.StartOffset);
             Assert.Equal(7, slice.EndIndex);
             Assert.Equal(7, slice.EndOffset);
-            Assert.Equal(true, slice.HasNext);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.True(slice.HasNext);
+            Assert.True(slice.HasPrevious);
             Assert.Equal(list, slice.Slice);
         }
 
@@ -126,8 +126,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(11, slice.StartOffset);
             Assert.Equal(10, slice.EndOffset);
 
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.False(slice.HasPrevious);
             Assert.Equal(new int[] { }, slice.Slice);
         }
 
@@ -144,8 +144,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(5, slice.StartOffset);
             Assert.Equal(4, slice.EndOffset);
 
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.False(slice.HasPrevious);
             Assert.Equal(new int[] { }, slice.Slice);
         }
 
@@ -157,7 +157,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(17, slice.StartOffset);
             Assert.Equal(17, slice.EndOffset);
-            Assert.Equal(false, slice.HasNext);
+            Assert.False(slice.HasNext);
         }
 
 
@@ -169,7 +169,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(15, slice.StartOffset);
             Assert.Equal(16, slice.EndOffset);
-            Assert.Equal(true, slice.HasNext);
+            Assert.True(slice.HasNext);
         }
 
         [Fact]
@@ -180,7 +180,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(7, slice.StartOffset);
             Assert.Equal(7, slice.EndOffset);
-            Assert.Equal(false, slice.HasNext);
+            Assert.False(slice.HasNext);
         }
 
         [Fact]
@@ -191,7 +191,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(0, slice.StartOffset);
             Assert.Equal(6, slice.EndOffset);
-            Assert.Equal(true, slice.HasNext);
+            Assert.True(slice.HasNext);
         }
 
         [Fact]
@@ -202,7 +202,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(10, slice.StartOffset);
             Assert.Equal(11, slice.EndOffset);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.True(slice.HasPrevious);
         }
 
         [Fact]
@@ -213,7 +213,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(0, slice.StartOffset);
             Assert.Equal(1, slice.EndOffset);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasPrevious);
         }
 
         [Fact]
@@ -224,7 +224,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(1, slice.StartOffset);
             Assert.Equal(7, slice.EndOffset);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.True(slice.HasPrevious);
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace GraphQL.Relay.Test.Types
 
             Assert.Equal(0, slice.StartOffset);
             Assert.Equal(7, slice.EndOffset);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasPrevious);
         }
     }
 }

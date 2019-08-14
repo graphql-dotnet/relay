@@ -1,7 +1,6 @@
-using System;
+using GraphQL.Http;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphQL.Http;
 
 namespace GraphQL.Relay.Todo
 {
@@ -17,23 +16,21 @@ namespace GraphQL.Relay.Todo
             _schema = schema;
         }
 
-
         public async Task<string> Generate()
         {
-            ExecutionResult result = await executor.ExecuteAsync(
-                _schema,
-                null,
-                introspectionQuery,
-                null
-            );
+            ExecutionResult result = await executor.ExecuteAsync(options =>
+            {
+                options.Schema = _schema;
+                options.Query = introspectionQuery;
+            });
 
             if (result.Errors?.Any() ?? false)
                 throw result.Errors.First();
 
-            return writer.Write(result);
+            return await writer.WriteToStringAsync(result);
         }
 
-        private string introspectionQuery = @"
+        private const string introspectionQuery = @"
           query IntrospectionQuery {
             __schema {
               queryType { name }

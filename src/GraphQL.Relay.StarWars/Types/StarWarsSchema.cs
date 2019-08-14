@@ -1,15 +1,15 @@
 using System;
 using GraphQL.Types;
+using GraphQL.Utilities;
 
 namespace GraphQL.Relay.StarWars.Types
 {
     public class StarWarsSchema: Schema
     {
-        public StarWarsSchema(Func<Type, object> resolveType)
-            : base(type => (GraphType)resolveType(type))
+        public StarWarsSchema(IServiceProvider provider)
+            : base(provider)
         {
-            var obj = resolveType(typeof(StarWarsQuery));
-            Query = obj as StarWarsQuery;
+            Query = provider.GetRequiredService<StarWarsQuery>();
 
             RegisterType<FilmGraphType>();
             RegisterType<PeopleGraphType>();

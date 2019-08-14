@@ -42,8 +42,7 @@ namespace GraphQL.Relay.Utilities
         // https://github.com/graphql-dotnet/graphql-dotnet/blob/master/LICENSE.md
         private static object GetValue(object value)
         {
-            var objectValue = value as JObject;
-            if (objectValue != null)
+            if (value is JObject objectValue)
             {
                 var output = new Dictionary<string, object>();
                 foreach (var kvp in objectValue)
@@ -53,8 +52,7 @@ namespace GraphQL.Relay.Utilities
                 return output;
             }
 
-            var propertyValue = value as JProperty;
-            if (propertyValue != null)
+            if (value is JProperty propertyValue)
             {
                 return new Dictionary<string, object>
                 {
@@ -62,8 +60,7 @@ namespace GraphQL.Relay.Utilities
                 };
             }
 
-            var arrayValue = value as JArray;
-            if (arrayValue != null)
+            if (value is JArray arrayValue)
             {
                 return arrayValue.Children().Aggregate(new List<object>(), (list, token) =>
                 {
@@ -72,13 +69,11 @@ namespace GraphQL.Relay.Utilities
                 });
             }
 
-            var rawValue = value as JValue;
-            if (rawValue != null)
+            if (value is JValue rawValue)
             {
                 var val = rawValue.Value;
-                if (val is long)
+                if (val is long l)
                 {
-                    long l = (long)val;
                     if (l >= int.MinValue && l <= int.MaxValue)
                     {
                         return (int)l;

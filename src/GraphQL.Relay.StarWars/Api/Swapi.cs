@@ -15,7 +15,7 @@ namespace GraphQL.Relay.StarWars.Api
   {
     private readonly HttpClient _client;
 
-    private string _apiBase = "http://swapi.co/api";
+    private const string _apiBase = "http://swapi.co/api";
     private ResponseCache _cache = new ResponseCache();
 
 

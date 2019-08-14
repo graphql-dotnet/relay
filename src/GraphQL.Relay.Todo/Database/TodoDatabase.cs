@@ -91,8 +91,7 @@ namespace GraphQL.Relay.Todo
         }
 
         public static void RemoveTodo(string id) {
-            Todo deleted;
-            _context.todos.Remove(id, out deleted);
+            _context.todos.Remove(id, out Todo deleted);
         }
 
         public static Todo RenameTodo(string id, string text) {

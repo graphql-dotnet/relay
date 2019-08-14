@@ -14,8 +14,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(10, con.TotalCount);
             Assert.Equal(OffsetToCursor(3), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(7), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(5, con.Edges.Count);
         }
 
@@ -27,8 +27,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(15, con.TotalCount);
             Assert.Equal(OffsetToCursor(5), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(8), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(4, con.Edges.Count);
             Assert.Equal(new[] {5, 6, 7, 8}, con.Items);
         }
@@ -41,8 +41,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(5, con.TotalCount);
             Assert.Equal(OffsetToCursor(0), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(4), con.PageInfo.EndCursor);
-            Assert.Equal(false, con.PageInfo.HasNextPage);
-            Assert.Equal(false, con.PageInfo.HasPreviousPage);
+            Assert.False(con.PageInfo.HasNextPage);
+            Assert.False(con.PageInfo.HasPreviousPage);
             Assert.Equal(5, con.Edges.Count);
         }
 
@@ -54,8 +54,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(14, con.TotalCount);
             Assert.Equal(OffsetToCursor(0), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(6), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(false, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.False(con.PageInfo.HasPreviousPage);
             Assert.Equal(7, con.Edges.Count);
             Assert.Equal(new[] {0, 1, 2, 3, 4, 5, 6}, con.Items);
         }
@@ -68,8 +68,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(14, con.TotalCount);
             Assert.Equal(OffsetToCursor(4), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(6), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(3, con.Edges.Count);
             Assert.Equal(new[] {4, 5, 6}, con.Items);
         }
@@ -82,8 +82,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(14, con.TotalCount);
             Assert.Equal(OffsetToCursor(10), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(13), con.PageInfo.EndCursor);
-            Assert.Equal(false, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.False(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(4, con.Edges.Count);
             Assert.Equal(new[] {10, 11, 12, 13}, con.Items);
         }
@@ -100,8 +100,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(20, con.TotalCount);
             Assert.Equal(OffsetToCursor(9), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(11), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(3, con.Edges.Count);
             Assert.Equal(new[] {9, 10, 11}, con.Items);
         }
@@ -117,8 +117,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(20, con.TotalCount);
             Assert.Equal(OffsetToCursor(6), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(11), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(6, con.Edges.Count);
             Assert.Equal(new[] {6, 7, 8, 9, 10, 11}, con.Items);
         }
@@ -131,8 +131,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(11, con.TotalCount);
             Assert.Equal(OffsetToCursor(6), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(7), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(2, con.Edges.Count);
             Assert.Equal(new[] {6, 7}, con.Items);
         }
@@ -145,8 +145,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(11, con.TotalCount);
             Assert.Equal(OffsetToCursor(6), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(10), con.PageInfo.EndCursor);
-            Assert.Equal(false, con.PageInfo.HasNextPage);
-            Assert.Equal(true, con.PageInfo.HasPreviousPage);
+            Assert.False(con.PageInfo.HasNextPage);
+            Assert.True(con.PageInfo.HasPreviousPage);
             Assert.Equal(5, con.Edges.Count);
             Assert.Equal(new[] {6, 7, 8, 9, 10}, con.Items);
         }
@@ -159,8 +159,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(14, con.TotalCount);
             Assert.Equal(OffsetToCursor(0), con.PageInfo.StartCursor);
             Assert.Equal(OffsetToCursor(3), con.PageInfo.EndCursor);
-            Assert.Equal(true, con.PageInfo.HasNextPage);
-            Assert.Equal(false, con.PageInfo.HasPreviousPage);
+            Assert.True(con.PageInfo.HasNextPage);
+            Assert.False(con.PageInfo.HasPreviousPage);
             Assert.Equal(4, con.Edges.Count);
             Assert.Equal(new[] {0, 1, 2, 3}, con.Items);
         }
@@ -174,7 +174,7 @@ namespace GraphQL.Relay.Test.Types
             var con = ToConnection(list, CreateContext(first: 4, after: OffsetToCursor(8), before: OffsetToCursor(2)),
                 0, 14);
             Assert.Equal(14, con.TotalCount);
-            Assert.Equal(0, con.Edges.Count);
+            Assert.Empty(con.Edges);
             Assert.Null(con.PageInfo.StartCursor);
             Assert.Null(con.PageInfo.EndCursor);
             Assert.False(con.PageInfo.HasNextPage);
