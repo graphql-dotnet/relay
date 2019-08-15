@@ -15,7 +15,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="3.0.0-preview-1206" />
+    <PackageReference Include="GraphQL" Version="3.0.0-preview-1207" />
     <PackageReference Include="HttpMultipartParser" Version="2.2.4" />
     <PackageReference Include="Panic.StringUtils" Version="1.0.1" />
   </ItemGroup>

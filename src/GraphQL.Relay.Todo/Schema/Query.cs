@@ -1,5 +1,4 @@
 using GraphQL.Relay.Types;
-using GraphQL.Relay.Todo;
 using GraphQL.Types;
 using System.Linq;
 
@@ -64,6 +63,4 @@ namespace GraphQL.Relay.Todo.Schema
         public override User GetById(string id) =>
             Database.GetUserById(id);
     }
-
-
 }

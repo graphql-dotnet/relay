@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GraphQL.Conversion;
+﻿using GraphQL.Conversion;
 using GraphQL.Http;
 using GraphQL.Relay.Http;
 using GraphQL.Relay.Todo.Schema;
@@ -13,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
+using System.Text;
 
 namespace GraphQL.Relay.Todo
 {

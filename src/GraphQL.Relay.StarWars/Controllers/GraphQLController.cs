@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using DataLoader;
-using GraphQL.Conversion;
+﻿using GraphQL.Conversion;
 using GraphQL.Relay.Http;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
-using GraphQL.Relay.StarWars.Utilities;
 using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GraphQL.Relay.StarWars.Controllers
 {

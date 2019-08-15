@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
-using GraphQL.Types;
+using System.Threading.Tasks;
 
 namespace GraphQL.Relay.StarWars.Types
 {
@@ -48,6 +47,5 @@ namespace GraphQL.Relay.StarWars.Types
 
     public override Task<Starships> GetById(string id) =>
         _api.GetEntity<Starships>(id);
-
   }
 }

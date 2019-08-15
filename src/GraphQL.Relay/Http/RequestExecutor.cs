@@ -49,7 +49,6 @@ namespace GraphQL.Relay.Http
             };
         }
 
-
         public async Task<RelayResponse> ExecuteAsync(
             HttpRequestMessage request,
             Action<GraphQL.ExecutionOptions, IEnumerable<HttpFile>> configure

@@ -1,4 +1,3 @@
-
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Utilities;
 using GraphQL.Relay.Types;

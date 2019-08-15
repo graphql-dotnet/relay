@@ -1,12 +1,6 @@
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DataLoader;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Types;
+using System.Collections.Generic;
 
 namespace GraphQL.Relay.StarWars
 {

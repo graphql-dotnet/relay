@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using GraphQL.Http;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GraphQL.Http;
 
 namespace GraphQL.Relay.Http
 {
@@ -18,30 +15,6 @@ namespace GraphQL.Relay.Http
 
         public bool HasErrors => Results.Any(r => r.Errors?.Count > 0);
 
-        public string Write()
-        {
-            if (IsBatched)
-                return WriteToStringAsync(Writer, Results.ToArray()).GetAwaiter().GetResult();
-            else
-                return Writer.WriteToStringAsync(Results.FirstOrDefault()).GetAwaiter().GetResult();
-        }
-
-        private static readonly Encoding Utf8Encoding = new UTF8Encoding(false);
-
-        //TODO: remove later
-        private static async Task<string> WriteToStringAsync(
-            IDocumentWriter writer,
-            ExecutionResult[] value)
-        {
-            using (var stream = new MemoryStream())
-            {
-                await writer.WriteAsync(stream, value);
-                stream.Position = 0;
-                using (var reader = new StreamReader(stream, Utf8Encoding))
-                {
-                    return await reader.ReadToEndAsync();
-                }
-            }
-        }
+        public string Write() => Writer.WriteToStringAsync(IsBatched ? (object)Results.ToArray() : Results.FirstOrDefault()).GetAwaiter().GetResult();
     }
 }

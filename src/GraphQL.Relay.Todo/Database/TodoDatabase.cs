@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace GraphQL.Relay.Todo
 {
-
     public class Todo {
         public string Id { get; set; }
         public string Text { get; set; }

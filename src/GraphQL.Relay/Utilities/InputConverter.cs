@@ -4,16 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace GraphQL.Relay.Utilities
 {
     public class InputConverter : JsonConverter
     {
-        public override bool CanWrite
-        {
-            get { return false; }
-        }
+        public override bool CanWrite => false;
 
         public override bool CanConvert(Type objectType)
         {
