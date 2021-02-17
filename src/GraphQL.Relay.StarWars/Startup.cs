@@ -1,4 +1,4 @@
-﻿using GraphQL.Http;
+﻿using GraphQL.NewtonsoftJson;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
 using Microsoft.AspNetCore.Builder;

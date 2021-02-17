@@ -1,5 +1,4 @@
-﻿using GraphQL.Http;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphQL.Relay.Http

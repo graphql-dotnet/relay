@@ -36,7 +36,7 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
+            IResolveFieldContext<object> context
         ) {
             var todo = Database.AddTodo(inputs.Get<string>("text"));
 
@@ -70,7 +70,7 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
+            IResolveFieldContext<object> context
         ) {
             return new {
                 Viewer = Database.GetViewer(),
@@ -101,7 +101,7 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
+            IResolveFieldContext<object> context
         ) {
             return new {
                 Viewer = Database.GetViewer(),
@@ -129,7 +129,7 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
+            IResolveFieldContext<object> context
         ) {
             return new {
                 Viewer = Database.GetViewer(),
@@ -159,7 +159,7 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
+            IResolveFieldContext<object> context
         ) {
             Database.RemoveTodo(
                 Node.FromGlobalId(inputs.Get<string>("id")).Id
@@ -192,7 +192,7 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
+            IResolveFieldContext<object> context
         ) {
             return new {
                 Viewer = Database.GetViewer(),

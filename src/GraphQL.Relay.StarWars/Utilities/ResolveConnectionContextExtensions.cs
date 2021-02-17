@@ -10,7 +10,7 @@ namespace GraphQL.Relay.StarWars.Utilities
     }
     public static class ResolveConnectionContextExtensions
     {
-        public static ConnectionArguments GetConnectionArguments<T>(this ResolveConnectionContext<T> ctx) {
+        public static ConnectionArguments GetConnectionArguments<T>(this IResolveConnectionContext<T> ctx) {
             return new ConnectionArguments {
                 First = ctx.First,
                 After = ctx.After,

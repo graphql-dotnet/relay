@@ -7,7 +7,7 @@ namespace GraphQL.Relay.Types
 {
     public interface IMutationPayload<out T>
     {
-        T MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context);
+        T MutateAndGetPayload(MutationInputs inputs, IResolveFieldContext<object> context);
     }
 
 
@@ -21,9 +21,9 @@ namespace GraphQL.Relay.Types
                 resolve: GetClientId);
         }
 
-        public abstract TOut MutateAndGetPayload(MutationInputs inputs, ResolveFieldContext<object> context);
+        public abstract TOut MutateAndGetPayload(MutationInputs inputs, IResolveFieldContext<object> context);
 
-        private string GetClientId(ResolveFieldContext<TSource> context)
+        private string GetClientId(IResolveFieldContext<TSource> context)
         {
             var field = context.Operation.SelectionSet.Selections
                 .Where(s => s is Field)
@@ -45,7 +45,7 @@ namespace GraphQL.Relay.Types
             return value.Value;
         }
 
-        private bool IsCorrectSelection(ResolveFieldContext<TSource> context, Field field)
+        private bool IsCorrectSelection(IResolveFieldContext<TSource> context, Field field)
         {
             return Enumerable.Any(field.SelectionSet.Selections,
                 s => s.SourceLocation.Equals(context.FieldAst.SourceLocation));

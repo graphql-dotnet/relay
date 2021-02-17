@@ -15,7 +15,7 @@ namespace GraphQL.Relay.Types
                 .Resolve(ResolveObjectFromGlobalId);
         }
 
-        private object ResolveObjectFromGlobalId(ResolveFieldContext<object> context)
+        private object ResolveObjectFromGlobalId(IResolveFieldContext<object> context)
         {
             var globalId = context.GetArgument<string>("id");
             var parts = Node.FromGlobalId(globalId);

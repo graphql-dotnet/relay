@@ -9,6 +9,7 @@ using HttpMultipartParser;
 using Newtonsoft.Json;
 using System.IO;
 using GraphQL.Relay.Utilities;
+using GraphQL.NewtonsoftJson;
 
 namespace GraphQL.Relay.Http
 {

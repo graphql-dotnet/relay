@@ -1,4 +1,4 @@
-using GraphQL.Http;
+using GraphQL.NewtonsoftJson;
 using System.Linq;
 using System.Threading.Tasks;
 

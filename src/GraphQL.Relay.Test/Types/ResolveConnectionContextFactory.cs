@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using GraphQL.Builders;
-using GraphQL.Execution;
 using GraphQL.Language.AST;
 using GraphQL.Types;
 
@@ -12,19 +11,21 @@ namespace GraphQL.Relay.Test.Types
             int? last = null, string before = null)
         {
             return new ResolveConnectionContext<TestParent>(
-                new ResolveFieldContext(new ExecutionContext(),
-                    new Field(),
-                    new FieldType(),
-                    new TestParent(),
-                    new ObjectGraphType(),
-                    new Dictionary<string, object>
+                new ResolveFieldContext
+                {
+                    FieldAst = new Field(),
+                    FieldDefinition = new FieldType(),
+                    Source = new TestParent(),
+                    ParentType = new ObjectGraphType(),
+                    Arguments = new Dictionary<string, object>
                     {
                         ["first"] = first,
                         ["last"] = last,
                         ["after"] = after,
                         ["before"] = before
                     },
-                    new[] {"children"}), false, null);
+                    Path = new[] { "children" },
+                }, isUnidirectional: false, defaultPageSize: null);
         }
 
         public class TestParent

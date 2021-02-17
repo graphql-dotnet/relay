@@ -43,7 +43,7 @@ namespace GraphQL.Relay.Types
 
         public static ArraySliceMetrics<TSource> Create<TSource, TParent>(
             IList<TSource> slice,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             bool strictCheck = true
         )
         {
@@ -52,7 +52,7 @@ namespace GraphQL.Relay.Types
 
         public static ArraySliceMetrics<TSource> Create<TSource, TParent>(
             IList<TSource> slice,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             int sliceStartIndex,
             int totalCount,
             bool strictCheck = true

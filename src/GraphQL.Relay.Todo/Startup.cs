@@ -1,5 +1,5 @@
 ﻿using GraphQL.Conversion;
-using GraphQL.Http;
+using GraphQL.NewtonsoftJson;
 using GraphQL.Relay.Http;
 using GraphQL.Relay.Todo.Schema;
 using Microsoft.AspNetCore.Builder;
@@ -53,7 +53,6 @@ namespace GraphQL.Relay.Todo
                                     context.Request.ContentType,
                                     (_, files) => {
                                         _.Schema = new TodoSchema();
-                                        _.FieldNameConverter = new CamelCaseFieldNameConverter();
                                     }
                                 );
 

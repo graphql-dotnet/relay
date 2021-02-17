@@ -29,14 +29,12 @@ namespace GraphQL.Relay.StarWars.Controllers
       var response = await _executor
         .ExecuteAsync(Request.Body, Request.ContentType, (_, files) => {
             _.Schema = Schema;
-            _.ExposeExceptions = true;
             _.UserContext = new GraphQLContext(_api);
 
             _.Root = new
             {
               Files = files,
             };
-            _.FieldNameConverter = new CamelCaseFieldNameConverter();
         });
 
 
