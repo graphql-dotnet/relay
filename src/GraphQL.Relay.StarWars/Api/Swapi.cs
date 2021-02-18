@@ -80,7 +80,7 @@ namespace GraphQL.Relay.StarWars.Api
     public async Task<List<T>> GetConnection<T>(ConnectionArguments args)
         where T : Entity
     {
-      var nextUrl = new Uri($"{_apiBase}/{typeof(T).Name.ToLower()}");
+      var nextUrl = new Uri($"{_apiBase}/{typeof(T).Name.ToLower()}/");
       var entities = new List<T>();
       var canStopEarly =
           args.After != null ||
