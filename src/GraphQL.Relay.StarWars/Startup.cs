@@ -1,6 +1,7 @@
 ﻿using GraphQL.NewtonsoftJson;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
+using GraphQL.Relay.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -36,6 +37,8 @@ namespace GraphQL.Relay.StarWars
             services.AddScoped<SpeciesGraphType>();
             services.AddScoped<StarshipGraphType>();
             services.AddScoped<VehicleGraphType>();
+
+            services.AddScoped<NodeInterface>();
 
             services.AddScoped(provider => new StarWarsSchema(provider));
         }
