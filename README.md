@@ -155,7 +155,7 @@ public class CreateDroidPayload : MutationPayloadGraphType<DroidPayload, Task<Dr
 Luckily `GraphQL-dotnet` already provides helpful utilities for creating connection fields, on GraphTypes. In addition
 included here are a few more helpful methods for creating relay compatible Connections from IEnumerables.
 
-#### `ConnectionUtils.ToConnection(IEnumerable items, ResolveConnectionContext context, bool strictCheck = true)`
+#### `ConnectionUtils.ToConnection(IEnumerable items, IResolveConnectionContext context, bool strictCheck = true)`
 
 Creates a connection from an existing list of objects.
 
@@ -183,7 +183,7 @@ public class DroidType : ObjectGraphType<Droid>
 }
 ```
 
-#### `ConnectionUtils.ToConnection(IEnumerable items, ResolveConnectionContext context, int sliceStartIndex, int totalCount, bool strictCheck = true)`
+#### `ConnectionUtils.ToConnection(IEnumerable items, IResolveConnectionContext context, int sliceStartIndex, int totalCount, bool strictCheck = true)`
 
 Similar to the above, but creates a connection with the correct cursors, when you only have a slice of the entire set
 of items. Windowing the items based on the arguments.
