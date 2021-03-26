@@ -9,6 +9,7 @@ using HttpMultipartParser;
 using Newtonsoft.Json;
 using System.IO;
 using GraphQL.Relay.Utilities;
+using GraphQL.SystemTextJson;
 
 namespace GraphQL.Relay.Http
 {
@@ -57,7 +58,8 @@ namespace GraphQL.Relay.Http
 
             var req = new RelayRequest()
             {
-                Files = form.Files.Select(f => new HttpFile {
+                Files = form.Files.Select(f => new HttpFile
+                {
                     ContentDisposition = f.ContentDisposition,
                     ContentType = f.ContentType,
                     Data = f.Data,
@@ -66,7 +68,8 @@ namespace GraphQL.Relay.Http
                 })
             };
 
-            req.Add(new RelayQuery {
+            req.Add(new RelayQuery
+            {
                 Query = form.Parameters.Find(p => p.Name == "query").Data,
                 Variables = form.Parameters.Find(p => p.Name == "variables").Data.ToInputs(),
             });

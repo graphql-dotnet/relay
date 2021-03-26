@@ -18,13 +18,13 @@ namespace GraphQL.Relay.Types
                 name: name,
                 type: typeof(TMutationType),
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<TMutationInput>> {Name = "input"}
+                    new QueryArgument<NonNullGraphType<TMutationInput>> { Name = "input" }
                 ),
                 resolve: c =>
                 {
                     var inputs = c.GetArgument<Dictionary<string, object>>("input");
-
-                    return ((TMutationType) c.ReturnType).MutateAndGetPayload(new MutationInputs(inputs), c);
+                    // TODO: is this correct??
+                    return ((TMutationType)c.FieldDefinition.ResolvedType).MutateAndGetPayload(new MutationInputs(inputs), c);
                 }
             );
         }

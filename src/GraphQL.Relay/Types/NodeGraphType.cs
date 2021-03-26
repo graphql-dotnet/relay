@@ -8,7 +8,8 @@ using Panic.StringUtils;
 
 namespace GraphQL.Relay.Types
 {
-    public class GlobalId {
+    public class GlobalId
+    {
         public string Type, Id;
     }
 
@@ -27,13 +28,14 @@ namespace GraphQL.Relay.Types
 
         public static string ToGlobalId(string name, object id)
         {
-            return StringUtils.Base64Encode("{0}:{1}".ToFormat(name, id));
+            return StringUtils.Base64Encode($"{name}:{id}");
         }
 
         public static GlobalId FromGlobalId(string globalId)
         {
             var parts = StringUtils.Base64Decode(globalId).Split(':');
-            return new GlobalId {
+            return new GlobalId
+            {
                 Type = parts[0],
                 Id = string.Join(":", parts.Skip(count: 1)),
             };

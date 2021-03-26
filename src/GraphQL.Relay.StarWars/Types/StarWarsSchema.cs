@@ -1,22 +1,21 @@
 using System;
+using Microsoft.Extensions.DependencyInjection;
 using GraphQL.Types;
 
 namespace GraphQL.Relay.StarWars.Types
 {
-    public class StarWarsSchema: Schema
+    public class StarWarsSchema : Schema
     {
-        public StarWarsSchema(Func<Type, object> resolveType)
-            : base(type => (GraphType)resolveType(type))
+        public StarWarsSchema(IServiceProvider provider) : base(provider)
         {
-            var obj = resolveType(typeof(StarWarsQuery));
-            Query = obj as StarWarsQuery;
+            Query = provider.GetService<StarWarsQuery>();
 
-            RegisterType<FilmGraphType>();
-            RegisterType<PeopleGraphType>();
-            RegisterType<PlanetGraphType>();
-            RegisterType<SpeciesGraphType>();
-            RegisterType<StarshipGraphType>();
-            RegisterType<VehicleGraphType>();
+            RegisterType(typeof(FilmGraphType));
+            RegisterType(typeof(PeopleGraphType));
+            RegisterType(typeof(PlanetGraphType));
+            RegisterType(typeof(SpeciesGraphType));
+            RegisterType(typeof(StarshipGraphType));
+            RegisterType(typeof(VehicleGraphType));
         }
     }
 }

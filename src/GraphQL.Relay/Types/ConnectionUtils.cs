@@ -12,7 +12,7 @@ namespace GraphQL.Relay.Types
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> items,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             bool strictCheck = true
         )
         {
@@ -22,7 +22,7 @@ namespace GraphQL.Relay.Types
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> slice,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             int sliceStartIndex,
             int totalCount,
             bool strictCheck = true
@@ -39,10 +39,10 @@ namespace GraphQL.Relay.Types
             );
 
             var edges = metrics.Slice.Select((item, i) => new Edge<TSource>
-                {
-                    Node = item,
-                    Cursor = OffsetToCursor(metrics.StartOffset + i)
-                })
+            {
+                Node = item,
+                Cursor = OffsetToCursor(metrics.StartOffset + i)
+            })
                 .ToList();
 
             var firstEdge = edges.FirstOrDefault();

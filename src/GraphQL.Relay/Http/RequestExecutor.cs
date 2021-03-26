@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using GraphQL.Http;
+using GraphQL.SystemTextJson;
 
 namespace GraphQL.Relay.Http
 {
@@ -27,7 +27,8 @@ namespace GraphQL.Relay.Http
             Stream body,
             string contentType,
             Action<GraphQL.ExecutionOptions, IEnumerable<HttpFile>> configure
-        ) {
+        )
+        {
             var queries = await Deserializer.Deserialize(body, contentType);
 
             var results = await Task.WhenAll(
@@ -53,7 +54,8 @@ namespace GraphQL.Relay.Http
         public async Task<RelayResponse> ExecuteAsync(
             HttpRequestMessage request,
             Action<GraphQL.ExecutionOptions, IEnumerable<HttpFile>> configure
-        ) {
+        )
+        {
             return await ExecuteAsync(
                 await request.Content.ReadAsStreamAsync(),
                 request.Content.Headers.ContentType.MediaType,
