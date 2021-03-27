@@ -5,14 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GraphQL.Conversion;
-using GraphQL.Http;
+using GraphQL.SystemTextJson;
 using GraphQL.Relay.Http;
 using GraphQL.Relay.Todo.Schema;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 
 namespace GraphQL.Relay.Todo
 {
@@ -26,7 +28,7 @@ namespace GraphQL.Relay.Todo
             services.AddScoped<RequestExecutor>();
         }
 
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var writer = new SchemaWriter(new TodoSchema());
 
@@ -37,9 +39,9 @@ namespace GraphQL.Relay.Todo
                 fs.Write(info, 0, info.Length);
             }
 
-            if (env.IsDevelopment()) {
+            if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware();
             }
 
             app
@@ -50,19 +52,23 @@ namespace GraphQL.Relay.Todo
                         .MapPost("graphql", async context =>
                         {
                             var executor = context.RequestServices.GetService<RequestExecutor>();
-                            try {
-                                var resp  = await executor.ExecuteAsync(
+                            try
+                            {
+                                var resp = await executor.ExecuteAsync(
                                     context.Request.Body,
                                     context.Request.ContentType,
-                                    (_, files) => {
+                                    (_, files) =>
+                                    {
                                         _.Schema = new TodoSchema();
-                                        _.FieldNameConverter = new CamelCaseFieldNameConverter();
+                                        //_.FieldNameConverter = new CamelCaseFieldNameConverter();
                                     }
                                 );
 
-                                await context.Response.WriteAsync(resp.Write());
+                                await context.Response.WriteAsync(await resp.Write());
 
-                            } catch (Exception err) {
+                            }
+                            catch (Exception err)
+                            {
                                 throw err;
                             }
                         })

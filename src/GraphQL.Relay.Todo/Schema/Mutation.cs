@@ -7,9 +7,10 @@ using GraphQL.Types.Relay.DataObjects;
 namespace GraphQL.Relay.Todo.Schema
 {
 
-    public class TodoMutation: MutationGraphType
+    public class TodoMutation : MutationGraphType
     {
-        public TodoMutation(): base() {
+        public TodoMutation() : base()
+        {
             Mutation<AddTodoInput, AddTodoPayload>("addTodo");
             Mutation<ChangeTodoStatusInput, ChangeTodoStatusPayload>("changeTodoStatus");
             Mutation<MarkAllTodosInput, MarkAllTodosPayload>("markAllTodos");
@@ -19,17 +20,21 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-    public class AddTodoInput: MutationInputGraphType {
-        public  AddTodoInput() {
+    public class AddTodoInput : MutationInputGraphType
+    {
+        public AddTodoInput()
+        {
             Name = "AddTodoInput";
 
             Field<StringGraphType>("text");
         }
     }
 
-    public class AddTodoPayload: MutationPayloadGraphType {
+    public class AddTodoPayload : MutationPayloadGraphType
+    {
 
-        public  AddTodoPayload() {
+        public AddTodoPayload()
+        {
             Name = "AddTodoPayload";
             Field<EdgeType<TodoGraphType>>("todoEdge");
             Field<UserGraphType>("viewer");
@@ -37,12 +42,15 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
-        ) {
+            IResolveFieldContext<object> context
+        )
+        {
             var todo = Database.AddTodo(inputs.Get<string>("text"));
 
-            return new {
-                TodoEdge = new Edge<Todo> {
+            return new
+            {
+                TodoEdge = new Edge<Todo>
+                {
                     Node = todo,
                     Cursor = ConnectionUtils.CursorForObjectInConnection(Database.GetTodos(), todo)
                 },
@@ -52,8 +60,10 @@ namespace GraphQL.Relay.Todo.Schema
     }
 
 
-    public class ChangeTodoStatusInput: MutationInputGraphType {
-        public  ChangeTodoStatusInput() {
+    public class ChangeTodoStatusInput : MutationInputGraphType
+    {
+        public ChangeTodoStatusInput()
+        {
             Name = "ChangeTodoStatusInput";
 
             Field<IdGraphType>("id");
@@ -61,9 +71,11 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-    public class ChangeTodoStatusPayload: MutationPayloadGraphType {
+    public class ChangeTodoStatusPayload : MutationPayloadGraphType
+    {
 
-        public  ChangeTodoStatusPayload() {
+        public ChangeTodoStatusPayload()
+        {
             Name = "ChangeTodoStatusPayload";
 
             Field<TodoGraphType>("todo");
@@ -72,9 +84,11 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
-        ) {
-            return new {
+            IResolveFieldContext<object> context
+        )
+        {
+            return new
+            {
                 Viewer = Database.GetViewer(),
                 Todo = Database.ChangeTodoStatus(
                     Node.FromGlobalId(inputs.Get<string>("id")).Id,
@@ -85,17 +99,21 @@ namespace GraphQL.Relay.Todo.Schema
     }
 
 
-    public class MarkAllTodosInput: MutationInputGraphType {
-        public  MarkAllTodosInput() {
+    public class MarkAllTodosInput : MutationInputGraphType
+    {
+        public MarkAllTodosInput()
+        {
             Name = "MarkAllTodosInput";
 
             Field<BooleanGraphType>("complete");
         }
     }
 
-    public class MarkAllTodosPayload: MutationPayloadGraphType {
+    public class MarkAllTodosPayload : MutationPayloadGraphType
+    {
 
-        public  MarkAllTodosPayload() {
+        public MarkAllTodosPayload()
+        {
             Name = "MarkAllTodosPayload";
 
             Field<ListGraphType<TodoGraphType>>("changedTodos");
@@ -104,9 +122,11 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
-        ) {
-            return new {
+            IResolveFieldContext<object> context
+        )
+        {
+            return new
+            {
                 Viewer = Database.GetViewer(),
                 ChangedTodos = Database.MarkAllTodos(
                     inputs.Get<bool>("complete")
@@ -116,15 +136,19 @@ namespace GraphQL.Relay.Todo.Schema
     }
 
 
-    public class RemoveCompletedTodosInput: MutationInputGraphType {
-        public  RemoveCompletedTodosInput() {
+    public class RemoveCompletedTodosInput : MutationInputGraphType
+    {
+        public RemoveCompletedTodosInput()
+        {
             Name = "RemoveCompletedTodosInput";
         }
     }
 
-    public class RemoveCompletedTodosPayload: MutationPayloadGraphType {
+    public class RemoveCompletedTodosPayload : MutationPayloadGraphType
+    {
 
-        public  RemoveCompletedTodosPayload() {
+        public RemoveCompletedTodosPayload()
+        {
             Name = "RemoveCompletedTodosPayload";
 
             Field<ListGraphType<IdGraphType>>("deletedTodoIds");
@@ -133,9 +157,11 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
-        ) {
-            return new {
+            IResolveFieldContext<object> context
+        )
+        {
+            return new
+            {
                 Viewer = Database.GetViewer(),
                 DeletedTodoIds = Database
                     .RemoveCompletedTodos(inputs.Get<bool>("complete"))
@@ -145,17 +171,21 @@ namespace GraphQL.Relay.Todo.Schema
     }
 
 
-    public class RemoveTodoInput: MutationInputGraphType {
-        public  RemoveTodoInput() {
+    public class RemoveTodoInput : MutationInputGraphType
+    {
+        public RemoveTodoInput()
+        {
             Name = "RemoveTodoInput";
 
             Field<IdGraphType>("id");
         }
     }
 
-    public class RemoveTodoPayload: MutationPayloadGraphType {
+    public class RemoveTodoPayload : MutationPayloadGraphType
+    {
 
-        public  RemoveTodoPayload() {
+        public RemoveTodoPayload()
+        {
             Name = "RemoveTodoPayload";
 
             Field<IdGraphType>("deletedTodoId");
@@ -164,13 +194,15 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
-        ) {
+            IResolveFieldContext<object> context
+        )
+        {
             Database.RemoveTodo(
                 Node.FromGlobalId(inputs.Get<string>("id")).Id
             );
 
-            return new {
+            return new
+            {
                 Viewer = Database.GetViewer(),
                 deletedTodoId = inputs.Get<string>("id"),
             };
@@ -178,8 +210,10 @@ namespace GraphQL.Relay.Todo.Schema
     }
 
 
-    public class RenameTodoInput: MutationInputGraphType {
-        public  RenameTodoInput() {
+    public class RenameTodoInput : MutationInputGraphType
+    {
+        public RenameTodoInput()
+        {
             Name = "RenameTodoInput";
 
             Field<IdGraphType>("id");
@@ -187,9 +221,11 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-    public class RenameTodoPayload: MutationPayloadGraphType {
+    public class RenameTodoPayload : MutationPayloadGraphType
+    {
 
-        public  RenameTodoPayload() {
+        public RenameTodoPayload()
+        {
             Name = "RenameTodoPayload";
 
             Field<TodoGraphType>("todo");
@@ -198,9 +234,11 @@ namespace GraphQL.Relay.Todo.Schema
 
         public override object MutateAndGetPayload(
             MutationInputs inputs,
-            ResolveFieldContext<object> context
-        ) {
-            return new {
+            IResolveFieldContext<object> context
+        )
+        {
+            return new
+            {
                 Viewer = Database.GetViewer(),
                 Todo = Database.RenameTodo(
                     Node.FromGlobalId(inputs.Get<string>("id")).Id,
