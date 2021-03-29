@@ -23,7 +23,6 @@ namespace GraphQL.Relay.Types
                 resolve: c =>
                 {
                     var inputs = c.GetArgument<Dictionary<string, object>>("input");
-                    // TODO: is this correct??
                     return ((TMutationType)c.FieldDefinition.ResolvedType).MutateAndGetPayload(new MutationInputs(inputs), c);
                 }
             );
