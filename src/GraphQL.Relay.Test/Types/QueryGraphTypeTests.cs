@@ -66,8 +66,8 @@ namespace GraphQL.Relay.Test.Types
             // query has one argument
             type.GetField("node").Arguments.Count.ShouldBe(1);
             // query has argument 
-            var idArgumentExpected = new QueryArgument(typeof(NonNullGraphType<IdGraphType>));
-            type.GetField("node").Arguments.ShouldContain(idArgumentExpected);
+            type.GetField("node").Arguments[0].Name.ShouldBe("id");
+            type.GetField("node").Arguments[0].Type.ShouldBe(typeof(NonNullGraphType<IdGraphType>));
         }
 
         /// <summary>
