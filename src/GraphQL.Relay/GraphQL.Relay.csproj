@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Authors>Jason Quense</Authors>
     <VersionPrefix>0.6.0-pre3</VersionPrefix>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>GraphQL.Relay</AssemblyName>
     <PackageId>GraphQL.Relay</PackageId>
     <PackageTags>GraphQL;Relay;React</PackageTags>
