@@ -12,19 +12,19 @@ namespace GraphQL.Relay.Test.Types
             int? last = null, string before = null)
         {
             return new ResolveConnectionContext<TestParent>(
-                new ResolveFieldContext(new ExecutionContext(),
-                    new Field(),
-                    new FieldType(),
-                    new TestParent(),
-                    new ObjectGraphType(),
-                    new Dictionary<string, object>
-                    {
-                        ["first"] = first,
-                        ["last"] = last,
-                        ["after"] = after,
-                        ["before"] = before
-                    },
-                    new[] {"children"}), false, null);
+                new ResolveFieldContext() { },
+                true,
+                null
+            )
+            {
+                Arguments = new Dictionary<string, ArgumentValue>
+                {
+                    ["first"] = new ArgumentValue(first, ArgumentSource.Variable),
+                    ["last"] = new ArgumentValue(last, ArgumentSource.Variable),
+                    ["after"] = new ArgumentValue(after, ArgumentSource.Variable),
+                    ["before"] = new ArgumentValue(before, ArgumentSource.Variable)
+                }
+            };
         }
 
         public class TestParent

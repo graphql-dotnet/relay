@@ -52,7 +52,7 @@ namespace GraphQL.Relay.Types
 
         public static ArraySliceMetrics<TSource> Create<TSource, TParent>(
             IList<TSource> slice,
-            ResolveConnectionContext<TParent> context,
+            IResolveConnectionContext<TParent> context,
             int sliceStartIndex,
             int totalCount,
             bool strictCheck = true
@@ -132,7 +132,7 @@ namespace GraphQL.Relay.Types
             TotalCount = totalCount;
             StartOffset = Math.Max(range.StartOffset, StartIndex);
             EndOffset = Math.Max(StartOffset - 1, Math.Min(range.EndOffset, EndIndex));
-            
+
             // Determine hasPrevious/hasNext according to specs
             // https://facebook.github.io/relay/graphql/connections.htm#sec-undefined.PageInfo.Fields
             // Because we work with offsets as cursors, we can use
@@ -142,7 +142,7 @@ namespace GraphQL.Relay.Types
             // pagination cannot continue from such a situation.
             HasPrevious = !IsEmpty && StartOffset > FirstValidOffset;
             HasNext = !IsEmpty && EndOffset < LastValidOffset;
-            
+
             if (strictCheck)
             {
                 if (!SliceCoversRange(StartIndex, EndIndex, range))
@@ -153,7 +153,7 @@ namespace GraphQL.Relay.Types
                 }
             }
 
-            
+
         }
 
         private static bool SliceCoversRange(int sliceStartIndex, int sliceEndIndex, EdgeRange range)

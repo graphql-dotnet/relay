@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Authors>Jason Quense</Authors>
     <VersionPrefix>0.6.0-pre3</VersionPrefix>
-    <TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
     <AssemblyName>GraphQL.Relay</AssemblyName>
     <PackageId>GraphQL.Relay</PackageId>
     <PackageTags>GraphQL;Relay;React</PackageTags>
@@ -13,7 +13,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="2.4.0" />
+    <PackageReference Include="GraphQL" Version="4.0.2" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="4.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="HttpMultipartParser" Version="2.2.4" />
     <PackageReference Include="Panic.StringUtils" Version="1.0.1" />

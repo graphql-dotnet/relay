@@ -15,11 +15,11 @@ namespace GraphQL.Relay.Types
                 .Resolve(ResolveObjectFromGlobalId);
         }
 
-        private object ResolveObjectFromGlobalId(ResolveFieldContext<object> context)
+        private object ResolveObjectFromGlobalId(IResolveFieldContext<object> context)
         {
             var globalId = context.GetArgument<string>("id");
             var parts = Node.FromGlobalId(globalId);
-            var node = (IRelayNode<object>) context.Schema.FindType(parts.Type);
+            var node = context.Schema.AllTypes[parts.Type] as IRelayNode<object>;
 
             return node.GetById(parts.Id);
         }
