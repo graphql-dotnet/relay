@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using GraphQL.Conversion;
 using GraphQL.SystemTextJson;
-using GraphQL.Relay.Http;
 using GraphQL.Relay.Todo.Schema;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +14,8 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using GraphQL.Types;
+using GraphQL.Server;
 
 namespace GraphQL.Relay.Todo
 {
@@ -25,7 +26,9 @@ namespace GraphQL.Relay.Todo
             services.AddRouting();
             services.AddScoped<IDocumentExecuter, DocumentExecuter>();
             services.AddScoped<IDocumentWriter, DocumentWriter>();
-            services.AddScoped<RequestExecutor>();
+            services.AddGraphQL()
+                .AddSystemTextJson();
+            services.AddSingleton<TodoSchema>();
         }
 
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,33 +50,8 @@ namespace GraphQL.Relay.Todo
             app
                 .UseStaticFiles()
                 .UseDefaultFiles()
-                .UseRouter(
-                    new RouteBuilder(app)
-                        .MapPost("graphql", async context =>
-                        {
-                            var executor = context.RequestServices.GetService<RequestExecutor>();
-                            try
-                            {
-                                var resp = await executor.ExecuteAsync(
-                                    context.Request.Body,
-                                    context.Request.ContentType,
-                                    (_, files) =>
-                                    {
-                                        _.Schema = new TodoSchema();
-                                        //_.FieldNameConverter = new CamelCaseFieldNameConverter();
-                                    }
-                                );
-
-                                await context.Response.WriteAsync(await resp.Write());
-
-                            }
-                            catch (Exception err)
-                            {
-                                throw err;
-                            }
-                        })
-                        .Build()
-                );
+                .UseGraphQL<TodoSchema>()
+                .UseGraphQLGraphiQL();
         }
     }
 }

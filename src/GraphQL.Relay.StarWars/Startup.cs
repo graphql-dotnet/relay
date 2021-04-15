@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphQL.Relay.Http;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
 using Microsoft.AspNetCore.Builder;
@@ -11,7 +10,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Scrutor;
 using Microsoft.Extensions.Hosting;
 using GraphQL.Server;
 using GraphQL.Types;

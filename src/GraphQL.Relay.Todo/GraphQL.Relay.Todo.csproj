@@ -10,11 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="4.0.2" />
-    <PackageReference Include="GraphQL.MicrosoftDI" Version="4.0.2" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="5.0.0" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.0.0" />
-    <PackageReference Include="GraphQL.SystemTextJson" Version="4.0.2" />
+    <PackageReference Include="GraphQL.Server.Ui.GraphiQL" Version="5.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.4" />
   </ItemGroup>
   <ItemGroup>
