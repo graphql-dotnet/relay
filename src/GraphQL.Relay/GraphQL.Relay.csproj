@@ -3,8 +3,6 @@
     <Authors>Jason Quense</Authors>
     <VersionPrefix>0.6.0-pre3</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyName>GraphQL.Relay</AssemblyName>
-    <PackageId>GraphQL.Relay</PackageId>
     <PackageTags>GraphQL;Relay;React</PackageTags>
     <PackageProjectUrl>https://github.com/graphql-dotnet/relay</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/graphql-dotnet/relay/blob/master/LICENSE.md</PackageLicenseUrl>
