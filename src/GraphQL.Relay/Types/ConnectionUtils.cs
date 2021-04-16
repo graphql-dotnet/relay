@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphQL.Builders;
+using GraphQL.Relay.Utilities;
 using GraphQL.Types.Relay.DataObjects;
-using Panic.StringUtils;
 
 namespace GraphQL.Relay.Types
 {
@@ -74,14 +74,12 @@ namespace GraphQL.Relay.Types
 
         public static int CursorToOffset(string cursor)
         {
-            return int.Parse(
-                StringUtils.Base64Decode(cursor).Substring(Prefix.Length + 1)
-            );
+            return int.Parse(cursor.Base64Decode().Substring(Prefix.Length + 1));
         }
 
         public static string OffsetToCursor(int offset)
         {
-            return StringUtils.Base64Encode($"{Prefix}:{offset}");
+            return $"{Prefix}:{offset}".Base64Encode();
         }
 
         public static int OffsetOrDefault(string cursor, int defaultOffset)

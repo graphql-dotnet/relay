@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>.net5.0</TargetFrameworks>
-
-    <IsPackable>false</IsPackable>
+    <TargetFramework>net5</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphQL.SystemTextJson" Version="4.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="Shouldly" Version="2.8.3" />
     <PackageReference Include="xunit" Version="2.2.0" />

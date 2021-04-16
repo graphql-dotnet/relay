@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using GraphQL.Relay.Utilities;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
-using Panic.StringUtils;
 
 namespace GraphQL.Relay.Types
 {
@@ -28,12 +28,12 @@ namespace GraphQL.Relay.Types
 
         public static string ToGlobalId(string name, object id)
         {
-            return StringUtils.Base64Encode($"{name}:{id}");
+            return $"{name}:{id}".Base64Encode();
         }
 
         public static GlobalId FromGlobalId(string globalId)
         {
-            var parts = StringUtils.Base64Decode(globalId).Split(':');
+            var parts = globalId.Base64Decode().Split(':');
             return new GlobalId
             {
                 Type = parts[0],
@@ -61,7 +61,7 @@ namespace GraphQL.Relay.Types
             string name = null;
             try
             {
-                name = StringUtils.ToCamelCase(expression.NameOf());
+                name = expression.NameOf().ToCamelCase();
             }
             catch
             {
@@ -83,7 +83,7 @@ namespace GraphQL.Relay.Types
                             "The parent GraphQL type must define a Name before declaring the Id field " +
                             "in order to properly prefix the local id field");
 
-                    name = StringUtils.ToCamelCase(Name + "Id");
+                    name = (Name + "Id").ToCamelCase();
                 }
 
                 Field(name, expression)
