@@ -63,7 +63,7 @@ namespace GraphQL.Relay.StarWars.Types
             );
     }
 
-    public override Task<Films> GetById(string id) =>
+    public override Task<Films> GetById(string id, IResolveFieldContext<object> context) =>
         _api.GetEntity<Films>(id);
   }
 }

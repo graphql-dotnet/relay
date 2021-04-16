@@ -30,7 +30,7 @@ namespace GraphQL.Relay.Test.Types
             Id(x => x.Id);
         }
 
-        public override SimpleData GetById(string id) => SimpleData
+        public override SimpleData GetById(string id, IResolveFieldContext<object> context) => SimpleData
             .GetData()
             .FirstOrDefault(x => x.Id.Equals(id));
 

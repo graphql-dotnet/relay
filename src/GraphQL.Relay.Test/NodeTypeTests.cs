@@ -27,7 +27,7 @@ namespace GraphQL.Relay.Tests.Types
 
         public class DroidType : DroidType<Droid>
         {
-            public override Droid GetById(string id)
+            public override Droid GetById(string id, IResolveFieldContext<object> context)
             {
                 return new Droid { Id = id, Name = "text" };
             }
@@ -35,7 +35,7 @@ namespace GraphQL.Relay.Tests.Types
 
         public class DroidTypeAsync : DroidType<Task<Droid>>
         {
-            public override async Task<Droid> GetById(string id)
+            public override async Task<Droid> GetById(string id, IResolveFieldContext<object> context)
             {
                 await Task.Delay(0);
                 return new Droid { Id = id, Name = "text" };
@@ -57,7 +57,7 @@ namespace GraphQL.Relay.Tests.Types
         {
             var type = new DroidTypeAsync();
 
-            var droid = await type.GetById("3");
+            var droid = await type.GetById("3", null);
             droid.Id.ShouldBe("3");
         }
     }

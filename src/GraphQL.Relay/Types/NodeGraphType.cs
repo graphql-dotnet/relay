@@ -15,7 +15,7 @@ namespace GraphQL.Relay.Types
 
     public interface IRelayNode<out T>
     {
-        T GetById(string id);
+        T GetById(string id, IResolveFieldContext<object> context);
     }
 
     public static class Node
@@ -54,7 +54,7 @@ namespace GraphQL.Relay.Types
             Interface<NodeInterface>();
         }
 
-        public abstract TOut GetById(string id);
+        public abstract TOut GetById(string id, IResolveFieldContext<object> context);
 
         public FieldType Id<TReturnType>(Expression<Func<T, TReturnType>> expression)
         {
@@ -131,7 +131,7 @@ namespace GraphQL.Relay.Types
             _getById = getById;
         }
 
-        public override TOut GetById(string id)
+        public override TOut GetById(string id, IResolveFieldContext<object> context)
         {
             return _getById(id);
         }

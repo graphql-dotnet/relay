@@ -21,7 +21,7 @@ namespace GraphQL.Relay.Types
             var parts = Node.FromGlobalId(globalId);
             var node = context.Schema.AllTypes[parts.Type] as IRelayNode<object>;
 
-            return node.GetById(parts.Id);
+            return node.GetById(parts.Id, context);
         }
     }
 }

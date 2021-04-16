@@ -26,7 +26,7 @@ namespace GraphQL.Relay.Todo.Schema
             Field("complete", t => t.Completed);
         }
 
-        public override Todo GetById(string id) =>
+        public override Todo GetById(string id, IResolveFieldContext<object> context) =>
             Database.GetTodoById(id);
     }
 
@@ -61,7 +61,7 @@ namespace GraphQL.Relay.Todo.Schema
             );
         }
 
-        public override User GetById(string id) =>
+        public override User GetById(string id, IResolveFieldContext<object> context) =>
             Database.GetUserById(id);
     }
 
