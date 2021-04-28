@@ -35,22 +35,18 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.NUGET_AUTH_TOKEN}}
       - name: Install dependencies
-        working-directory: src
         run: dotnet restore
       - name: Build solution [Release]
-        working-directory: src
         run: dotnet build --no-restore -c Release -p:Version=$version
       - name: Pack solution [Release]
-        working-directory: src
         run: dotnet pack --no-restore --no-build -c Release -p:Version=$version -o out
       - name: Upload Nuget packages as workflow artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Nuget packages
           path: |
-            src/out/*
+            out/*
       - name: Publish Nuget packages to Nuget registry
-        working-directory: src
         run: dotnet nuget push "out/*" -k ${{secrets.NUGET_AUTH_TOKEN}}
       - name: Upload Nuget packages as release artifacts
         uses: actions/github-script@v2
@@ -69,6 +65,6 @@ jobs:
                 repo,
                 release_id: ${{ github.event.release.id }},
                 name: file,
-                data: await fs.readFile(`src/out/${file}`)
+                data: await fs.readFile(`out/${file}`)
               });
             }
