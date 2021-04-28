@@ -4,6 +4,6 @@
     <PackageTags>GraphQL;Relay;React</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="4.0.2" />
+    <PackageReference Include="GraphQL" Version="4.0.3" />
   </ItemGroup>
 </Project>

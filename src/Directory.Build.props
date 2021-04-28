@@ -5,7 +5,6 @@
     <LangVersion>latest</LangVersion>
     <Authors>Jason Quense</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageIcon>logo.64x64.png</PackageIcon>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -15,7 +14,7 @@
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
     <DebugType>embedded</DebugType>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <GraphQLTestVersion>4.0.2</GraphQLTestVersion>
+    <GraphQLTestVersion>4.0.3</GraphQLTestVersion>
   </PropertyGroup>
   
   <ItemGroup>
