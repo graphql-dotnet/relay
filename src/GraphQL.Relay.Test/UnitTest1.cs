@@ -8,6 +8,11 @@ namespace GraphQL.Relay.Test
         [Fact]
         public void Test1()
         {
+            var z = SystemTextJson.StringExtensions.FromJson<MyClass>("{}");
+        }
+
+        public class MyClass
+        {
 
         }
     }
