@@ -31,7 +31,6 @@ jobs:
           - ubuntu-latest
           - windows-latest
         graphqlversion:
-          - 2.4.0
           - 4.0.2
           - 4.1.0
           - 4.2.0
