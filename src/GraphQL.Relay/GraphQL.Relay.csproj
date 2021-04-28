@@ -1,16 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>Jason Quense</Authors>
-    <VersionPrefix>0.6.0-pre3</VersionPrefix>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageTags>GraphQL;Relay;React</PackageTags>
-    <PackageProjectUrl>https://github.com/graphql-dotnet/relay</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/graphql-dotnet/relay/blob/master/LICENSE.md</PackageLicenseUrl>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="4.0.2" />
+    <PackageReference Include="GraphQL" Version="$(GraphQLTestVersion)" />
   </ItemGroup>
 </Project>
