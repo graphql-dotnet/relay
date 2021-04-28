@@ -14,7 +14,7 @@
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
     <DebugType>embedded</DebugType>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <GraphQLTestVersion>4.0.3</GraphQLTestVersion>
+    <GraphQLTestVersion>4.0.2</GraphQLTestVersion>
   </PropertyGroup>
   
   <ItemGroup>
