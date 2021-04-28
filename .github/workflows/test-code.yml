@@ -47,7 +47,7 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Install dependencies with GraphQL version ${{ matrix.graphqlversion }}
-        run: dotnet restore
+        run: dotnet restore -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
       - name: Build solution [Release]
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run: dotnet build --no-restore -c Release -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
