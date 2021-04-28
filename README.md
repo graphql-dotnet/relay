@@ -178,20 +178,20 @@ public class DroidType : ObjectGraphType<Droid>
     Connection<DroidType>()
       .Name("friends")
       .Resolve(context =>
-        Connection.ToConnection(c.Source.Friends, context));
+        ConnectionUtils.ToConnection(c.Source.Friends, context));
   }
 }
 ```
 
-#### `Connection.ToConnection(IEnumerable items, ResolveConnectionContext context, int sliceStartIndex, int totalCount)`
+#### `ConnectionUtils.ToConnection(IEnumerable items, ResolveConnectionContext context, int sliceStartIndex, int totalCount)`
 
 Similar to the above, but creates a connection with the correct cursors, when you only have a slice of the entire set
 of items. Windowing the items based on the arguments.
 
-#### `Connection.CursorToOffset(string cursor)`
+#### `ConnectionUtils.CursorToOffset(string cursor)`
 
 Convert a connection item cursor to the `int` index of the item in the set.
 
-#### `Connection.OffsetToCursor(int offset)`
+#### `ConnectionUtils.OffsetToCursor(int offset)`
 
 Convert an index offset to a connection cursor.
