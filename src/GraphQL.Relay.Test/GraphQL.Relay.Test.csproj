@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net5</TargetFramework>
+    <NoWarn>$(NoWarn);1591;IDE1006</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQL.SystemTextJson" Version="4.0.2" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="$(GraphQLTestVersion)" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="Shouldly" Version="2.8.3" />
+    <PackageReference Include="Shouldly" Version="4.0.3" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>

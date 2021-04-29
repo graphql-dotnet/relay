@@ -1,0 +1,70 @@
+name: Test code
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+    paths:
+      - src/**
+      - .github/workflows/**
+      - "*.sln"
+  # Upload code coverage results when PRs are merged
+  push:
+    branches:
+      - master
+      - develop
+    paths:
+      - src/**
+      - .github/workflows/**
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: 
+          - ubuntu-latest
+          - windows-latest
+        graphqlversion:
+          - 4.0.2
+          - 4.1.0
+          - 4.2.0
+          - 4.3.0
+          - 4.4.0
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+      - name: Setup .NET Core 5.0 SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.x'
+          source-url: https://nuget.pkg.github.com/graphql-dotnet/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Install dependencies with GraphQL version ${{ matrix.graphqlversion }}
+        run: dotnet restore -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
+      - name: Build solution [Release]
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        run: dotnet build --no-restore -c Release -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
+      - name: Build solution [Debug]
+        run: dotnet build --no-restore -c Debug -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
+      - name: Test solution [Debug]
+        run: dotnet test --no-restore --no-build
+
+  buildcheck:
+    needs:
+      - test
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Pass build check
+        if: ${{ needs.test.result == 'success' }}
+        run: exit 0
+      - name: Fail build check
+        if: ${{ needs.test.result != 'success' }}
+        run: exit 1
