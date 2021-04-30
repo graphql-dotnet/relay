@@ -38,7 +38,11 @@ namespace GraphQL.Relay.Test.Types
 
     public class SimpleSchema : Schema
     {
-        public SimpleSchema() => (Query) = (new QueryGraphType());
+        public SimpleSchema()
+        {
+            Query = new QueryGraphType();
+            RegisterType(new SimpleNodeGraphType());
+        }
     }
 
     public class QueryGraphTypeTests
