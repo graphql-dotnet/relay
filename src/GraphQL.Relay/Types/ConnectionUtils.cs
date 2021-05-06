@@ -17,7 +17,7 @@ namespace GraphQL.Relay.Types
         )
         {
             var list = items.ToList();
-            return ToConnection(list, context, sliceStartIndex: 0, totalCount: list.Count, strictCheck: true);
+            return ToConnection(list, context, sliceStartIndex: 0, totalCount: list.Count, strictCheck);
         }
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
