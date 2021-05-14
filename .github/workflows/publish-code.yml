@@ -33,7 +33,7 @@ jobs:
           dotnet-version: '5.0.x'
           source-url: https://api.nuget.org/v3/index.json
         env:
-          NUGET_AUTH_TOKEN: ${{secrets.NUGET_AUTH_TOKEN}}
+          NUGET_AUTH_TOKEN: ${{secrets.RELAY_NUGET_TOKEN}}
       - name: Install dependencies
         run: dotnet restore
       - name: Build solution [Release]
@@ -47,7 +47,7 @@ jobs:
           path: |
             out/*
       - name: Publish Nuget packages to Nuget registry
-        run: dotnet nuget push "out/*" -k ${{secrets.NUGET_AUTH_TOKEN}}
+        run: dotnet nuget push "out/*" -k ${{secrets.RELAY_NUGET_TOKEN}}
       - name: Upload Nuget packages as release artifacts
         uses: actions/github-script@v2
         with:
