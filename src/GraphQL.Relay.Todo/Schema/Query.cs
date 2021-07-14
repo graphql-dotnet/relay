@@ -1,9 +1,5 @@
-<<<<<<< Updated upstream
 using GraphQL.Relay.Types;
 using GraphQL.Relay.Todo;
-=======
-﻿using GraphQL.Relay.Types;
->>>>>>> Stashed changes
 using GraphQL.Types;
 using System;
 using System.Collections.Generic;
@@ -71,9 +67,4 @@ namespace GraphQL.Relay.Todo.Schema
         public override User GetById(IResolveFieldContext<object> context, string id) =>
             Database.GetUserById(id);
     }
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
 }

@@ -1,35 +1,13 @@
-<<<<<<< Updated upstream
-﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using GraphQL.Conversion;
-=======
 using GraphQL.Relay.Todo.Schema;
 using GraphQL.Server;
->>>>>>> Stashed changes
 using GraphQL.SystemTextJson;
-using GraphQL.Relay.Todo.Schema;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-<<<<<<< Updated upstream
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using GraphQL.Types;
-using GraphQL.Server;
-=======
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> Stashed changes
 
 namespace GraphQL.Relay.Todo
 {

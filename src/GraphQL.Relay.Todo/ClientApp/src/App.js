@@ -25,7 +25,6 @@ const preloadedQuery = loadQuery(RelayEnvironment, AppQuery, {
     /* query variables */
 });
 
-
 function App(props) {
     const displayName = App.name;
     const data = usePreloadedQuery(AppQuery, props.preloadedQuery);
@@ -35,11 +34,6 @@ function App(props) {
     );
 }
 
-// The above component needs to know how to access the Relay environment, and we
-// need to specify a fallback in case it suspends:
-// - <RelayEnvironmentProvider> tells child components how to talk to the current
-//   Relay Environment instance
-// - <Suspense> specifies a fallback in case a child suspends.
 function AppRoot(props) {
     return (
         <RelayEnvironmentProvider environment={RelayEnvironment}>

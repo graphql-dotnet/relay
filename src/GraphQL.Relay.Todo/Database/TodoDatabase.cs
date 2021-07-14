@@ -7,25 +7,17 @@ using System.Threading.Tasks;
 namespace GraphQL.Relay.Todo
 {
 
-    public class Todo {
+    public class Todo
+    {
         public string Id { get; set; }
         public string Text { get; set; }
-        public bool Completed {get; set; }
+        public bool Completed { get; set; }
     }
 
-    public class User {
+    public class User
+    {
         public string Id { get; set; }
-        // public Lazy<List<Todo>> Todos { get; set; }
     }
-
-<<<<<<< Updated upstream
-    public class Todos: ConcurrentDictionary<string, Todo> {
-
-    }
-    public class Users: ConcurrentDictionary<string, User> {
-        public Users() : base() {
-            this["me"] = new User { Id = "me"};
-=======
     public class Todos : ConcurrentDictionary<string, Todo>
     {
 
@@ -35,7 +27,6 @@ namespace GraphQL.Relay.Todo
         public Users() : base()
         {
             this["me"] = new User { Id = "me" };
->>>>>>> Stashed changes
         }
     }
 
@@ -52,20 +43,25 @@ namespace GraphQL.Relay.Todo
         }
     }
 
-    public static class Database {
+    public static class Database
+    {
         private static TodoDatabaseContext _context
             = new TodoDatabaseContext();
 
-        public static User GetUser(string id) {
+        public static User GetUser(string id)
+        {
             return _context.users[id];
         }
 
-        public static User GetViewer() {
+        public static User GetViewer()
+        {
             return GetUser("me");
         }
 
-        public static Todo AddTodo(string text, bool complete = false) {
-            var todo = new Todo {
+        public static Todo AddTodo(string text, bool complete = false)
+        {
+            var todo = new Todo
+            {
                 Id = Guid.NewGuid().ToString(),
                 Text = text,
                 Completed = complete,
@@ -75,46 +71,55 @@ namespace GraphQL.Relay.Todo
             return todo;
         }
 
-        public static Todo GetTodoById(string id) {
+        public static Todo GetTodoById(string id)
+        {
             return _context.todos[id];
         }
 
-        public static IEnumerable<Todo> GetTodos() {
+        public static IEnumerable<Todo> GetTodos()
+        {
             return GetTodosByStatus();
         }
 
-        public static IEnumerable<Todo> GetTodosByStatus(string status = "any") {
+        public static IEnumerable<Todo> GetTodosByStatus(string status = "any")
+        {
             var todos = _context.todos.Select(t => t.Value);
             if (status == "any") return todos;
             return todos.Where(t => t.Completed == (status == "completed"));
         }
 
-        private static Todo ChangeTodoStatus(Todo todo, bool complete) {
+        private static Todo ChangeTodoStatus(Todo todo, bool complete)
+        {
             todo.Completed = complete;
             return todo;
         }
 
-        public static Todo ChangeTodoStatus(string id, bool complete) {
+        public static Todo ChangeTodoStatus(string id, bool complete)
+        {
             return ChangeTodoStatus(GetTodoById(id), complete);
         }
 
-        public static IEnumerable<Todo> MarkAllTodos(bool complete) {
+        public static IEnumerable<Todo> MarkAllTodos(bool complete)
+        {
             return GetTodosByStatus()
                 .Select(t => ChangeTodoStatus(t, complete));
         }
 
-        public static void RemoveTodo(string id) {
+        public static void RemoveTodo(string id)
+        {
             Todo deleted;
             _context.todos.Remove(id, out deleted);
         }
 
-        public static Todo RenameTodo(string id, string text) {
+        public static Todo RenameTodo(string id, string text)
+        {
             var todo = GetTodoById(id);
             todo.Text = text;
             return todo;
         }
 
-        public static IEnumerable<string> RemoveCompletedTodos(bool complete) {
+        public static IEnumerable<string> RemoveCompletedTodos(bool complete)
+        {
             var deleted = new List<string>();
 
             foreach (var todo in GetTodosByStatus("completed"))
@@ -126,7 +131,8 @@ namespace GraphQL.Relay.Todo
             return deleted;
         }
 
-        public static User GetUserById(string id) {
+        public static User GetUserById(string id)
+        {
             return _context.users[id];
         }
 

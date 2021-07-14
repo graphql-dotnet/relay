@@ -1,37 +1,69 @@
-import React from "react";
-import PropTypes from "prop-types";
-import FilterLink from "./Link";
+/**
+ * This file provided by Facebook is for non-commercial testing and evaluation
+ * purposes only.  Facebook reserves all rights not expressly granted.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+ * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
 
-const FILTER_TITLES = ["All", "Active", "Completed"];
+import RemoveCompletedTodosMutation from '../mutations/RemoveCompletedTodosMutation';
 
-const TodoListFooter = props => {
-    const { activeCount, completedCount, onClearCompleted } = props;
-    const itemWord = activeCount === 1 ? "item" : "items";
-    return (
-        <footer className="footer">
-            <span className="todo-count">
-                <strong>{activeCount || "No"}</strong> {itemWord} left
-            </span>
-            <ul className="filters">
-                {FILTER_TITLES.map(filter => (
-                    <li key={filter}>
-                        <FilterLink filter={filter}>{filter}</FilterLink>
-                    </li>
-                ))}
-            </ul>
-            {!!completedCount && (
-                <button className="clear-completed" onClick={onClearCompleted}>
-                    Clear completed
-                </button>
-            )}
-        </footer>
+import React from 'react';
+import {
+  graphql,
+  createFragmentContainer,
+} from 'react-relay';
+
+class TodoListFooter extends React.Component {
+  _handleRemoveCompletedTodosClick = () => {
+    RemoveCompletedTodosMutation.commit(
+      this.props.relay.environment,
+      this.props.viewer.completedTodos,
+      this.props.viewer,
     );
-};
+  };
+  render() {
+    const numCompletedTodos = this.props.viewer.completedCount;
+    const numRemainingTodos = this.props.viewer.totalCount - numCompletedTodos;
+    return (
+      <footer className="footer">
+        <span className="todo-count">
+          <strong>{numRemainingTodos}</strong> item{numRemainingTodos === 1 ? '' : 's'} left
+        </span>
+        {numCompletedTodos > 0 &&
+          <button
+            className="clear-completed"
+            onClick={this._handleRemoveCompletedTodosClick}>
+            Clear completed
+          </button>
+        }
+      </footer>
+    );
+  }
+}
 
-TodoListFooter.propTypes = {
-    completedCount: PropTypes.number.isRequired,
-    activeCount: PropTypes.number.isRequired,
-    onClearCompleted: PropTypes.func.isRequired
-};
-
-export default TodoListFooter;
+export default createFragmentContainer(
+  TodoListFooter,
+  graphql`
+    fragment TodoListFooter_viewer on User {
+      id,
+      completedCount,
+      completedTodos: todos(
+        status: "completed",
+        first: 2147483647  # max GraphQLInt
+      ) {
+        edges {
+          node {
+            id
+            complete
+          }
+        }
+      },
+      totalCount,
+    }
+  `
+);
