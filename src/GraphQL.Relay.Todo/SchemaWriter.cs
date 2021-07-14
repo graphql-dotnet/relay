@@ -1,4 +1,10 @@
+<<<<<<< Updated upstream
 using System;
+=======
+﻿using GraphQL.SystemTextJson;
+using System;
+using System.Collections.Generic;
+>>>>>>> Stashed changes
 using System.Linq;
 using System.Threading.Tasks;
 using GraphQL.SystemTextJson;

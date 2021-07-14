@@ -8,7 +8,14 @@
 'use strict';
 
 /*::
+<<<<<<< Updated upstream:src/GraphQL.Relay.Todo/ClientApp/mutations/__generated__/AddTodoMutation.graphql.js
 import type {ConcreteBatch} from 'relay-runtime';
+=======
+import type { ConcreteRequest } from 'relay-runtime';
+export type AddTodoInput = {|
+  text?: ?string
+|};
+>>>>>>> Stashed changes:src/GraphQL.Relay.Todo/ClientApp/src/mutations/__generated__/AddTodoMutation.graphql.js
 export type AddTodoMutationVariables = {|
   input: {
     clientMutationId?: ?string;
@@ -291,7 +298,30 @@ const batch /*: ConcreteBatch*/ = {
         ],
         "storageKey": null
       }
+<<<<<<< Updated upstream:src/GraphQL.Relay.Todo/ClientApp/mutations/__generated__/AddTodoMutation.graphql.js
     ]
+=======
+    ],
+    "storageKey": null
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "AddTodoMutation",
+    "selections": (v2/*: any*/),
+    "type": "TodoMutation",
+    "abstractKey": null
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Operation",
+    "name": "AddTodoMutation",
+    "selections": (v2/*: any*/)
+>>>>>>> Stashed changes:src/GraphQL.Relay.Todo/ClientApp/src/mutations/__generated__/AddTodoMutation.graphql.js
   },
   "text": "mutation AddTodoMutation(\n  $input: AddTodoInput!\n) {\n  addTodo(input: $input) {\n    todoEdge {\n      __typename\n      cursor\n      node {\n        id\n        complete\n        text\n      }\n    }\n    viewer {\n      id\n      totalCount\n    }\n  }\n}\n"
 };

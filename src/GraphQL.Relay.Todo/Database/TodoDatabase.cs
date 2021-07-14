@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GraphQL.Relay.Todo
 {
@@ -17,12 +18,24 @@ namespace GraphQL.Relay.Todo
         // public Lazy<List<Todo>> Todos { get; set; }
     }
 
+<<<<<<< Updated upstream
     public class Todos: ConcurrentDictionary<string, Todo> {
 
     }
     public class Users: ConcurrentDictionary<string, User> {
         public Users() : base() {
             this["me"] = new User { Id = "me"};
+=======
+    public class Todos : ConcurrentDictionary<string, Todo>
+    {
+
+    }
+    public class Users : ConcurrentDictionary<string, User>
+    {
+        public Users() : base()
+        {
+            this["me"] = new User { Id = "me" };
+>>>>>>> Stashed changes
         }
     }
 
