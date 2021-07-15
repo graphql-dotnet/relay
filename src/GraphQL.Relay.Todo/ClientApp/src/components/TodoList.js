@@ -1,25 +1,14 @@
-/**
- * This file provided by Facebook is for non-commercial testing and evaluation
- * purposes only.  Facebook reserves all rights not expressly granted.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
+import React from 'react';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay'
 
 import MarkAllTodosMutation from '../mutations/MarkAllTodosMutation'
 import Todo from './Todo'
 
-import React from 'react'
-import { createFragmentContainer, graphql } from 'react-relay'
-
 class TodoList extends React.Component {
   _handleMarkAllChange = e => {
     const complete = e.target.checked
-    MarkAllTodosMutation.commit(
+    MarkAllTodosMutation(
       this.props.relay.environment,
       complete,
       this.props.viewer.todos,
@@ -43,7 +32,7 @@ class TodoList extends React.Component {
     return (
       <section className="main">
         <input
-          checked={numTodos === numCompletedTodos}
+          checked={true}
           className="toggle-all"
           onChange={this._handleMarkAllChange}
           type="checkbox"
@@ -57,22 +46,22 @@ class TodoList extends React.Component {
 
 export default createFragmentContainer(TodoList, {
   viewer: graphql`
-    fragment TodoList_viewer on User {
-      todos(
-        first: 2147483647 # max GraphQLInt
-      ) @connection(key: "TodoList_todos") {
-        edges {
-          node {
-            id
-            complete
-            ...Todo_todo
-          }
-        }
-      }
-      id
-      totalCount
-      completedCount
-      ...Todo_viewer
-    }
-  `,
-})
+     fragment TodoList_viewer on User {
+       todos(
+         first: 2147483647 # max GraphQLInt
+       ) @connection(key: "TodoList_todos") {
+         edges {
+           node {
+             id
+             complete
+             ...Todo_todo
+           }
+         }
+       }
+       id
+       totalCount
+       completedCount
+       ...Todo_viewer
+     }
+   `,
+});

@@ -30,7 +30,6 @@ namespace GraphQL.Relay.Todo
         }
     }
 
-
     internal class TodoDatabaseContext
     {
         public readonly Todos todos;
@@ -135,6 +134,5 @@ namespace GraphQL.Relay.Todo
         {
             return _context.users[id];
         }
-
     }
 }

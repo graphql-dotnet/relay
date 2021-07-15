@@ -1,22 +1,21 @@
-﻿import AddTodoMutation from '../mutations/AddTodoMutation';
+import React from 'react';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay'
+
+import AddTodoMutation from '../mutations/AddTodoMutation';
 import TodoList from './TodoList';
 import TodoListFooter from './TodoListFooter';
 import TodoTextInput from './TodoTextInput';
 
-import React from 'react';
-import {
-    createFragmentContainer,
-    graphql,
-} from 'react-relay';
-
 class TodoApp extends React.Component {
     _handleTextInputSave = (text) => {
-        AddTodoMutation.commit(
+        AddTodoMutation(
             this.props.relay.environment,
             text,
             this.props.viewer,
         );
     };
+
     render() {
         const hasTodos = this.props.viewer.totalCount > 0;
         return (
@@ -25,7 +24,7 @@ class TodoApp extends React.Component {
                     <header className="header">
                         <h1>
                             todos
-            </h1>
+                        </h1>
                         <TodoTextInput
                             autoFocus={true}
                             className="new-todo"
@@ -44,11 +43,11 @@ class TodoApp extends React.Component {
                 <footer className="info">
                     <p>
                         Double-click to edit a todo
-          </p>
+                    </p>
                     <p>
                         Created by the <a href="https://facebook.github.io/relay/">
                             Relay team
-            </a>
+                        </a>
                     </p>
                     <p>
                         Part of <a href="http://todomvc.com">TodoMVC</a>
