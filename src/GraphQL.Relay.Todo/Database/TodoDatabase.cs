@@ -11,7 +11,7 @@ namespace GraphQL.Relay.Todo
     {
         public string Id { get; set; }
         public string Text { get; set; }
-        public bool Completed { get; set; }
+        public bool Complete { get; set; }
     }
 
     public class User
@@ -63,7 +63,7 @@ namespace GraphQL.Relay.Todo
             {
                 Id = Guid.NewGuid().ToString(),
                 Text = text,
-                Completed = complete,
+                Complete = complete,
             };
 
             _context.todos[todo.Id] = todo;
@@ -84,12 +84,12 @@ namespace GraphQL.Relay.Todo
         {
             var todos = _context.todos.Select(t => t.Value);
             if (status == "any") return todos;
-            return todos.Where(t => t.Completed == (status == "completed"));
+            return todos.Where(t => t.Complete == (status == "completed"));
         }
 
         private static Todo ChangeTodoStatus(Todo todo, bool complete)
         {
-            todo.Completed = complete;
+            todo.Complete = complete;
             return todo;
         }
 

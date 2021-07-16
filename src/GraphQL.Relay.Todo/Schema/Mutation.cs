@@ -47,7 +47,7 @@ namespace GraphQL.Relay.Todo.Schema
                     return new
                     {
                         Viewer = Database.GetViewer(),
-                        Todo = Database.ChangeTodoStatus(Node.FromGlobalId(todo.Id).Id, todo.Completed)
+                        Todo = Database.ChangeTodoStatus(Node.FromGlobalId(todo.Id).Id, todo.Complete)
                     };
                 });
 
@@ -63,7 +63,7 @@ namespace GraphQL.Relay.Todo.Schema
                     return new
                     {
                         Viewer = Database.GetViewer(),
-                        ChangedTodos = Database.MarkAllTodos(todo.Completed)
+                        ChangedTodos = Database.MarkAllTodos(todo.Complete)
                     };
                 });
 
@@ -79,7 +79,7 @@ namespace GraphQL.Relay.Todo.Schema
                     return new
                     {
                         Viewer = Database.GetViewer(),
-                        DeletedTodoIds = Database.RemoveCompletedTodos(todo.Completed).Select(id => Node.ToGlobalId("Todo", id))
+                        DeletedTodoIds = Database.RemoveCompletedTodos(todo.Complete).Select(id => Node.ToGlobalId("Todo", id))
                     };
                 });
 

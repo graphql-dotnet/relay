@@ -26,8 +26,8 @@ function getOptimisticResponse(complete, todo, user) {
   return {
     changeTodoStatus: {
       todo: {
-        complete: complete,
         id: todo.id,
+        complete: complete
       },
       viewer: viewerPayload,
     },
@@ -37,7 +37,7 @@ function getOptimisticResponse(complete, todo, user) {
 export default function commit(environment, complete, todo, user) {
   return commitMutation(environment, {
     mutation,
-    variables: { input: { complete: complete, id: todo.id } },
+    variables: { input: { id: todo.id, complete } },
     optimisticResponse: getOptimisticResponse(complete, todo, user),
   })
 }

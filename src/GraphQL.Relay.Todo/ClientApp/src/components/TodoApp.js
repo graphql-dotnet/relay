@@ -17,42 +17,24 @@ class TodoApp extends React.Component {
     };
 
     render() {
-        const hasTodos = this.props.viewer.totalCount > 0;
         return (
             <div>
                 <section className="todoapp">
                     <header className="header">
-                        <h1>
-                            todos
-                        </h1>
+                        <h1>todos</h1>
                         <TodoTextInput
-                            autoFocus={true}
+                            autoFocus
                             className="new-todo"
                             onSave={this._handleTextInputSave}
                             placeholder="What needs to be done?"
                         />
                     </header>
                     <TodoList viewer={this.props.viewer} />
-                    {hasTodos &&
                         <TodoListFooter
                             todos={this.props.viewer.todos}
                             viewer={this.props.viewer}
                         />
-                    }
                 </section>
-                <footer className="info">
-                    <p>
-                        Double-click to edit a todo
-                    </p>
-                    <p>
-                        Created by the <a href="https://facebook.github.io/relay/">
-                            Relay team
-                        </a>
-                    </p>
-                    <p>
-                        Part of <a href="http://todomvc.com">TodoMVC</a>
-                    </p>
-                </footer>
             </div>
         );
     }

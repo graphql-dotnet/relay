@@ -65,7 +65,7 @@ class Todo extends React.Component {
         return (
             <TodoTextInput
                 className="edit"
-                commitOnBlur={true}
+                commitOnBlur
                 initialValue={this.props.todo.text}
                 onCancel={this._handleTextInputCancel}
                 onDelete={this._handleTextInputDelete}
