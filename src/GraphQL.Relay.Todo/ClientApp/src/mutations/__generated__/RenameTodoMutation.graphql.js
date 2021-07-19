@@ -102,7 +102,7 @@ return {
     "metadata": null,
     "name": "RenameTodoMutation",
     "selections": (v1/*: any*/),
-    "type": "TodoMutation",
+    "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",

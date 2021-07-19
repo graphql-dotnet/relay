@@ -114,7 +114,7 @@ return {
         "storageKey": null
       }
     ],
-    "type": "TodoMutation",
+    "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",

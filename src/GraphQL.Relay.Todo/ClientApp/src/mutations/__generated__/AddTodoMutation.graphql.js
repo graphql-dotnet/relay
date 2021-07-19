@@ -171,7 +171,7 @@ return {
     "metadata": null,
     "name": "AddTodoMutation",
     "selections": (v2/*: any*/),
-    "type": "TodoMutation",
+    "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
