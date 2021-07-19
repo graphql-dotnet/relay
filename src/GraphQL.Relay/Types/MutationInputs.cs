@@ -23,7 +23,7 @@ namespace GraphQL.Relay.Types
             if (!TryGetValue(key, out value))
                 return defaultValue;
 
-            return (T) value;
+            return (T)value;
         }
     }
 }

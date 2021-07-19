@@ -1,7 +1,6 @@
-using System;
+using GraphQL.SystemTextJson;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphQL.SystemTextJson;
 
 namespace GraphQL.Relay.Todo
 {

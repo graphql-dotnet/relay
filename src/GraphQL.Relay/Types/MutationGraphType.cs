@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GraphQL.Types;
+﻿using GraphQL.Types;
+using System.Collections.Generic;
 
 namespace GraphQL.Relay.Types
 {
@@ -12,7 +12,7 @@ namespace GraphQL.Relay.Types
 
         public FieldType Mutation<TMutationInput, TMutationType>(string name)
             where TMutationType : IMutationPayload<object>
-            where TMutationInput : MutationInputGraphType
+            where TMutationInput : InputObjectGraphType
         {
             return Field(
                 name: name,

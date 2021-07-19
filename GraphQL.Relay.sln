@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay", "src\GraphQL.Relay\GraphQL.Relay.csproj", "{46076F16-C4F7-4879-903D-70D75DD8B3EF}"
 EndProject
@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.Test", "src\G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.StarWars", "src\GraphQL.Relay.StarWars\GraphQL.Relay.StarWars.csproj", "{43F14E11-5D11-427C-B4F7-D68B2339E837}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.Todo", "src\GraphQL.Relay.Todo\GraphQL.Relay.Todo.csproj", "{15AFC7EC-11E6-469F-87DF-D1E396463BE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.Todo", "src\GraphQL.Relay.Todo\GraphQL.Relay.Todo.csproj", "{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2F92B771-95CF-4FC3-AE9A-52E9273349F1}"
 EndProject
@@ -71,18 +71,18 @@ Global
 		{43F14E11-5D11-427C-B4F7-D68B2339E837}.Release|x64.Build.0 = Release|Any CPU
 		{43F14E11-5D11-427C-B4F7-D68B2339E837}.Release|x86.ActiveCfg = Release|Any CPU
 		{43F14E11-5D11-427C-B4F7-D68B2339E837}.Release|x86.Build.0 = Release|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x64.Build.0 = Debug|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Debug|x86.Build.0 = Debug|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x64.ActiveCfg = Release|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x64.Build.0 = Release|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x86.ActiveCfg = Release|Any CPU
-		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x86.Build.0 = Release|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Debug|x86.Build.0 = Debug|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Release|x64.ActiveCfg = Release|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Release|x64.Build.0 = Release|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B6E249F-3C0B-4BDD-B2DA-7ED9B2BDFF15}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
