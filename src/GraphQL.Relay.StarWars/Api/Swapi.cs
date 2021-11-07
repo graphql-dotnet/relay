@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using GraphQL.Builders;
 using GraphQL.Relay.StarWars.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.IO;
 
 namespace GraphQL.Relay.StarWars.Api
 {
@@ -78,32 +77,29 @@ namespace GraphQL.Relay.StarWars.Api
             FetchMany<T>(urls);
 
 
-        private bool DoneFetching(int count, ConnectionArguments args)
+        private bool DoneFetching(int count, IResolveConnectionContext args)
         {
             if (args.After != null || args.Before != null || args.Last != null || args.First == null)
                 return false;
             return count >= args.First.Value;
         }
-        public async Task<List<T>> GetConnection<T>(ConnectionArguments args)
+        public async Task<ConnectionResults<T>> GetConnection<T>(IResolveConnectionContext connectionContext)
             where T : Entity
         {
+            var count = 0;
             var nextUrl = new Uri($"{_apiBase}/{typeof(T).Name.ToLower()}/");
             var entities = new List<T>();
-            var canStopEarly =
-                args.After != null ||
-                args.Before != null ||
-                args.Last != null ||
-                args.First == null;
 
             EntityList<T> page;
-            while (nextUrl != null && !DoneFetching(entities.Count, args))
+            while (nextUrl != null && !DoneFetching(entities.Count, connectionContext))
             {
                 page = await Fetch<EntityList<T>>(nextUrl);
                 entities.AddRange(page.Results);
                 nextUrl = page.Next;
+                count = page.Count;
             }
 
-            return entities;
+            return ConnectionResults.Create(entities, count);
         }
 
         private T DeserializeObject<T>(string payload)

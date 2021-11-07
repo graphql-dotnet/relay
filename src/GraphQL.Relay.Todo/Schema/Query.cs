@@ -1,7 +1,7 @@
-using GraphQL.Relay.Types;
-using GraphQL.Relay.Todo;
-using GraphQL.Types;
 using System.Linq;
+using GraphQL.Relay.Extensions;
+using GraphQL.Relay.Types;
+using GraphQL.Types;
 
 namespace GraphQL.Relay.Todo.Schema
 {
@@ -32,7 +32,8 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class UserGraphType: NodeGraphType<User>
     {
-        public UserGraphType() {
+        public UserGraphType()
+        {
             Name = "User";
 
             Id(t => t.Id);
@@ -44,12 +45,9 @@ namespace GraphQL.Relay.Todo.Schema
                     description: "Filter todos by their status",
                     defaultValue: "any"
                 )
-                .Resolve(ctx =>
-                    ConnectionUtils.ToConnection(
-                        Database.GetTodosByStatus(ctx.GetArgument<string>("status")),
-                        ctx
-                    )
-                );
+                .Resolve(ctx => ctx.ToConnection(
+                    Database.GetTodosByStatus(ctx.GetArgument<string>("status"))
+                ));
 
             Field<IntGraphType>(
                 name: "totalCount",
