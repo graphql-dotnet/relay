@@ -11,9 +11,11 @@ namespace GraphQL.Relay.StarWars.Utilities
             Swapi api
         ) where TEntity : Entity
         {
-            builder.Resolve(ctx => api
-                .GetConnection<TEntity>(ctx)
-                .ContinueWith(t => ctx.ToConnection(t.Result.Entities, t.Result.TotalCount))
+            builder
+                .Bidirectional()
+                .Resolve(ctx => api
+                    .GetConnection<TEntity>(ctx)
+                    .ContinueWith(t => ctx.ToConnection(t.Result.Entities, t.Result.TotalCount))
             );
         }
     }
