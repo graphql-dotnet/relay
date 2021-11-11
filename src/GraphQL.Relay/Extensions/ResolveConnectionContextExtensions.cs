@@ -36,7 +36,7 @@ namespace GraphQL.Relay.Extensions
                 .Select((item, i) => new Edge<TSource>
                 {
                     Node = item,
-                    Cursor = ConnectionUtils.OffsetToCursor(metrics.StartOffset + i)
+                    Cursor = ConnectionUtils.OffsetToCursor(metrics.StartIndex + i)
                 })
                 .ToList();
 

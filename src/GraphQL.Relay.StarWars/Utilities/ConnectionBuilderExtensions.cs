@@ -13,7 +13,7 @@ namespace GraphQL.Relay.StarWars.Utilities
         {
             builder.Resolve(ctx => api
                 .GetConnection<TEntity>(ctx)
-                .ContinueWith(t => ctx.ToConnection(t.Result.Results, t.Result.TotalCount))
+                .ContinueWith(t => ctx.ToConnection(t.Result.Entities, t.Result.TotalCount))
             );
         }
     }

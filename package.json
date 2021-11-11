@@ -4,7 +4,7 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "dotnet test src/GraphQL.Relay.Tests",
+    "test": "dotnet test src/GraphQL.Relay.Test",
     "pack": "rimraf nuget/* && dotnet pack src/GraphQL.Relay -o nuget -c Release --include-source --include-symbols",
     "version": "node tools/version",
     "release": "npm run test && npm run pack && cd nuget && nuget push *.symbols.nupkg -s https://www.nuget.org/api/v2/package"

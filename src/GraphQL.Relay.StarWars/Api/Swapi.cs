@@ -83,7 +83,7 @@ namespace GraphQL.Relay.StarWars.Api
                 return false;
             return count >= args.First.Value;
         }
-        public async Task<ConnectionResults<T>> GetConnection<T>(IResolveConnectionContext connectionContext)
+        public async Task<ConnectionEntities<T>> GetConnection<T>(IResolveConnectionContext connectionContext)
             where T : Entity
         {
             var count = 0;
@@ -99,7 +99,7 @@ namespace GraphQL.Relay.StarWars.Api
                 count = page.Count;
             }
 
-            return ConnectionResults.Create(entities, count);
+            return ConnectionEntities.Create(entities, count);
         }
 
         private T DeserializeObject<T>(string payload)

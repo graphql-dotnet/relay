@@ -36,9 +36,9 @@ namespace GraphQL.Relay.Types
         /// <summary>
         /// The local total of the list slice.
         /// </summary>
-        private int SliceSize { get; }
+        public int SliceSize { get; }
 
-        public int StartOffset { get; }
+        public int StartIndex { get; }
 
         public bool HasPrevious { get; }
 
@@ -64,7 +64,7 @@ namespace GraphQL.Relay.Types
             HasNext = (startingIndex + SliceSize) < TotalCount;
             HasPrevious = startingIndex > 0;
 
-            StartOffset = startingIndex;
+            StartIndex = startingIndex;
         }
 
         private static (int startingIndex, int pageSize) GetStartingIndexAndPageSize(int totalCount, IResolveConnectionContext context)
@@ -74,64 +74,45 @@ namespace GraphQL.Relay.Types
 
             if (!string.IsNullOrEmpty(context.After))
             {
-                var after = ConnectionUtils.CursorToOffset(context.After);
+                var afterIndex = ConnectionUtils.CursorToOffset(context.After);
 
                 if (last.HasValue)
                 {
                     var startingIndex = totalCount - last.Value;
 
                     return (
-                        startingIndex: startingIndex < after ? after : startingIndex,
-                        pageSize);
+                        startingIndex: startingIndex < afterIndex ? afterIndex : startingIndex,
+                        pageSize
+                    );
                 }
 
                 return (
-                    startingIndex: after + 1,
+                    startingIndex: afterIndex + 1,
                     pageSize
                 );
             }
 
             if (!string.IsNullOrEmpty(context.Before))
             {
-                var before = ConnectionUtils.CursorToOffset(context.Before);
+                var beforeIndex = ConnectionUtils.CursorToOffset(context.Before);
+                var startingIndex = !last.HasValue || pageSize > beforeIndex ? 0 : beforeIndex - pageSize;
+                var lastIndex = startingIndex + pageSize - 1;
 
-                if (first.HasValue)
-                {
-                    var lastIndex = pageSize - 1;
-
-                    return (
-                        startingIndex: 0,
-                        pageSize: lastIndex > before ? before - 1 : pageSize);
-                }
-
-                if (last.HasValue)
-                {
-                    var startingIndex = before - pageSize - 1;
-                    var lastIndex = startingIndex + pageSize - 1;
-
-                    return (
-                        startingIndex: startingIndex < 0 ? 0 : startingIndex,
-                        pageSize: lastIndex > before ? lastIndex - startingIndex : pageSize);
-                }
+                return (
+                    startingIndex,
+                    pageSize: lastIndex >= beforeIndex ? (pageSize - (lastIndex - beforeIndex) - 1) : pageSize);
             }
 
             return (
-                startingIndex: 0,
+                startingIndex: !last.HasValue || totalCount < pageSize ? 0 : totalCount - pageSize,
                 pageSize);
         }
 
-        private static (int? first, int? last) GetFirstLast(IResolveConnectionContext context)
-        {
-            if (context.Last == null)
-            {
-                return (
-                    first: context.First,
-                    last: context.First.HasValue ? null : context.Last);
-            }
-
-            return (
-                first: context.First.HasValue ? context.First : null,
-                last: context.First.HasValue ? null : context.Last);
-        }
+        private static (int? first, int? last) GetFirstLast(
+            IResolveConnectionContext context
+        ) => (
+            first: context.First,
+            last: context.First.HasValue ? null : context.Last
+        );
     }
 }

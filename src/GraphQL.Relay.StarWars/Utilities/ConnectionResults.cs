@@ -2,23 +2,23 @@ using System.Collections.Generic;
 
 namespace GraphQL.Relay.StarWars.Utilities
 {
-    public static class ConnectionResults
+    public static class ConnectionEntities
     {
-        public static ConnectionResults<TSource> Create<TSource>(
-            IEnumerable<TSource> results,
+        public static ConnectionEntities<TSource> Create<TSource>(
+            IEnumerable<TSource> entities,
             int totalCount
-        ) => new(results, totalCount);
+        ) => new(entities, totalCount);
     }
 
-    public class ConnectionResults<TSource>
+    public class ConnectionEntities<TSource>
     {
-        public ConnectionResults(IEnumerable<TSource> results, int totalCount)
+        public ConnectionEntities(IEnumerable<TSource> entities, int totalCount)
         {
-            Results = results;
+            Entities = entities;
             TotalCount = totalCount;
         }
 
         public int TotalCount { get; }
-        public IEnumerable<TSource> Results { get; }
+        public IEnumerable<TSource> Entities { get; }
     }
 }

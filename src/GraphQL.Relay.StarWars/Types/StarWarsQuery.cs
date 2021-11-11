@@ -12,26 +12,32 @@ namespace GraphQL.Relay.StarWars.Types
 
             Connection<FilmGraphType>()
                 .Name("films")
+                .Bidirectional()
                 .ResolveApiConnection<Films>(api);
 
             Connection<PeopleGraphType>()
                 .Name("people")
+                .Bidirectional()
                 .ResolveApiConnection<People>(api);
 
             Connection<PlanetGraphType>()
                 .Name("planets")
+                .Bidirectional()
                 .ResolveApiConnection<Planets>(api);
 
             Connection<SpeciesGraphType>()
                 .Name("species")
+                .Bidirectional()
                 .ResolveApiConnection<Species>(api);
 
             Connection<StarshipGraphType>()
                 .Name("starships")
+                .Bidirectional()
                 .ResolveApiConnection<Starships>(api);
 
             Connection<VehicleGraphType>()
                 .Name("vehicles")
+                .Bidirectional()
                 .ResolveApiConnection<Vehicles>(api);
         }
     }
