@@ -23,7 +23,7 @@ namespace GraphQL.Relay.Extensions
         public static Connection<TSource> ToConnection<TSource>(
             this IResolveConnectionContext context,
             IEnumerable<TSource> items,
-            int totalCount = 0
+            int? totalCount = null
         )
         {
             var metrics = EnumerableSliceMetrics.Create(

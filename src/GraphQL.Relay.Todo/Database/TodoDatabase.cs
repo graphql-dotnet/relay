@@ -40,10 +40,9 @@ namespace GraphQL.Relay.Todo
 
     public static class Database
     {
-        private static TodoDatabaseContext _context
-            = new TodoDatabaseContext();
+        private static TodoDatabaseContext _context = new();
 
-        readonly static Lazy<TodosContext> todosContext = new(
+        private static readonly Lazy<TodosContext> _todosContext = new(
             () => new TodosContext(
                 new DbContextOptionsBuilder<TodosContext>()
                         .UseInMemoryDatabase("TestDatabase")
@@ -61,35 +60,35 @@ namespace GraphQL.Relay.Todo
 
         public static Todo AddTodo(string text, bool complete = false)
         {
-            var todo = new Todo
+            var todo = _todosContext.Value.Add(new Todo
             {
                 Id = Guid.NewGuid().ToString(),
                 Text = text,
                 Completed = complete,
-            };
+            }).Entity;
 
-            todosContext.Value.Add(todo);
-            todosContext.Value.SaveChanges();
-
-            return todo;
+            return _todosContext.Value.SaveChanges() != 0
+                ? todo
+                : throw new Exception("Could not save todo");
         }
 
-        public static Todo GetTodoById(string id) => todosContext.Value
+        public static Todo GetTodoById(string id) => _todosContext.Value
             .Set<Todo>()
             .FirstOrDefault(t => t.Id == id);
 
         public static IQueryable<Todo> GetTodos() => GetTodosByStatus();
 
-        public static IQueryable<Todo> GetTodosByStatus(string status = "any") => todosContext.Value
-            .Set<Todo>()
-            .Where(t => status == "any" || (t.Completed && (status == "completed")));
+        public static IQueryable<Todo> GetTodosByStatus(string status = "any") =>
+            _todosContext.Value
+                .Set<Todo>()
+                .Where(t => status == "any" || (t.Completed && (status == "completed")));
 
         public static Todo ChangeTodoStatus(string id, bool complete)
         {
             var todo = GetTodoById(id);
             todo.Completed = complete;
 
-            todosContext.Value.SaveChanges();
+            _todosContext.Value.SaveChanges();
 
             return todo;
         }
@@ -103,16 +102,16 @@ namespace GraphQL.Relay.Todo
                 todo.Completed = complete;
             }
 
-            todosContext.Value.SaveChanges();
+            _todosContext.Value.SaveChanges();
 
             return todos;
         }
 
         public static Todo RemoveTodo(string id)
         {
-            var todo = todosContext.Value.Remove(GetTodoById(id)).Entity;
+            var todo = _todosContext.Value.Remove(GetTodoById(id)).Entity;
 
-            todosContext.Value.SaveChanges();
+            _todosContext.Value.SaveChanges();
 
             return todo;
         }
@@ -122,7 +121,7 @@ namespace GraphQL.Relay.Todo
             var todo = GetTodoById(id);
             todo.Text = text;
 
-            todosContext.Value.SaveChanges();
+            _todosContext.Value.SaveChanges();
 
             return todo;
         }
@@ -134,10 +133,10 @@ namespace GraphQL.Relay.Todo
             foreach (var todo in GetTodosByStatus("completed"))
             {
                 deleted.Add(todo.Id);
-                todosContext.Value.Remove(todo);
+                _todosContext.Value.Remove(todo);
             }
 
-            todosContext.Value.SaveChanges();
+            _todosContext.Value.SaveChanges();
 
             return deleted;
         }

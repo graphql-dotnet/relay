@@ -5,8 +5,10 @@ using GraphQL.Types;
 
 namespace GraphQL.Relay.Todo.Schema
 {
-    public class TodoQuery: QueryGraphType {
-        public TodoQuery() {
+    public class TodoQuery : QueryGraphType
+    {
+        public TodoQuery()
+        {
             Name = "Query";
 
             Field<UserGraphType>(
@@ -16,9 +18,10 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-    public class TodoGraphType: NodeGraphType<Todo>
+    public class TodoGraphType : NodeGraphType<Todo>
     {
-        public TodoGraphType() {
+        public TodoGraphType()
+        {
             Name = "Todo";
 
             Id(t => t.Id);
@@ -30,7 +33,7 @@ namespace GraphQL.Relay.Todo.Schema
             Database.GetTodoById(id);
     }
 
-    public class UserGraphType: NodeGraphType<User>
+    public class UserGraphType : NodeGraphType<User>
     {
         public UserGraphType()
         {
@@ -53,6 +56,7 @@ namespace GraphQL.Relay.Todo.Schema
                 name: "totalCount",
                 resolve: ctx => Database.GetTodos().Count()
             );
+
             Field<IntGraphType>(
                 name: "completedCount",
                 resolve: ctx => Database.GetTodosByStatus("completed").Count()
@@ -62,6 +66,4 @@ namespace GraphQL.Relay.Todo.Schema
         public override User GetById(IResolveFieldContext<object> context, string id) =>
             Database.GetUserById(id);
     }
-
-
 }

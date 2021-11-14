@@ -6,7 +6,6 @@ using GraphQL.Types.Relay.DataObjects;
 
 namespace GraphQL.Relay.Todo.Schema
 {
-
     public class TodoMutation : MutationGraphType
     {
         public TodoMutation() : base()
@@ -32,7 +31,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class AddTodoPayload : MutationPayloadGraphType
     {
-
         public AddTodoPayload()
         {
             Name = "AddTodoPayload";
@@ -111,7 +109,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class MarkAllTodosPayload : MutationPayloadGraphType
     {
-
         public MarkAllTodosPayload()
         {
             Name = "MarkAllTodosPayload";
@@ -146,7 +143,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class RemoveCompletedTodosPayload : MutationPayloadGraphType
     {
-
         public RemoveCompletedTodosPayload()
         {
             Name = "RemoveCompletedTodosPayload";
@@ -164,12 +160,11 @@ namespace GraphQL.Relay.Todo.Schema
             {
                 Viewer = Database.GetViewer(),
                 DeletedTodoIds = Database
-                    .RemoveCompletedTodos(inputs.Get<bool>("complete"))
+                    .RemoveCompletedTodos()
                     .Select(id => Node.ToGlobalId("Todo", id)),
             };
         }
     }
-
 
     public class RemoveTodoInput : MutationInputGraphType
     {
@@ -183,7 +178,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class RemoveTodoPayload : MutationPayloadGraphType
     {
-
         public RemoveTodoPayload()
         {
             Name = "RemoveTodoPayload";
@@ -208,7 +202,6 @@ namespace GraphQL.Relay.Todo.Schema
             };
         }
     }
-
 
     public class RenameTodoInput : MutationInputGraphType
     {
