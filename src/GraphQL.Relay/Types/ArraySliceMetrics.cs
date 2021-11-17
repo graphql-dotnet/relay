@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GraphQL.Builders;
-using GraphQL.Relay.Extensions;
 using GraphQL.Relay.Utilities;
 
 namespace GraphQL.Relay.Types

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GraphQL.Relay.Extensions
+namespace GraphQL.Relay.Utilities
 {
     public static class EnumerableExtensions
     {
