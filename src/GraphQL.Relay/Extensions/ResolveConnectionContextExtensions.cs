@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GraphQL.Builders;
 using GraphQL.Relay.Types;
+using GraphQL.Relay.Utilities;
 using GraphQL.Types.Relay.DataObjects;
 
 namespace GraphQL.Relay.Extensions
@@ -11,6 +12,24 @@ namespace GraphQL.Relay.Extensions
     /// </summary>
     public static class ResolveConnectionContextExtensions
     {
+        /// <summary>
+        /// Calculates an EdgeRange object based on the current
+        /// resolve connection context and the provided edge items count
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="edgeCount"></param>
+        /// <returns></returns>
+        public static EdgeRange EdgesToReturn(
+            this IResolveConnectionContext context,
+            int edgeCount
+        ) => RelayPagination.CalculateEdgeRange(
+            edgeCount,
+            context.First,
+            context.After,
+            context.Last,
+            context.Before
+        );
+
         /// <summary>
         /// From the connection context, <see cref="IResolveConnectionContext"/>,
         /// it creates a <see cref="Connection{TSource}"/> based on the given <see cref="IEnumerable{TSource}"/>

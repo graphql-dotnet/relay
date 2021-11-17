@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GraphQL.Builders;
+using GraphQL.Relay.Extensions;
 
 namespace GraphQL.Relay.Types
 {
@@ -9,10 +10,13 @@ namespace GraphQL.Relay.Types
     /// </summary>
     public static class EnumerableSliceMetrics
     {
+        /// <summary>
+        /// When a page size is not specified, the default page size is 25.
+        /// </summary>
         public static int DefaultPageSize { get; set; } = 25;
 
         /// <summary>
-        /// 
+        /// Factory method to create an <see cref="EnumerableSliceMetrics{TSource}"/>
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
         /// <param name="items"></param>
@@ -26,6 +30,10 @@ namespace GraphQL.Relay.Types
         ) => new(items, context, totalCount);
     }
 
+    /// <summary>
+    /// TODO: Add a description
+    /// </summary>
+    /// <typeparam name="TSource"></typeparam>
     public class EnumerableSliceMetrics<TSource>
     {
         /// <summary>
@@ -40,10 +48,19 @@ namespace GraphQL.Relay.Types
 
         public int StartIndex { get; }
 
+        /// <summary>
+        /// When a slice of a larger IEnumerable source has any records before it, this will be true
+        /// </summary>
         public bool HasPrevious { get; }
 
+        /// <summary>
+        /// When a slice of a larger IEnumerable source has any records after it, this will be true
+        /// </summary>
         public bool HasNext { get; }
 
+        /// <summary>
+        /// A particular section of a larger IEnumerable source
+        /// </summary>
         public IEnumerable<TSource> Slice { get; }
 
         public EnumerableSliceMetrics(
@@ -54,65 +71,16 @@ namespace GraphQL.Relay.Types
         {
             TotalCount = totalCount ?? itemSource.Count();
 
-            var (startingIndex, pageSize) = GetStartingIndexAndPageSize(TotalCount, connectContext);
-
-            var slice = itemSource.Skip(startingIndex).Take(pageSize).ToList();
+            var edges = connectContext.EdgesToReturn(TotalCount);
+            var slice = itemSource.Skip(edges.StartOffset).Take(edges.Count).ToList();
 
             Slice = slice;
             SliceSize = slice.Count;
 
-            HasNext = (startingIndex + SliceSize) < TotalCount;
-            HasPrevious = startingIndex > 0;
+            HasNext = (edges.StartOffset + SliceSize) < TotalCount;
+            HasPrevious = edges.StartOffset > 0;
 
-            StartIndex = startingIndex;
+            StartIndex = edges.StartOffset;
         }
-
-        private static (int startingIndex, int pageSize) GetStartingIndexAndPageSize(int totalCount, IResolveConnectionContext context)
-        {
-            var (first, last) = GetFirstLast(context);
-            var pageSize = last ?? first ?? context.PageSize ?? EnumerableSliceMetrics.DefaultPageSize;
-
-            if (!string.IsNullOrEmpty(context.After))
-            {
-                var afterIndex = ConnectionUtils.CursorToOffset(context.After);
-
-                if (last.HasValue)
-                {
-                    var startingIndex = totalCount - last.Value;
-
-                    return (
-                        startingIndex: startingIndex < afterIndex ? afterIndex : startingIndex,
-                        pageSize
-                    );
-                }
-
-                return (
-                    startingIndex: afterIndex + 1,
-                    pageSize
-                );
-            }
-
-            if (!string.IsNullOrEmpty(context.Before))
-            {
-                var beforeIndex = ConnectionUtils.CursorToOffset(context.Before);
-                var startingIndex = !last.HasValue || pageSize > beforeIndex ? 0 : beforeIndex - pageSize;
-                var lastIndex = startingIndex + pageSize - 1;
-
-                return (
-                    startingIndex,
-                    pageSize: lastIndex >= beforeIndex ? (pageSize - (lastIndex - beforeIndex) - 1) : pageSize);
-            }
-
-            return (
-                startingIndex: !last.HasValue || totalCount < pageSize ? 0 : totalCount - pageSize,
-                pageSize);
-        }
-
-        private static (int? first, int? last) GetFirstLast(
-            IResolveConnectionContext context
-        ) => (
-            first: context.First,
-            last: context.First.HasValue ? null : context.Last
-        );
     }
 }
