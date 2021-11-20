@@ -31,7 +31,7 @@ namespace GraphQL.Relay.Types
     }
 
     /// <summary>
-    /// TODO: Add a description
+    /// Relay connection slice metrics
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
     public class EnumerableSliceMetrics<TSource>
@@ -46,6 +46,9 @@ namespace GraphQL.Relay.Types
         /// </summary>
         public int SliceSize { get; }
 
+        /// <summary>
+        /// Starting index for a slice of an IEnumerable item source
+        /// </summary>
         public int StartIndex { get; }
 
         /// <summary>
@@ -63,6 +66,13 @@ namespace GraphQL.Relay.Types
         /// </summary>
         public IEnumerable<TSource> Slice { get; }
 
+        /// <summary>
+        /// Constructor for relay connection slice metrics
+        /// </summary>
+        /// <param name="itemSource"></param>
+        /// <param name="connectContext"></param>
+        /// <param name="totalCount"></param>
+        ///
         public EnumerableSliceMetrics(
             IEnumerable<TSource> itemSource,
             IResolveConnectionContext connectContext,
