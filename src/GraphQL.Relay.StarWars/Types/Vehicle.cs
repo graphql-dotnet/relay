@@ -42,6 +42,6 @@ namespace GraphQL.Relay.StarWars.Types
         }
 
         public override Task<Vehicles> GetById(IResolveFieldContext<object> context, string id) =>
-            _api.GetEntity<Vehicles>(id);
+            _api.GetEntityAsync<Vehicles>(id);
     }
 }

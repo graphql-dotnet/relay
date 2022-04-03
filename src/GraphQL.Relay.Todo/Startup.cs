@@ -19,11 +19,12 @@ namespace GraphQL.Relay.Todo
                 .AddSystemTextJson());
         }
 
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var writer = new SchemaWriter(new TodoSchema());
 
-            string schema = await writer.GenerateAsync();
+            // TODO: Why is it all necessary?
+            string schema = writer.GenerateAsync().GetAwaiter().GetResult();
             using (FileStream fs = File.Create(Path.Combine(env.WebRootPath, "schema.json")))
             {
                 byte[] info = new UTF8Encoding(true).GetBytes(schema);

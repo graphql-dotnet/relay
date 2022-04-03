@@ -44,6 +44,6 @@ namespace GraphQL.Relay.StarWars.Types
         }
 
         public override Task<Starships> GetById(IResolveFieldContext<object> context, string id) =>
-            _api.GetEntity<Starships>(id);
+            _api.GetEntityAsync<Starships>(id);
     }
 }

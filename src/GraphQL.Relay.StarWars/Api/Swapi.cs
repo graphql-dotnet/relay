@@ -47,14 +47,14 @@ namespace GraphQL.Relay.StarWars.Api
             );
         }
 
-        public async Task<IEnumerable<T>> FetchMany<T>(IEnumerable<Uri> urls)
+        public async Task<IEnumerable<T>> FetchManyAsync<T>(IEnumerable<Uri> urls)
             where T : Entity
         {
             var entities = await Task.WhenAll(urls.Select(Fetch<T>));
             return entities.AsEnumerable();
         }
 
-        public async Task<T> GetEntity<T>(string id) where T : Entity
+        public async Task<T> GetEntityAsync<T>(string id) where T : Entity
         {
             var name = GetResource<T>();
             var entity = await GetEntity<T>(new Uri($"{API_BASE}/{name}/{id}"));
@@ -67,7 +67,7 @@ namespace GraphQL.Relay.StarWars.Api
 
 
         public Task<IEnumerable<T>> GetMany<T>(IEnumerable<Uri> urls) where T : Entity =>
-            FetchMany<T>(urls);
+            FetchManyAsync<T>(urls);
 
 
         private bool DoneFetching(int count, ConnectionArguments args)
@@ -76,7 +76,8 @@ namespace GraphQL.Relay.StarWars.Api
                 return false;
             return count >= args.First.Value;
         }
-        public async Task<List<T>> GetConnection<T>(ConnectionArguments args)
+
+        public async Task<List<T>> GetConnectionAsync<T>(ConnectionArguments args)
             where T : Entity
         {
             var nextUrl = new Uri($"{API_BASE}/{typeof(T).Name.ToLower()}/");

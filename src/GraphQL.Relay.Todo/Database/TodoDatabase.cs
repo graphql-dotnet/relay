@@ -103,6 +103,8 @@ namespace GraphQL.Relay.Todo
 
         public static IEnumerable<string> RemoveCompletedTodos(bool complete)
         {
+            complete.ToString(); // TODO: unused parameter, check this example
+
             var deleted = new List<string>();
 
             foreach (var todo in GetTodosByStatus("completed"))
