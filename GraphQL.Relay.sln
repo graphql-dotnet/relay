@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FA0A321D-0F73-478E-9B1D-495A96F4BF6D}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-artifacts-code.yml = .github\workflows\build-artifacts-code.yml
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
 		.github\workflows\publish-code.yml = .github\workflows\publish-code.yml
 		.github\workflows\test-code.yml = .github\workflows\test-code.yml
 		.github\workflows\wipcheck.yml = .github\workflows\wipcheck.yml
