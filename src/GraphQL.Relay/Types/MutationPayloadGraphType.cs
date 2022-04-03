@@ -8,7 +8,6 @@ namespace GraphQL.Relay.Types
         T MutateAndGetPayload(MutationInputs inputs, IResolveFieldContext<object> context);
     }
 
-
     public abstract class MutationPayloadGraphType<TSource, TOut> : ObjectGraphType<TSource>, IMutationPayload<TOut>
     {
         protected MutationPayloadGraphType()
@@ -49,7 +48,6 @@ namespace GraphQL.Relay.Types
                 s => s.Location.Equals(context.FieldAst.Location));
         }
     }
-
 
     public abstract class MutationPayloadGraphType<TSource> : MutationPayloadGraphType<TSource, TSource>
     {

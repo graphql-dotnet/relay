@@ -136,7 +136,6 @@ namespace GraphQL.Relay.Test.Utilities
             Assert.Equal("last", ex.ParamName);
         }
 
-
         [Fact]
         public void CalculateEdgeRange_IfFirstIsProvided_LimitsRangeLength()
         {

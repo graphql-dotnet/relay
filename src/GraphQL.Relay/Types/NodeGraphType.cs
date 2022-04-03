@@ -63,7 +63,6 @@ namespace GraphQL.Relay.Types
             {
             }
 
-
             return Id(name, expression);
         }
 

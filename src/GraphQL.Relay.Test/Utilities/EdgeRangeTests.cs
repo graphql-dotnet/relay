@@ -57,14 +57,12 @@ namespace GraphQL.Relay.Test.Utilities
             Assert.Equal(0, range.StartOffset);
         }
 
-
         [Fact]
         public void LimitCountToEnd_IfMaxLengthIsNegative_ThrowsException()
         {
             var range = new EdgeRange(0, 10);
             Assert.Throws<ArgumentOutOfRangeException>(() => range.LimitCountToEnd(-1));
         }
-
 
         [Fact]
         public void LimitCountToEnd_WhenProvidingMaxLengthLessThanCount_MovesStartOffet()

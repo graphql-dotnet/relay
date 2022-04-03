@@ -87,7 +87,6 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(new[] { 10, 11, 12, 13 }, con.Items);
         }
 
-
         [Fact]
         public void ToConnection_WhenRequestingForwardAndBackwardSlice_ReturnsRequestedSliceOnly()
         {

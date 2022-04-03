@@ -74,7 +74,6 @@ namespace GraphQL.Relay.StarWars.Api
         public IList<Uri> Films { get; set; }
     }
 
-
     public class People : Entity
     {
         public string Name { get; set; }

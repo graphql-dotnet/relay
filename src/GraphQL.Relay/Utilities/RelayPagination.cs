@@ -53,7 +53,6 @@ namespace GraphQL.Relay.Utilities
             int startOffset = afterOffset + 1;
             int endOffset = beforeOffset - 1;
 
-
             var edges = new EdgeRange(startOffset, endOffset);
             return edges;
         }

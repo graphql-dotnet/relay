@@ -62,13 +62,13 @@ namespace GraphQL.Relay.StarWars.Api
             return entity;
         }
 
-        public Task<T> GetEntity<T>(Uri url) where T : Entity =>
+        public Task<T> GetEntity<T>(Uri url)
+            where T : Entity =>
             Fetch<T>(url);
 
-
-        public Task<IEnumerable<T>> GetMany<T>(IEnumerable<Uri> urls) where T : Entity =>
+        public Task<IEnumerable<T>> GetMany<T>(IEnumerable<Uri> urls)
+            where T : Entity =>
             FetchManyAsync<T>(urls);
-
 
         private bool DoneFetching(int count, ConnectionArguments args)
         {
