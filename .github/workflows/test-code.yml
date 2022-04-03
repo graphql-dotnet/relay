@@ -68,7 +68,7 @@ jobs:
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         uses: codecov/codecov-action@v2.1.0
         with:
-          files: 'src/.coverage/**/coverage.opencover.xml'
+          files: '.coverage/**/coverage.opencover.xml'
 
   buildcheck:
     needs:
