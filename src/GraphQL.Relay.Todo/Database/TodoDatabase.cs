@@ -2,147 +2,118 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace GraphQL.Relay.Todo
 {
-    public class Todo
-    {
+
+    public class Todo {
         public string Id { get; set; }
         public string Text { get; set; }
-        public bool Completed { get; set; }
+        public bool Completed {get; set; }
     }
 
-    public class User
-    {
+    public class User {
         public string Id { get; set; }
         // public Lazy<List<Todo>> Todos { get; set; }
     }
 
-    public class Users : ConcurrentDictionary<string, User>
-    {
-        public Users() : base()
-        {
-            this["me"] = new User { Id = "me" };
+    public class Todos: ConcurrentDictionary<string, Todo> {
+
+    }
+    public class Users: ConcurrentDictionary<string, User> {
+        public Users() : base() {
+            this["me"] = new User { Id = "me"};
         }
     }
 
 
     internal class TodoDatabaseContext
     {
+        public readonly Todos todos;
         public readonly Users users;
 
         internal TodoDatabaseContext()
         {
+            todos = new Todos();
             users = new Users();
         }
     }
 
-    public static class Database
-    {
-        private static TodoDatabaseContext _context = new();
+    public static class Database {
+        private static TodoDatabaseContext _context
+            = new TodoDatabaseContext();
 
-        private static readonly Lazy<TodosContext> _todosContext = new(
-            () => new TodosContext(
-                new DbContextOptionsBuilder<TodosContext>()
-                        .UseInMemoryDatabase("TestDatabase")
-                        .Options));
-
-        public static User GetUser(string id)
-        {
+        public static User GetUser(string id) {
             return _context.users[id];
         }
 
-        public static User GetViewer()
-        {
+        public static User GetViewer() {
             return GetUser("me");
         }
 
-        public static Todo AddTodo(string text, bool complete = false)
-        {
-            var todo = _todosContext.Value.Add(new Todo
-            {
+        public static Todo AddTodo(string text, bool complete = false) {
+            var todo = new Todo {
                 Id = Guid.NewGuid().ToString(),
                 Text = text,
                 Completed = complete,
-            }).Entity;
+            };
 
-            return _todosContext.Value.SaveChanges() != 0
-                ? todo
-                : throw new Exception("Could not save todo");
+            _context.todos[todo.Id] = todo;
+            return todo;
         }
 
-        public static Todo GetTodoById(string id) => _todosContext.Value
-            .Set<Todo>()
-            .FirstOrDefault(t => t.Id == id);
+        public static Todo GetTodoById(string id) {
+            return _context.todos[id];
+        }
 
-        public static IQueryable<Todo> GetTodos() => GetTodosByStatus();
+        public static IEnumerable<Todo> GetTodos() {
+            return GetTodosByStatus();
+        }
 
-        public static IQueryable<Todo> GetTodosByStatus(string status = "any") =>
-            _todosContext.Value
-                .Set<Todo>()
-                .Where(t => status == "any" || (t.Completed && (status == "completed")));
+        public static IEnumerable<Todo> GetTodosByStatus(string status = "any") {
+            var todos = _context.todos.Select(t => t.Value);
+            if (status == "any") return todos;
+            return todos.Where(t => t.Completed == (status == "completed"));
+        }
 
-        public static Todo ChangeTodoStatus(string id, bool complete)
-        {
-            var todo = GetTodoById(id);
+        private static Todo ChangeTodoStatus(Todo todo, bool complete) {
             todo.Completed = complete;
-
-            _todosContext.Value.SaveChanges();
-
             return todo;
         }
 
-        public static IEnumerable<Todo> MarkAllTodos(bool complete)
-        {
-            var todos = GetTodosByStatus();
-
-            foreach (var todo in todos)
-            {
-                todo.Completed = complete;
-            }
-
-            _todosContext.Value.SaveChanges();
-
-            return todos;
+        public static Todo ChangeTodoStatus(string id, bool complete) {
+            return ChangeTodoStatus(GetTodoById(id), complete);
         }
 
-        public static Todo RemoveTodo(string id)
-        {
-            var todo = _todosContext.Value.Remove(GetTodoById(id)).Entity;
-
-            _todosContext.Value.SaveChanges();
-
-            return todo;
+        public static IEnumerable<Todo> MarkAllTodos(bool complete) {
+            return GetTodosByStatus()
+                .Select(t => ChangeTodoStatus(t, complete));
         }
 
-        public static Todo RenameTodo(string id, string text)
-        {
+        public static void RemoveTodo(string id) {
+            Todo deleted;
+            _context.todos.Remove(id, out deleted);
+        }
+
+        public static Todo RenameTodo(string id, string text) {
             var todo = GetTodoById(id);
             todo.Text = text;
-
-            _todosContext.Value.SaveChanges();
-
             return todo;
         }
 
-        public static IEnumerable<string> RemoveCompletedTodos()
-        {
+        public static IEnumerable<string> RemoveCompletedTodos(bool complete) {
             var deleted = new List<string>();
 
             foreach (var todo in GetTodosByStatus("completed"))
             {
                 deleted.Add(todo.Id);
-                _todosContext.Value.Remove(todo);
+                RemoveTodo(todo.Id);
             }
-
-            _todosContext.Value.SaveChanges();
 
             return deleted;
         }
 
-        public static User GetUserById(string id)
-        {
+        public static User GetUserById(string id) {
             return _context.users[id];
         }
 
