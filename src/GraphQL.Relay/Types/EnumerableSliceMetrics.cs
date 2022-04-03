@@ -2,6 +2,7 @@
 using System.Linq;
 using GraphQL.Builders;
 using GraphQL.Relay.Extensions;
+using GraphQL.Relay.Utilities;
 
 namespace GraphQL.Relay.Types
 {
@@ -22,12 +23,14 @@ namespace GraphQL.Relay.Types
         /// <param name="items"></param>
         /// <param name="context"></param>
         /// <param name="totalCount"></param>
+        /// <param name="strictCheck"></param>
         /// <returns></returns>
         public static EnumerableSliceMetrics<TSource> Create<TSource>(
             IEnumerable<TSource> items,
             IResolveConnectionContext context,
-            int? totalCount = null
-        ) => new(items, context, totalCount);
+            int? totalCount = null,
+            bool strictCheck = true
+        ) => new(items, context, totalCount, strictCheck);
     }
 
     /// <summary>
@@ -52,6 +55,11 @@ namespace GraphQL.Relay.Types
         public int StartIndex { get; }
 
         /// <summary>
+        /// Ending index for a slice of an IEnumerable item source
+        /// </summary>
+        public int EndIndex { get; }
+
+        /// <summary>
         /// When a slice of a larger IEnumerable source has any records before it, this will be true
         /// </summary>
         public bool HasPrevious { get; }
@@ -72,11 +80,13 @@ namespace GraphQL.Relay.Types
         /// <param name="itemSource"></param>
         /// <param name="connectContext"></param>
         /// <param name="totalCount"></param>
+        /// <param name="strictCheck"></param>
         ///
         public EnumerableSliceMetrics(
             IEnumerable<TSource> itemSource,
             IResolveConnectionContext connectContext,
-            int? totalCount = null
+            int? totalCount = null,
+            bool strictCheck = true
         )
         {
             TotalCount = totalCount ?? itemSource.Count();
@@ -91,6 +101,17 @@ namespace GraphQL.Relay.Types
             HasPrevious = edges.StartOffset > 0;
 
             StartIndex = edges.StartOffset;
+            EndIndex = StartIndex + SliceSize - 1;
+
+            if (strictCheck)
+            {
+                RelayPagination.EnsureSliceCoversRange(
+                    nameof(itemSource),
+                    edges,
+                    StartIndex,
+                    EndIndex
+                );
+            }
         }
     }
 }
