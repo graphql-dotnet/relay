@@ -1,6 +1,5 @@
-using Xunit;
-using static GraphQL.Relay.Types.ConnectionUtils;
 using static GraphQL.Relay.Test.Types.ResolveConnectionContextFactory;
+using static GraphQL.Relay.Types.ConnectionUtils;
 
 namespace GraphQL.Relay.Test.Types
 {

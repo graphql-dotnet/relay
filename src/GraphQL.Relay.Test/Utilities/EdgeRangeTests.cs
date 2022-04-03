@@ -1,5 +1,4 @@
 using GraphQL.Relay.Utilities;
-using Xunit;
 
 namespace GraphQL.Relay.Test.Utilities
 {

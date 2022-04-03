@@ -1,8 +1,6 @@
 using GraphQL.Relay.Types;
 using GraphQL.SystemTextJson;
 using GraphQL.Types;
-using Shouldly;
-using Xunit;
 
 namespace GraphQL.Relay.Test.Types
 {

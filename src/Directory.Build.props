@@ -17,6 +17,8 @@
 	<ImplicitUsings>enable</ImplicitUsings>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <IsPackable>true</IsPackable>
+    <!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
     <GraphQLTestVersion>5.0.0</GraphQLTestVersion>
   </PropertyGroup>
 
