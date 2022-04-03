@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using GraphQL.Language.AST;
 using GraphQL.Types;
+using GraphQLParser.AST;
 
 namespace GraphQL.Relay.Types
 {
@@ -26,29 +24,29 @@ namespace GraphQL.Relay.Types
         private string GetClientId(IResolveFieldContext<TSource> context)
         {
             var field = context.Operation.SelectionSet.Selections
-                .Where(s => s is Field)
-                .Cast<Field>()
+                .Where(s => s is GraphQLField)
+                .Cast<GraphQLField>()
                 .First(s => IsCorrectSelection(context, s));
 
             var arg = field.Arguments.First(a => a.Name == "input");
 
-            if (arg.Value is VariableReference)
+            if (arg.Value is GraphQLVariable variable)
             {
-                var name = ((VariableReference)arg.Value).Name;
+                var name = variable.Name;
                 var inputs = context.Variables.First(v => v.Name == name).Value as Dictionary<string, object>;
 
                 return inputs["clientMutationId"] as string;
             }
 
             var value =
-                ((ObjectValue)arg.Value).ObjectFields.First(f => f.Name == "clientMutationId").Value as StringValue;
-            return value.Value;
+                ((GraphQLObjectValue)arg.Value).Fields.First(f => f.Name == "clientMutationId").Value as GraphQLStringValue;
+            return (string)value.Value; // TODO: string allocation
         }
 
-        private bool IsCorrectSelection(IResolveFieldContext<TSource> context, Field field)
+        private bool IsCorrectSelection(IResolveFieldContext<TSource> context, GraphQLField field)
         {
             return Enumerable.Any(field.SelectionSet.Selections,
-                s => s.SourceLocation.Equals(context.FieldAst.SourceLocation));
+                s => s.Location.Equals(context.FieldAst.Location));
         }
     }
 

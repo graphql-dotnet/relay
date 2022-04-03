@@ -1,22 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-
 namespace GraphQL.Relay.StarWars.Api
 {
-
-    public static class UriListExtensions {
-        public static IEnumerable<string> ToIds (this IList<Uri> list) {
+    public static class UriListExtensions
+    {
+        public static IEnumerable<string> ToIds(this IList<Uri> list)
+        {
             return list
                 .Select(url => url?.ToString().Split('/')[5]);
         }
     }
-    public interface ISwapiResponse {}
 
-    public class EntityList<TEntity>: ISwapiResponse {
+    public interface ISwapiResponse { }
+
+    public class EntityList<TEntity> : ISwapiResponse
+    {
 
         public int Count { get; set; }
         public Uri Next { get; set; }
@@ -24,7 +20,7 @@ namespace GraphQL.Relay.StarWars.Api
         public List<TEntity> Results = new List<TEntity>();
     }
 
-    public class Entity: ISwapiResponse
+    public class Entity : ISwapiResponse
     {
         public string Id => Url.ToString()?.Split('/')[5];
         public DateTime Created { get; set; }
@@ -47,7 +43,7 @@ namespace GraphQL.Relay.StarWars.Api
         public IList<Uri> Species { get; set; }
     }
 
-    public class Planets: Entity
+    public class Planets : Entity
     {
         public string Name { get; set; }
         public string RotationPeriod { get; set; }
@@ -62,7 +58,7 @@ namespace GraphQL.Relay.StarWars.Api
         public IList<Uri> Films { get; set; }
     }
 
-    public class Species: Entity
+    public class Species : Entity
     {
         public string Name { get; set; }
         public string Classification { get; set; }
@@ -79,7 +75,7 @@ namespace GraphQL.Relay.StarWars.Api
     }
 
 
-    public class People: Entity
+    public class People : Entity
     {
         public string Name { get; set; }
         public string Height { get; set; }
@@ -96,7 +92,7 @@ namespace GraphQL.Relay.StarWars.Api
         public IList<Uri> Starships { get; set; }
     }
 
-    public class Starships: Entity
+    public class Starships : Entity
     {
         public string Name { get; set; }
         public string Model { get; set; }
@@ -115,7 +111,7 @@ namespace GraphQL.Relay.StarWars.Api
         public IList<Uri> Films { get; set; }
     }
 
-    public class Vehicles: Entity
+    public class Vehicles : Entity
     {
         public string Name { get; set; }
         public string Model { get; set; }

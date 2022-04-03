@@ -13,7 +13,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Check github.ref starts with 'refs/tags/'
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         run: |
@@ -27,10 +27,10 @@ jobs:
           version="${github_ref:10}"
           echo version=$version
           echo "version=$version" >> $GITHUB_ENV
-      - name: Setup .NET Core 5.0 SDK
+      - name: Setup .NET Core 6.0 SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: '6.0.102'
           source-url: https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.RELAY_NUGET_TOKEN}}
@@ -49,7 +49,7 @@ jobs:
       - name: Publish Nuget packages to Nuget registry
         run: dotnet nuget push "out/*" -k ${{secrets.RELAY_NUGET_TOKEN}}
       - name: Upload Nuget packages as release artifacts
-        uses: actions/github-script@v2
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
@@ -60,7 +60,7 @@ jobs:
             for (let file of await fs.readdir('src/out')) {
               console.log('uploading', file);
 
-              await github.repos.uploadReleaseAsset({
+              await github.rest.repos.uploadReleaseAsset({
                 owner,
                 repo,
                 release_id: ${{ github.event.release.id }},

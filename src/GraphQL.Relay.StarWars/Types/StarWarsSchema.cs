@@ -1,5 +1,3 @@
-using System;
-using Microsoft.Extensions.DependencyInjection;
 using GraphQL.Types;
 
 namespace GraphQL.Relay.StarWars.Types

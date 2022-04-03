@@ -1,4 +1,3 @@
-using System.Linq;
 using GraphQL.Relay.Types;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
@@ -6,7 +5,6 @@ using GraphQL.Types.Relay.DataObjects;
 
 namespace GraphQL.Relay.Todo.Schema
 {
-
     public class TodoMutation : MutationGraphType
     {
         public TodoMutation() : base()
@@ -32,7 +30,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class AddTodoPayload : MutationPayloadGraphType
     {
-
         public AddTodoPayload()
         {
             Name = "AddTodoPayload";
@@ -59,7 +56,6 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-
     public class ChangeTodoStatusInput : MutationInputGraphType
     {
         public ChangeTodoStatusInput()
@@ -73,7 +69,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class ChangeTodoStatusPayload : MutationPayloadGraphType
     {
-
         public ChangeTodoStatusPayload()
         {
             Name = "ChangeTodoStatusPayload";
@@ -98,7 +93,6 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-
     public class MarkAllTodosInput : MutationInputGraphType
     {
         public MarkAllTodosInput()
@@ -111,7 +105,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class MarkAllTodosPayload : MutationPayloadGraphType
     {
-
         public MarkAllTodosPayload()
         {
             Name = "MarkAllTodosPayload";
@@ -135,7 +128,6 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-
     public class RemoveCompletedTodosInput : MutationInputGraphType
     {
         public RemoveCompletedTodosInput()
@@ -146,7 +138,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class RemoveCompletedTodosPayload : MutationPayloadGraphType
     {
-
         public RemoveCompletedTodosPayload()
         {
             Name = "RemoveCompletedTodosPayload";
@@ -170,7 +161,6 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-
     public class RemoveTodoInput : MutationInputGraphType
     {
         public RemoveTodoInput()
@@ -183,7 +173,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class RemoveTodoPayload : MutationPayloadGraphType
     {
-
         public RemoveTodoPayload()
         {
             Name = "RemoveTodoPayload";
@@ -209,7 +198,6 @@ namespace GraphQL.Relay.Todo.Schema
         }
     }
 
-
     public class RenameTodoInput : MutationInputGraphType
     {
         public RenameTodoInput()
@@ -223,7 +211,6 @@ namespace GraphQL.Relay.Todo.Schema
 
     public class RenameTodoPayload : MutationPayloadGraphType
     {
-
         public RenameTodoPayload()
         {
             Name = "RenameTodoPayload";

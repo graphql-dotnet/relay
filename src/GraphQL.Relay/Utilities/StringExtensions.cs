@@ -1,5 +1,3 @@
-﻿using System;
-
 namespace GraphQL.Relay.Utilities
 {
     /// <summary>
@@ -12,8 +10,9 @@ namespace GraphQL.Relay.Utilities
         /// </summary>
         public static string Base64Encode(this string value)
         {
-            if (value == null) return null;
-            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
+            return value == null
+                ? null
+                : Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
         }
 
         /// <summary>
@@ -21,8 +20,9 @@ namespace GraphQL.Relay.Utilities
         /// </summary>
         public static string Base64Decode(this string value)
         {
-            if (value == null) return null;
-            return System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(value));
+            return value == null
+                ? null
+                : System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(value));
         }
     }
 }

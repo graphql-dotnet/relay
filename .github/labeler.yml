@@ -1,0 +1,15 @@
+test:
+  - src/GraphQL.Relay.Test/**/*
+  - src/GraphQL.Relay.ApiTests/**/*.cs
+
+CI:
+  - .github/workflows/**/*
+  - .github/dependabot.yml
+  - .github/labeler.yml
+  - .github/codecov.yml
+
+code style:
+  - .editorconfig
+
+documentation:
+  - README.md

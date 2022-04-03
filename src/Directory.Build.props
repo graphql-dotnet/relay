@@ -1,10 +1,11 @@
 <Project>
 
   <PropertyGroup>
-    <VersionPrefix>0.6.0-preview</VersionPrefix>
+    <VersionPrefix>0.7.0-preview</VersionPrefix>
     <LangVersion>latest</LangVersion>
     <Authors>Jason Quense</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageIcon>logo.64x64.png</PackageIcon>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -13,12 +14,10 @@
     <!-- https://github.com/clairernovotny/DeterministicBuilds -->
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">True</ContinuousIntegrationBuild>
     <DebugType>embedded</DebugType>
+	<ImplicitUsings>enable</ImplicitUsings>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <GraphQLTestVersion>4.0.2</GraphQLTestVersion>
+	<EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <GraphQLTestVersion>5.0.0</GraphQLTestVersion>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" Condition="'$(IsPackable)' == 'true'"/>
-  </ItemGroup>
 
 </Project>

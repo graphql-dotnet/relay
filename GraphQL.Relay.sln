@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31205.134
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay", "src\GraphQL.Relay\GraphQL.Relay.csproj", "{46076F16-C4F7-4879-903D-70D75DD8B3EF}"
 EndProject
@@ -11,6 +11,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.Todo", "src\GraphQL.Relay.Todo\GraphQL.Relay.Todo.csproj", "{15AFC7EC-11E6-469F-87DF-D1E396463BE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2F92B771-95CF-4FC3-AE9A-52E9273349F1}"
+	ProjectSection(SolutionItems) = preProject
+		.github\codecov.yml = .github\codecov.yml
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\labeler.yml = .github\labeler.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FA0A321D-0F73-478E-9B1D-495A96F4BF6D}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,7 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{5EBDC740-68FC-451D-9F02-B81314A5059E}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		src\Directory.Build.props = src\Directory.Build.props
+		src\Directory.Build.targets = src\Directory.Build.targets
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

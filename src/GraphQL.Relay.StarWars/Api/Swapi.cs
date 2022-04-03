@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using GraphQL.Relay.StarWars.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.IO;
 
 namespace GraphQL.Relay.StarWars.Api
 {
@@ -16,9 +9,8 @@ namespace GraphQL.Relay.StarWars.Api
     {
         private readonly HttpClient _client;
 
-        private string _apiBase = "http://swapi.dev/api";
-        private ResponseCache _cache = new ResponseCache();
-
+        private const string API_BASE = "http://swapi.dev/api";
+        private readonly ResponseCache _cache = new();
 
         private string GetResource<T>() where T : Entity
         {
@@ -65,7 +57,7 @@ namespace GraphQL.Relay.StarWars.Api
         public async Task<T> GetEntity<T>(string id) where T : Entity
         {
             var name = GetResource<T>();
-            var entity = await GetEntity<T>(new Uri($"{_apiBase}/{name}/{id}"));
+            var entity = await GetEntity<T>(new Uri($"{API_BASE}/{name}/{id}"));
 
             return entity;
         }
@@ -87,7 +79,7 @@ namespace GraphQL.Relay.StarWars.Api
         public async Task<List<T>> GetConnection<T>(ConnectionArguments args)
             where T : Entity
         {
-            var nextUrl = new Uri($"{_apiBase}/{typeof(T).Name.ToLower()}/");
+            var nextUrl = new Uri($"{API_BASE}/{typeof(T).Name.ToLower()}/");
             var entities = new List<T>();
             var canStopEarly =
                 args.After != null ||

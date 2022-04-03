@@ -1,4 +1,3 @@
-using System;
 using static GraphQL.Relay.Types.ConnectionUtils;
 
 namespace GraphQL.Relay.Utilities
@@ -7,12 +6,12 @@ namespace GraphQL.Relay.Utilities
     {
         /// <summary>
         /// Apply Facebook Relay pagination as described at <a href="https://facebook.github.io/relay/graphql/connections.htm#sec-Pagination-algorithm">
-        /// https://facebook.github.io/relay/graphql/connections.htm#sec-Pagination-algorithm</a> 
+        /// https://facebook.github.io/relay/graphql/connections.htm#sec-Pagination-algorithm</a>
         /// </summary>
         /// <param name="edgeCount">Total number of edges.</param>
         /// <param name="first">Maximum number of edges to return after <paramref name="after"/> (if provided) or from
-        /// the start of the edge list. 
-        /// </param> 
+        /// the start of the edge list.
+        /// </param>
         /// <param name="after">Only return edges coming after the edge represented by this cursor.</param>
         /// <param name="last">Maximum number of edges to return before <paramref name="before"/> (if provided)
         /// or from the end of the edge list.</param>
@@ -30,14 +29,14 @@ namespace GraphQL.Relay.Utilities
                 }
                 range.LimitCountFromStart(first.Value);
             }
-            
+
             if (last != null)
             {
                 if (last.Value < 0)
                 {
                     throw new ArgumentOutOfRangeException(nameof(last));
                 }
-                
+
                 range.LimitCountToEnd(last.Value);
             }
             return range;

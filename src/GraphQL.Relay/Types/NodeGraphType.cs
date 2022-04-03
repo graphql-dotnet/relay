@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using GraphQL.Relay.Utilities;
 using GraphQL.Types;
 using GraphQL.Types.Relay;
@@ -41,7 +38,6 @@ namespace GraphQL.Relay.Types
             };
         }
     }
-
 
     public abstract class NodeGraphType<T, TOut> : ObjectGraphType<T>, IRelayNode<TOut>
     {

@@ -1,9 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageTags>GraphQL;Relay;React</PackageTags>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="4.0.2" />
+    <PackageReference Include="GraphQL" Version="5.0.0" />
   </ItemGroup>
+
 </Project>

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using GraphQL.Builders;
 using GraphQL.Relay.Utilities;
-using static GraphQL.Relay.Types.ConnectionUtils;
 
 namespace GraphQL.Relay.Types
 {
@@ -39,7 +34,6 @@ namespace GraphQL.Relay.Types
             return new ArraySliceMetrics<TSource>(slice, first, after, last, before, sliceStartIndex, totalCount,
                 strictCheck);
         }
-
 
         public static ArraySliceMetrics<TSource> Create<TSource, TParent>(
             IList<TSource> slice,
@@ -152,8 +146,6 @@ namespace GraphQL.Relay.Types
                         $"completely contain the expected data range [{range.StartOffset}, {range.EndOffset}]", nameof(slice));
                 }
             }
-
-
         }
 
         private static bool SliceCoversRange(int sliceStartIndex, int sliceEndIndex, EdgeRange range)
