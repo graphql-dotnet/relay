@@ -1,4 +1,3 @@
-using System;
 using GraphQL.Relay.Utilities;
 using Xunit;
 using static GraphQL.Relay.Types.ConnectionUtils;
