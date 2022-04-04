@@ -14,14 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2F92
 	ProjectSection(SolutionItems) = preProject
 		.github\codecov.yml = .github\codecov.yml
 		.github\dependabot.yml = .github\dependabot.yml
-		.github\labeler.yml = .github\labeler.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FA0A321D-0F73-478E-9B1D-495A96F4BF6D}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-artifacts-code.yml = .github\workflows\build-artifacts-code.yml
 		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
-		.github\workflows\label.yml = .github\workflows\label.yml
 		.github\workflows\publish-code.yml = .github\workflows\publish-code.yml
 		.github\workflows\test-code.yml = .github\workflows\test-code.yml
 		.github\workflows\wipcheck.yml = .github\workflows\wipcheck.yml
@@ -29,10 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{5EBDC740-68FC-451D-9F02-B81314A5059E}"
 	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
 		.editorconfig = .editorconfig
 		src\Directory.Build.props = src\Directory.Build.props
 		src\Directory.Build.targets = src\Directory.Build.targets
+		README.md = README.md
 		src\Tests.props = src\Tests.props
 	EndProjectSection
 EndProject
