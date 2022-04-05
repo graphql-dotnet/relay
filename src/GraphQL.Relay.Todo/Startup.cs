@@ -1,7 +1,7 @@
 using System.Text;
+using GraphQL.AspNetCore3;
 using GraphQL.MicrosoftDI;
 using GraphQL.Relay.Todo.Schema;
-using GraphQL.Server;
 using GraphQL.SystemTextJson;
 
 namespace GraphQL.Relay.Todo
@@ -11,8 +11,6 @@ namespace GraphQL.Relay.Todo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGraphQL(b => b
-                .AddServer(true)
-                .AddHttpMiddleware<TodoSchema>()
                 .AddSchema<TodoSchema>()
                 .AddSystemTextJson()
                 .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)

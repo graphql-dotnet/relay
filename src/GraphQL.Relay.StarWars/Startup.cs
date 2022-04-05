@@ -1,8 +1,8 @@
+using GraphQL.AspNetCore3;
 using GraphQL.MicrosoftDI;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
 using GraphQL.Relay.Types;
-using GraphQL.Server;
 using GraphQL.SystemTextJson;
 using GraphQL.Types.Relay;
 
@@ -27,8 +27,6 @@ namespace GraphQL.Relay.StarWars
                 .AddSingleton<ResponseCache>();
 
             services.AddGraphQL(b => b
-                .AddServer(true)
-                .AddHttpMiddleware<StarWarsSchema>()
                 .AddSchema<StarWarsSchema>()
                 .AddSystemTextJson()
                 .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)
