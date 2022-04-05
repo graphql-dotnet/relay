@@ -5,50 +5,51 @@ using GraphQL.Relay.Types;
 
 namespace GraphQL.Relay.StarWars.Types
 {
-    public class StarWarsQuery: GraphQL.Relay.Types.QueryGraphType
+    public class StarWarsQuery : QueryGraphType
     {
-        public StarWarsQuery(Swapi api) {
+        public StarWarsQuery(Swapi api)
+        {
             Name = "StarWarsQuery";
 
             Connection<FilmGraphType>()
                 .Name("films")
-                .Resolve(ctx => api
-                    .GetConnection<Films>(ctx.GetConnectionArguments())
+                .ResolveAsync(async ctx => await api
+                    .GetConnectionAsync<Films>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
                 );
 
             Connection<PeopleGraphType>()
                 .Name("people")
-                .Resolve(ctx => api
-                    .GetConnection<People>(ctx.GetConnectionArguments())
+                .ResolveAsync(async ctx => await api
+                    .GetConnectionAsync<People>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
                 );
 
             Connection<PlanetGraphType>()
                 .Name("planets")
-                .Resolve(ctx => api
-                    .GetConnection<Planets>(ctx.GetConnectionArguments())
+                .ResolveAsync(async ctx => await api
+                    .GetConnectionAsync<Planets>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
                 );
 
             Connection<SpeciesGraphType>()
                 .Name("species")
-                .Resolve(ctx => api
-                    .GetConnection<Species>(ctx.GetConnectionArguments())
+                .ResolveAsync(async ctx => await api
+                    .GetConnectionAsync<Species>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
                 );
 
             Connection<StarshipGraphType>()
                 .Name("starships")
-                .Resolve(ctx => api
-                    .GetConnection<Starships>(ctx.GetConnectionArguments())
+                .ResolveAsync(async ctx => await api
+                    .GetConnectionAsync<Starships>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
                 );
 
             Connection<VehicleGraphType>()
                 .Name("vehicles")
-                .Resolve(ctx => api
-                    .GetConnection<Vehicles>(ctx.GetConnectionArguments())
+                .ResolveAsync(async ctx => await api
+                    .GetConnectionAsync<Vehicles>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
                 );
         }

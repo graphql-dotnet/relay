@@ -1,5 +1,3 @@
-using System;
-
 namespace GraphQL.Relay.Types
 {
     [Serializable]

@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace GraphQL.Relay.Utilities
 {
     public static class EnumerableExtensions
@@ -15,13 +10,17 @@ namespace GraphQL.Relay.Utilities
             count = collection.Count();
 
             // Get start/end indexes, negative numbers start at the end of the collection.
-            if (start < 0) start += count;
-            if (end < 0) end += count;
+            if (start < 0)
+                start += count;
+            if (end < 0)
+                end += count;
 
             foreach (T item in collection)
             {
-                if (index >= end) yield break;
-                if (index >= start) yield return item;
+                if (index >= end)
+                    yield break;
+                if (index >= start)
+                    yield return item;
                 ++index;
             }
         }

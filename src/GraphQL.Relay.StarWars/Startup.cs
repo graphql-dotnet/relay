@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GraphQL.MicrosoftDI;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Hosting;
-using GraphQL.Server;
-using GraphQL.Types;
-using GraphQL.Types.Relay;
 using GraphQL.Relay.Types;
+using GraphQL.Server;
+using GraphQL.SystemTextJson;
+using GraphQL.Types.Relay;
+
 namespace GraphQL.Relay.StarWars
 {
     public class Startup
@@ -30,23 +21,18 @@ namespace GraphQL.Relay.StarWars
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddTransient(typeof(ConnectionType<>))
-                .AddTransient(typeof(EdgeType<>))
                 .AddTransient<NodeInterface>()
                 .AddTransient<PageInfoType>()
-                .AddSingleton<StarWarsSchema>();
+                .AddTransient<Swapi>()
+                .AddSingleton<ResponseCache>();
 
-            services
-                .AddGraphQL(options =>
-                {
-                    options.EnableMetrics = false;
-                })
+            services.AddGraphQL(b => b
+                .AddServer(true)
+                .AddHttpMiddleware<StarWarsSchema>()
+                .AddSchema<StarWarsSchema>()
                 .AddSystemTextJson()
-                .AddRelayGraphTypes()
-                .AddGraphTypes(typeof(StarWarsSchema));
-
-            services.AddTransient<Swapi>();
-            services.AddSingleton<ResponseCache>();
+                .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)
+                .AddGraphTypes(typeof(StarWarsSchema).Assembly));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +44,7 @@ namespace GraphQL.Relay.StarWars
             }
 
             app.UseGraphQL<StarWarsSchema>();
+            app.UseGraphQLGraphiQL();
         }
     }
 }

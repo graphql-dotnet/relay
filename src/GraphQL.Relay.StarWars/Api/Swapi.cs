@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using GraphQL.Relay.StarWars.Utilities;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.IO;
 
 namespace GraphQL.Relay.StarWars.Api
 {
@@ -16,9 +9,8 @@ namespace GraphQL.Relay.StarWars.Api
     {
         private readonly HttpClient _client;
 
-        private string _apiBase = "http://swapi.dev/api";
-        private ResponseCache _cache = new ResponseCache();
-
+        private const string API_BASE = "http://swapi.dev/api";
+        private readonly ResponseCache _cache = new();
 
         private string GetResource<T>() where T : Entity
         {
@@ -55,28 +47,28 @@ namespace GraphQL.Relay.StarWars.Api
             );
         }
 
-        public async Task<IEnumerable<T>> FetchMany<T>(IEnumerable<Uri> urls)
+        public async Task<IEnumerable<T>> FetchManyAsync<T>(IEnumerable<Uri> urls)
             where T : Entity
         {
             var entities = await Task.WhenAll(urls.Select(Fetch<T>));
             return entities.AsEnumerable();
         }
 
-        public async Task<T> GetEntity<T>(string id) where T : Entity
+        public async Task<T> GetEntityAsync<T>(string id) where T : Entity
         {
             var name = GetResource<T>();
-            var entity = await GetEntity<T>(new Uri($"{_apiBase}/{name}/{id}"));
+            var entity = await GetEntity<T>(new Uri($"{API_BASE}/{name}/{id}"));
 
             return entity;
         }
 
-        public Task<T> GetEntity<T>(Uri url) where T : Entity =>
+        public Task<T> GetEntity<T>(Uri url)
+            where T : Entity =>
             Fetch<T>(url);
 
-
-        public Task<IEnumerable<T>> GetMany<T>(IEnumerable<Uri> urls) where T : Entity =>
-            FetchMany<T>(urls);
-
+        public Task<IEnumerable<T>> GetMany<T>(IEnumerable<Uri> urls)
+            where T : Entity =>
+            FetchManyAsync<T>(urls);
 
         private bool DoneFetching(int count, ConnectionArguments args)
         {
@@ -84,10 +76,11 @@ namespace GraphQL.Relay.StarWars.Api
                 return false;
             return count >= args.First.Value;
         }
-        public async Task<List<T>> GetConnection<T>(ConnectionArguments args)
+
+        public async Task<List<T>> GetConnectionAsync<T>(ConnectionArguments args)
             where T : Entity
         {
-            var nextUrl = new Uri($"{_apiBase}/{typeof(T).Name.ToLower()}/");
+            var nextUrl = new Uri($"{API_BASE}/{typeof(T).Name.ToLower()}/");
             var entities = new List<T>();
             var canStopEarly =
                 args.After != null ||

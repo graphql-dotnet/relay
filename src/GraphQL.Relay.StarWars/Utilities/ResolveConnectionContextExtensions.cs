@@ -9,6 +9,7 @@ namespace GraphQL.Relay.StarWars.Utilities
         public int? Last { get; set; }
         public string Before { get; set; }
     }
+
     public static class ResolveConnectionContextExtensions
     {
         public static ConnectionArguments GetConnectionArguments<T>(this IResolveConnectionContext<T> ctx)

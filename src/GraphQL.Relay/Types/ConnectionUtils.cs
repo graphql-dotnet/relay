@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using GraphQL.Builders;
 using GraphQL.Relay.Utilities;
 using GraphQL.Types.Relay.DataObjects;
@@ -8,7 +6,7 @@ namespace GraphQL.Relay.Types
 {
     public static class ConnectionUtils
     {
-        private const string Prefix = "arrayconnection";
+        private const string PREFIX = "arrayconnection";
 
         public static Connection<TSource> ToConnection<TSource, TParent>(
             IEnumerable<TSource> items,
@@ -67,19 +65,19 @@ namespace GraphQL.Relay.Types
             T item
         )
         {
-            var idx = slice.ToList().IndexOf(item);
+            int idx = slice.ToList().IndexOf(item);
 
             return idx == -1 ? null : OffsetToCursor(idx);
         }
 
         public static int CursorToOffset(string cursor)
         {
-            return int.Parse(cursor.Base64Decode().Substring(Prefix.Length + 1));
+            return int.Parse(cursor.Base64Decode().Substring(PREFIX.Length + 1));
         }
 
         public static string OffsetToCursor(int offset)
         {
-            return $"{Prefix}:{offset}".Base64Encode();
+            return $"{PREFIX}:{offset}".Base64Encode();
         }
 
         public static int OffsetOrDefault(string cursor, int defaultOffset)

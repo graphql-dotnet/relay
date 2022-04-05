@@ -1,40 +1,36 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphQL.SystemTextJson;
 
 namespace GraphQL.Relay.Todo
 {
     public class SchemaWriter
     {
-        private readonly IDocumentWriter writer = new DocumentWriter();
-        private readonly IDocumentExecuter executor;
+        private readonly IGraphQLTextSerializer _serializer = new GraphQLSerializer();
+        private readonly IDocumentExecuter _executor;
         private readonly GraphQL.Types.Schema _schema;
 
         public SchemaWriter(GraphQL.Types.Schema schema)
         {
-            executor = new DocumentExecuter();
+            _executor = new DocumentExecuter();
             _schema = schema;
         }
 
-
-        public async Task<string> Generate()
+        public async Task<string> GenerateAsync()
         {
-            ExecutionResult result = await executor.ExecuteAsync(
-              new ExecutionOptions
-              {
-                  Schema = _schema,
-                  Query = introspectionQuery
-              }
+            var result = await _executor.ExecuteAsync(
+                new ExecutionOptions
+                {
+                    Schema = _schema,
+                    Query = _introspectionQuery
+                }
             );
 
             if (result.Errors?.Any() ?? false)
                 throw result.Errors.First();
 
-            return await writer.WriteToStringAsync(result);
+            return _serializer.Serialize(result);
         }
 
-        private string introspectionQuery = @"
+        private readonly string _introspectionQuery = @"
           query IntrospectionQuery {
             __schema {
               queryType { name }

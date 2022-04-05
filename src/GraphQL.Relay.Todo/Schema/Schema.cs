@@ -1,9 +1,6 @@
-using System;
-using GraphQL.Types;
-
 namespace GraphQL.Relay.Todo.Schema
 {
-    public class TodoSchema: GraphQL.Types.Schema
+    public class TodoSchema : GraphQL.Types.Schema
     {
         public TodoSchema()
         {

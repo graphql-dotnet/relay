@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
 using GraphQL.Builders;
 using GraphQL.Execution;
-using GraphQL.Language.AST;
-using GraphQL.Types;
 
 namespace GraphQL.Relay.Test.Types
 {

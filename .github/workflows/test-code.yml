@@ -27,34 +27,47 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: 
+        os:
           - ubuntu-latest
           - windows-latest
         graphqlversion:
-          - 4.0.2
-          - 4.1.0
-          - 4.2.0
-          - 4.3.0
-          - 4.4.0
+          - 5.0.0
     steps:
       - name: Checkout source
-        uses: actions/checkout@v2
-      - name: Setup .NET Core 5.0 SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/checkout@v3
+      - name: Setup .NET Core SDKs
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '5.0.x'
+          dotnet-version: |
+            6.0.102
           source-url: https://nuget.pkg.github.com/graphql-dotnet/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - name: Install dependencies with GraphQL version ${{ matrix.graphqlversion }}
         run: dotnet restore -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
+      - name: Check formatting
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        run: |
+          dotnet format --no-restore --verify-no-changes --severity warn || (echo "Run 'dotnet format' to fix issues" && exit 1)
       - name: Build solution [Release]
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
         run: dotnet build --no-restore -c Release -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
       - name: Build solution [Debug]
         run: dotnet build --no-restore -c Debug -p:GraphQLTestVersion=${{ matrix.graphqlversion }}
       - name: Test solution [Debug]
-        run: dotnet test --no-restore --no-build
+        run: >
+          dotnet test
+          --no-build
+          --collect "XPlat Code Coverage"
+          --results-directory .coverage
+          --
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[GraphQL.Relay.StarWars]*,[GraphQL.Relay.Todo]*
+      - name: Upload coverage to codecov
+        if: ${{ startsWith(matrix.os, 'ubuntu') }}
+        uses: codecov/codecov-action@v2.1.0
+        with:
+          files: '.coverage/**/coverage.opencover.xml'
 
   buildcheck:
     needs:

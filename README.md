@@ -90,7 +90,7 @@ public class DroidType : NodeGraphType<Droid>
 
 #### Mutations
 
-Relay mutations specify a few constraints on top of the general GraphQL mutations. To accompodate this, there are
+Relay mutations specify a few constraints on top of the general GraphQL mutations. To accommodate this, there are
 mutation specific GraphTypes provided.
 
 #### `MutationGraphType`
@@ -123,7 +123,7 @@ An simple base class that defines a `clientMutationId` field. functionally ident
 #### `MutationPayloadGraphType<TSource, TOut>`, `MutationPayloadGraphType<TSource>`, `MutationPayloadGraphType`
 
 The output ObjectGraphType containing the mutation payload, functionally similar to an `ObjectGraphType` with the
-addition of requiing a `MutateAndGetPayload()` method used to resolve the payload from the inputs.
+addition of requiring a `MutateAndGetPayload()` method used to resolve the payload from the inputs.
 
 ```csharp
 public class CreateDroidPayload : MutationPayloadGraphType<DroidPayload, Task<DroidPayload>>
