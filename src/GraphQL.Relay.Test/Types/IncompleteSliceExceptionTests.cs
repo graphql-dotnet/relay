@@ -1,6 +1,4 @@
-﻿using System;
 using GraphQL.Relay.Types;
-using Xunit;
 
 namespace GraphQL.Relay.Test.Types
 {
@@ -30,7 +28,7 @@ namespace GraphQL.Relay.Test.Types
             var ex = new IncompleteSliceException("Test", inner);
             Assert.Equal("Test", ex.Message);
             Assert.Equal(inner, ex.InnerException);
-            
+
             ex = new IncompleteSliceException("Test", "paramName", inner);
             Assert.StartsWith($"Test", ex.Message);
             Assert.Equal("paramName", ex.ParamName);

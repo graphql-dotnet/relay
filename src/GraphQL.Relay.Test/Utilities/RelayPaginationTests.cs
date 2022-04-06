@@ -1,6 +1,4 @@
-using System;
 using GraphQL.Relay.Utilities;
-using Xunit;
 using static GraphQL.Relay.Types.ConnectionUtils;
 
 namespace GraphQL.Relay.Test.Utilities
@@ -137,7 +135,6 @@ namespace GraphQL.Relay.Test.Utilities
             var ex = Assert.Throws<ArgumentOutOfRangeException>(() => RelayPagination.CalculateEdgeRange(10, last: -1));
             Assert.Equal("last", ex.ParamName);
         }
-
 
         [Fact]
         public void CalculateEdgeRange_IfFirstIsProvided_LimitsRangeLength()

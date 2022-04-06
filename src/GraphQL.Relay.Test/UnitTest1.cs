@@ -1,6 +1,3 @@
-using System;
-using Xunit;
-
 namespace GraphQL.Relay.Test
 {
     public class UnitTest1

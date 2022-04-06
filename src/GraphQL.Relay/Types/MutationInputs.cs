@@ -1,5 +1,3 @@
-﻿using System.Collections.Generic;
-
 namespace GraphQL.Relay.Types
 {
     public class MutationInputs : Dictionary<string, object>
@@ -17,13 +15,9 @@ namespace GraphQL.Relay.Types
             return this[key];
         }
 
-        public T Get<T>(string key, T defaultValue = default(T))
+        public T Get<T>(string key, T defaultValue = default)
         {
-            object value;
-            if (!TryGetValue(key, out value))
-                return defaultValue;
-
-            return (T) value;
+            return TryGetValue(key, out object value) ? (T)value : defaultValue;
         }
     }
 }

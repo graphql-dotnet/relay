@@ -1,10 +1,4 @@
-﻿using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GraphQL.Relay.Types;
-using Xunit;
 
 namespace GraphQL.Relay.Tests.Types
 {

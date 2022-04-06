@@ -1,14 +1,9 @@
+using GraphQL.Relay.Types;
+using GraphQL.SystemTextJson;
+using GraphQL.Types;
+
 namespace GraphQL.Relay.Test.Types
 {
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using GraphQL.Relay.Types;
-    using GraphQL.Types;
-    using Xunit;
-    using Shouldly;
-    using GraphQL.SystemTextJson;
-
     public class SimpleData
     {
         public string Id { get; set; }
@@ -51,10 +46,14 @@ namespace GraphQL.Relay.Test.Types
 
         public DocumentExecuter Executer { get; }
 
-        public DocumentWriter DocumentWriter { get; }
+        public IGraphQLTextSerializer Serializer { get; }
 
-        public QueryGraphTypeTests() =>
-            (Schema, Executer, DocumentWriter) = (new SimpleSchema(), new DocumentExecuter(), new DocumentWriter());
+        public QueryGraphTypeTests()
+        {
+            Schema = new SimpleSchema();
+            Executer = new DocumentExecuter();
+            Serializer = new GraphQLSerializer();
+        }
 
         /// <summary>
         /// Tests the implementation of the "node" query
@@ -69,7 +68,7 @@ namespace GraphQL.Relay.Test.Types
             type.HasField("node").ShouldBeTrue();
             // query has one argument
             type.GetField("node").Arguments.Count.ShouldBe(1);
-            // query has argument 
+            // query has argument
             type.GetField("node").Arguments[0].Name.ShouldBe("id");
             type.GetField("node").Arguments[0].Type.ShouldBe(typeof(NonNullGraphType<IdGraphType>));
         }
@@ -116,7 +115,7 @@ namespace GraphQL.Relay.Test.Types
                 options.Query = query;
             });
 
-            var writtenResult = await DocumentWriter.WriteToStringAsync(result);
+            var writtenResult = Serializer.Serialize(result);
             writtenResult.ShouldBe(expected);
         }
     }

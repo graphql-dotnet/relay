@@ -1,8 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../Tests.props" />
 
   <PropertyGroup>
-    <TargetFramework>net5</TargetFramework>
-    <NoWarn>$(NoWarn);1591;IDE1006</NoWarn>
+    <TargetFramework>net6</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

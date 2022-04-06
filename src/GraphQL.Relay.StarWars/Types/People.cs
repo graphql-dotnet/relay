@@ -1,70 +1,63 @@
-using System.Threading.Tasks;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
-using GraphQL.Types;
 
 namespace GraphQL.Relay.StarWars.Types
 {
-  public class PeopleGraphType : NodeGraphType<People, Task<People>>
-  {
-    private readonly Swapi _api;
-    public PeopleGraphType(Swapi api)
+    public class PeopleGraphType : NodeGraphType<People, Task<People>>
     {
-        _api = api;
+        private readonly Swapi _api;
 
-        Name = "People";
+        public PeopleGraphType(Swapi api)
+        {
+            _api = api;
 
-        Id(p => p.Id);
-        Field(p => p.Name);
-        Field(p => p.Height);
-        Field(p => p.Mass);
-        Field(p => p.HairColor);
-        Field(p => p.SkinColor);
-        Field(p => p.EyeColor);
-        Field(p => p.BirthYear);
-        Field(p => p.Gender);
-        Field(
-          name: "homeworld",
-          type: typeof(PlanetGraphType),
-          resolve: ctx => _api.GetEntity<Planets>(ctx.Source.Homeworld)
-        );
+            Name = "People";
 
-        Connection<FilmGraphType>()
-            .Name("films")
-            .Unidirectional()
-            .Resolve(ctx => api
-                .GetMany<Films>(ctx.Source.Films)
-                .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+            Id(p => p.Id);
+            Field(p => p.Name);
+            Field(p => p.Height);
+            Field(p => p.Mass);
+            Field(p => p.HairColor);
+            Field(p => p.SkinColor);
+            Field(p => p.EyeColor);
+            Field(p => p.BirthYear);
+            Field(p => p.Gender);
+            FieldAsync(
+              name: "homeworld",
+              type: typeof(PlanetGraphType),
+              resolve: async ctx => await _api.GetEntity<Planets>(ctx.Source.Homeworld)
             );
 
+            Connection<FilmGraphType>()
+                .Name("films")
+                .ResolveAsync(async ctx => await api
+                    .GetMany<Films>(ctx.Source.Films)
+                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                );
 
-        Connection<SpeciesGraphType>()
-            .Name("species")
-            .Unidirectional()
-            .Resolve(ctx => api
-                .GetMany<Species>(ctx.Source.Species)
-                .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
-            );
+            Connection<SpeciesGraphType>()
+                .Name("species")
+                .ResolveAsync(async ctx => await api
+                    .GetMany<Species>(ctx.Source.Species)
+                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                );
 
-        Connection<StarshipGraphType>()
-            .Name("starships")
-            .Unidirectional()
-            .Resolve(ctx => api
-                .GetMany<Starships>(ctx.Source.Starships)
-                .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
-            );
+            Connection<StarshipGraphType>()
+                .Name("starships")
+                .ResolveAsync(async ctx => await api
+                    .GetMany<Starships>(ctx.Source.Starships)
+                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                );
 
-        Connection<VehicleGraphType>()
-            .Name("vehicles")
-            .Unidirectional()
-            .Resolve(ctx => api
-                .GetMany<Vehicles>(ctx.Source.Vehicles)
-                .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
-            );
+            Connection<VehicleGraphType>()
+                .Name("vehicles")
+                .ResolveAsync(async ctx => await api
+                    .GetMany<Vehicles>(ctx.Source.Vehicles)
+                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                );
+        }
+
+        public override Task<People> GetById(IResolveFieldContext<object> context, string id) =>
+            _api.GetEntityAsync<People>(id);
     }
-
-    public override Task<People> GetById(IResolveFieldContext<object> context, string id) =>
-        _api.GetEntity<People>(id);
-
-  }
 }

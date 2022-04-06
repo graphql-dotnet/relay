@@ -2,7 +2,7 @@ using GraphQL.Types;
 
 namespace GraphQL.Relay.StarWars.Types
 {
-    public class EntityInterface: InterfaceGraphType
+    public class EntityInterface : InterfaceGraphType
     {
         public EntityInterface()
         {

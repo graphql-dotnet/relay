@@ -1,55 +1,51 @@
-using System.Threading.Tasks;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
-using GraphQL.Types;
 
 namespace GraphQL.Relay.StarWars.Types
 {
-  public class SpeciesGraphType : NodeGraphType<Species, Task<Species>>
-  {
-    private readonly Swapi _api;
-    public SpeciesGraphType(Swapi api)
+    public class SpeciesGraphType : NodeGraphType<Species, Task<Species>>
     {
-        _api = api;
+        private readonly Swapi _api;
 
-        Name = "Species";
+        public SpeciesGraphType(Swapi api)
+        {
+            _api = api;
 
-        Id(p => p.Id);
-        Field(p => p.Name);
+            Name = "Species";
 
-        Field(p => p.Classification);
-        Field(p => p.Designation);
-        Field(p => p.AverageHeight);
-        Field(p => p.SkinColors);
-        Field(p => p.HairColors);
-        Field(p => p.EyeColors);
-        Field(p => p.AverageLifespan);
-        Field(p => p.Language);
-        Field(
-          name: "homeworld",
-          type: typeof(PlanetGraphType),
-          resolve: ctx => _api.GetEntity<Planets>(ctx.Source.Homeworld)
-        );
+            Id(p => p.Id);
+            Field(p => p.Name);
 
-        Connection<PeopleGraphType>()
-            .Name("people")
-            .Unidirectional()
-            .Resolve(ctx => api
-                .GetMany<People>(ctx.Source.People)
-                .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+            Field(p => p.Classification);
+            Field(p => p.Designation);
+            Field(p => p.AverageHeight);
+            Field(p => p.SkinColors);
+            Field(p => p.HairColors);
+            Field(p => p.EyeColors);
+            Field(p => p.AverageLifespan);
+            Field(p => p.Language);
+            FieldAsync(
+              name: "homeworld",
+              type: typeof(PlanetGraphType),
+              resolve: async ctx => await _api.GetEntity<Planets>(ctx.Source.Homeworld)
             );
 
-        Connection<FilmGraphType>()
-            .Name("films")
-            .Unidirectional()
-            .Resolve(ctx => api
-                .GetMany<Films>(ctx.Source.Films)
-                .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
-            );
+            Connection<PeopleGraphType>()
+                .Name("people")
+                .ResolveAsync(async ctx => await api
+                    .GetMany<People>(ctx.Source.People)
+                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                );
+
+            Connection<FilmGraphType>()
+                .Name("films")
+                .ResolveAsync(async ctx => await api
+                    .GetMany<Films>(ctx.Source.Films)
+                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                );
+        }
+
+        public override Task<Species> GetById(IResolveFieldContext<object> context, string id) =>
+            _api.GetEntityAsync<Species>(id);
     }
-
-    public override Task<Species> GetById(IResolveFieldContext<object> context, string id) =>
-        _api.GetEntity<Species>(id);
-
-  }
 }
