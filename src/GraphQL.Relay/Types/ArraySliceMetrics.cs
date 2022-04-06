@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using GraphQL.Builders;
 using GraphQL.Relay.Utilities;
+using static GraphQL.Relay.Types.ConnectionUtils;
 
 namespace GraphQL.Relay.Types
 {
@@ -10,7 +13,6 @@ namespace GraphQL.Relay.Types
     /// </summary>
     public static class ArraySliceMetrics
     {
-        [Obsolete($"Use {nameof(EnumerableSliceMetrics)}.{nameof(EnumerableSliceMetrics.Create)} instead")]
         public static ArraySliceMetrics<TSource> Create<TSource>(
             IList<TSource> slice,
             int? first = null,
@@ -23,7 +25,6 @@ namespace GraphQL.Relay.Types
             return new ArraySliceMetrics<TSource>(slice, first, after, last, before, strictCheck);
         }
 
-        [Obsolete($"Use {nameof(EnumerableSliceMetrics)}.{nameof(EnumerableSliceMetrics.Create)} instead")]
         public static ArraySliceMetrics<TSource> Create<TSource>(
             IList<TSource> slice,
             int sliceStartIndex,
@@ -39,7 +40,7 @@ namespace GraphQL.Relay.Types
                 strictCheck);
         }
 
-        [Obsolete($"Use {nameof(EnumerableSliceMetrics)}.{nameof(EnumerableSliceMetrics.Create)} instead")]
+
         public static ArraySliceMetrics<TSource> Create<TSource, TParent>(
             IList<TSource> slice,
             ResolveConnectionContext<TParent> context,
@@ -49,7 +50,6 @@ namespace GraphQL.Relay.Types
             return new ArraySliceMetrics<TSource>(slice, context.First, context.After, context.Last, context.Before, strictCheck);
         }
 
-        [Obsolete($"Use {nameof(EnumerableSliceMetrics)}.{nameof(EnumerableSliceMetrics.Create)} instead")]
         public static ArraySliceMetrics<TSource> Create<TSource, TParent>(
             IList<TSource> slice,
             IResolveConnectionContext<TParent> context,
@@ -145,13 +145,20 @@ namespace GraphQL.Relay.Types
 
             if (strictCheck)
             {
-                RelayPagination.EnsureSliceCoversRange(
-                    nameof(slice),
-                    range,
-                    StartIndex,
-                    EndIndex
-                );
+                if (!SliceCoversRange(StartIndex, EndIndex, range))
+                {
+                    throw new IncompleteSliceException(
+                        $"Provided slice data with index range [{StartIndex},{EndIndex}] does not " +
+                        $"completely contain the expected data range [{range.StartOffset}, {range.EndOffset}]", nameof(slice));
+                }
             }
+
+
+        }
+
+        private static bool SliceCoversRange(int sliceStartIndex, int sliceEndIndex, EdgeRange range)
+        {
+            return sliceStartIndex <= range.StartOffset && sliceEndIndex >= range.EndOffset;
         }
     }
 

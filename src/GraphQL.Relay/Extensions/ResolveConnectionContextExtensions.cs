@@ -22,13 +22,20 @@ namespace GraphQL.Relay.Extensions
         public static EdgeRange EdgesToReturn(
             this IResolveConnectionContext context,
             int edgeCount
-        ) => RelayPagination.CalculateEdgeRange(
-            edgeCount,
-            context.First,
-            context.After,
-            context.Last,
-            context.Before
-        );
+        )
+        {
+            var first = (!context.First.HasValue && !context.Last.HasValue)
+                ? (context.PageSize ?? edgeCount)
+                : default(int?);
+
+            return RelayPagination.CalculateEdgeRange(
+                edgeCount,
+                first ?? context.First,
+                context.After,
+                context.Last,
+                context.Before
+            );
+        }
 
         /// <summary>
         /// From the connection context, <see cref="IResolveConnectionContext"/>,
@@ -45,7 +52,7 @@ namespace GraphQL.Relay.Extensions
             int? totalCount = null
         )
         {
-            var metrics = EnumerableSliceMetrics.Create(
+            var metrics = SliceMetrics.Create(
                 items,
                 context,
                 totalCount

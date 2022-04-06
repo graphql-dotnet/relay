@@ -7,37 +7,64 @@ using GraphQL.Relay.Utilities;
 namespace GraphQL.Relay.Types
 {
     /// <summary>
-    /// Factory methods for <see cref="EnumerableSliceMetrics{TSource}"/>
+    /// Factory methods for <see cref="SliceMetrics{TSource}"/>
     /// </summary>
-    public static class EnumerableSliceMetrics
+    public static class SliceMetrics
     {
         /// <summary>
-        /// When a page size is not specified, the default page size is 25.
-        /// </summary>
-        public static int DefaultPageSize { get; set; } = 25;
-
-        /// <summary>
-        /// Factory method to create an <see cref="EnumerableSliceMetrics{TSource}"/>
+        /// Factory method to create an <see cref="SliceMetrics{TSource}"/>
         /// </summary>
         /// <typeparam name="TSource"></typeparam>
-        /// <param name="items"></param>
+        /// <param name="source"></param>
         /// <param name="context"></param>
         /// <param name="totalCount"></param>
-        /// <param name="strictCheck"></param>
         /// <returns></returns>
-        public static EnumerableSliceMetrics<TSource> Create<TSource>(
-            IEnumerable<TSource> items,
+        public static SliceMetrics<TSource> Create<TSource>(
+            IEnumerable<TSource> source,
             IResolveConnectionContext context,
-            int? totalCount = null,
-            bool strictCheck = true
-        ) => new(items, context, totalCount, strictCheck);
+            int? totalCount = null
+        )
+        {
+            var totalSourceRowCount = totalCount ?? source.Count();
+            var edges = context.EdgesToReturn(totalSourceRowCount);
+            var nodes = source.Skip(edges.StartOffset).Take(edges.Count);
+
+            return new(
+                source: nodes.ToList(),
+                edges,
+                totalSourceRowCount
+            );
+        }
+
+        /// <summary>
+        /// Factory method to create an <see cref="SliceMetrics{TSource}"/>
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="source"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public static SliceMetrics<TSource> Create<TSource>(
+            IQueryable<TSource> source,
+            IResolveConnectionContext context
+        )
+        {
+            var totalCount = source.Count();
+            var edges = context.EdgesToReturn(totalCount);
+            var nodes = source.Skip(edges.StartOffset).Take(edges.Count);
+
+            return new(
+                source: nodes.ToList(),
+                edges,
+                totalCount
+            );
+        }
     }
 
     /// <summary>
     /// Relay connection slice metrics
     /// </summary>
     /// <typeparam name="TSource"></typeparam>
-    public class EnumerableSliceMetrics<TSource>
+    public class SliceMetrics<TSource>
     {
         /// <summary>
         /// The Total number of items in outer list. May be >= the SliceSize
@@ -53,11 +80,6 @@ namespace GraphQL.Relay.Types
         /// Starting index for a slice of an IEnumerable item source
         /// </summary>
         public int StartIndex { get; }
-
-        /// <summary>
-        /// Ending index for a slice of an IEnumerable item source
-        /// </summary>
-        public int EndIndex { get; }
 
         /// <summary>
         /// When a slice of a larger IEnumerable source has any records before it, this will be true
@@ -77,41 +99,25 @@ namespace GraphQL.Relay.Types
         /// <summary>
         /// Constructor for relay connection slice metrics
         /// </summary>
-        /// <param name="itemSource"></param>
-        /// <param name="connectContext"></param>
+        /// <param name="source"></param>
+        /// <param name="edges"></param>
         /// <param name="totalCount"></param>
-        /// <param name="strictCheck"></param>
         ///
-        public EnumerableSliceMetrics(
-            IEnumerable<TSource> itemSource,
-            IResolveConnectionContext connectContext,
-            int? totalCount = null,
-            bool strictCheck = true
+        public SliceMetrics(
+            IList<TSource> source,
+            EdgeRange edges,
+            int totalCount
         )
         {
-            TotalCount = totalCount ?? itemSource.Count();
+            TotalCount = totalCount;
 
-            var edges = connectContext.EdgesToReturn(TotalCount);
-            var slice = itemSource.Skip(edges.StartOffset).Take(edges.Count).ToList();
-
-            Slice = slice;
-            SliceSize = slice.Count;
+            Slice = source;
+            SliceSize = source.Count;
 
             HasNext = (edges.StartOffset + SliceSize) < TotalCount;
             HasPrevious = edges.StartOffset > 0;
 
             StartIndex = edges.StartOffset;
-            EndIndex = StartIndex + SliceSize - 1;
-
-            if (strictCheck)
-            {
-                RelayPagination.EnsureSliceCoversRange(
-                    nameof(itemSource),
-                    edges,
-                    StartIndex,
-                    EndIndex
-                );
-            }
         }
     }
 }

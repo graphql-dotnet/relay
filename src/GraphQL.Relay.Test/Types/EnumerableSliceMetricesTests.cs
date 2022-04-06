@@ -184,7 +184,7 @@ namespace GraphQL.Relay.Test.Types
             var list = new int?[] { 1, 2, 3, 4 };
 
             // Act
-            var slice = EnumerableSliceMetrics.Create(list, CreateContext(
+            var slice = SliceMetrics.Create(list, CreateContext(
                 first,
                 after,
                 last,

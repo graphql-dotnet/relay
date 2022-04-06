@@ -6,11 +6,19 @@ namespace GraphQL.Relay.Test.Types
 {
     public class ResolveConnectionContextFactory
     {
-        public static ResolveConnectionContext<TestParent> CreateContext(int? first = null, string after = null,
-            int? last = null, string before = null) => new(
+        public static ResolveConnectionContext<TestParent> CreateContext(
+            int? first = null,
+            string after = null,
+            int? last = null,
+            string before = null,
+            int? defaultPageSize = null
+        ) => CreateContext<TestParent>(first, after, last, before, defaultPageSize);
+
+        public static ResolveConnectionContext<TSource> CreateContext<TSource>(int? first = null, string after = null,
+            int? last = null, string before = null, int? defaultPageSize = null) => new(
                 new ResolveFieldContext() { },
                 true,
-                null
+                defaultPageSize
             )
             {
                 Arguments = new Dictionary<string, ArgumentValue>
