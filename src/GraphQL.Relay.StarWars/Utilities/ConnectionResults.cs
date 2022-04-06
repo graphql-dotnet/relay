@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace GraphQL.Relay.StarWars.Utilities
 {
     public static class ConnectionEntities

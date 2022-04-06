@@ -85,7 +85,7 @@ namespace GraphQL.Relay.StarWars.Api
             var entities = new List<T>();
 
             EntityList<T> page;
-            while (nextUrl != null && !DoneFetching(entities.Count, connectionContext))
+            while (nextUrl != null && !DoneFetching(entities.Count, args))
             {
                 page = await Fetch<EntityList<T>>(nextUrl);
                 entities.AddRange(page.Results);
