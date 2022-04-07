@@ -1,22 +1,22 @@
 using GraphQL.Builders;
 using GraphQL.Relay.Test.Fixtures;
+using GraphQL.Relay.Test.Fixtures.Models;
 using GraphQL.Relay.Types;
-using Xunit;
 using static GraphQL.Relay.Test.Fixtures.DatabaseFixture;
 using static GraphQL.Relay.Test.Types.ResolveConnectionContextFactory;
 
 namespace GraphQL.Relay.Test.Types
 {
-    public class QueryableSliceMetricsTests : IClassFixture<DatabaseFixture>
+    public class QueryableSliceMetricTests : IClassFixture<DatabaseFixture>
     {
         private readonly DatabaseFixture fixture;
 
-        public QueryableSliceMetricsTests(DatabaseFixture fixture)
+        public QueryableSliceMetricTests(DatabaseFixture fixture)
         {
             this.fixture = fixture;
         }
 
-        BloggingContext DbContext => this.fixture.Context;
+        private BloggingContext DbContext => fixture.Context;
 
         public static ResolveConnectionContext<Blog> CreateContext(
             int? first = null,
@@ -39,11 +39,11 @@ namespace GraphQL.Relay.Test.Types
             );
 
             // Assert
-            Assert.Equal(1000, slice.SliceSize);
-            Assert.Equal(1000, slice.TotalCount);
+            Assert.Equal(fixture.TotalCount, slice.SliceSize);
+            Assert.Equal(fixture.TotalCount, slice.TotalCount);
             Assert.Equal(0, slice.StartIndex);
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.False(slice.HasPrevious);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace GraphQL.Relay.Test.Types
         {
             // Arrange
             var context = CreateContext(
-                defaultPageSize: 1000
+                defaultPageSize: fixture.TotalCount
             );
 
             // Act
@@ -61,11 +61,11 @@ namespace GraphQL.Relay.Test.Types
             );
 
             // Assert
-            Assert.Equal(1000, slice.SliceSize);
-            Assert.Equal(1000, slice.TotalCount);
+            Assert.Equal(fixture.TotalCount, slice.SliceSize);
+            Assert.Equal(fixture.TotalCount, slice.TotalCount);
             Assert.Equal(0, slice.StartIndex);
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.False(slice.HasPrevious);
         }
 
         [Fact]
@@ -85,10 +85,10 @@ namespace GraphQL.Relay.Test.Types
 
             // Assert
             Assert.Equal(4, slice.SliceSize);
-            Assert.Equal(1000, slice.TotalCount);
+            Assert.Equal(fixture.TotalCount, slice.TotalCount);
             Assert.Equal(996, slice.StartIndex);
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.True(slice.HasPrevious);
         }
 
         [Fact]
@@ -110,8 +110,8 @@ namespace GraphQL.Relay.Test.Types
             Assert.Equal(0, slice.SliceSize);
             Assert.Equal(1000, slice.StartIndex);
 
-            Assert.Equal(false, slice.HasNext);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.False(slice.HasNext);
+            Assert.True(slice.HasPrevious);
         }
 
         [Fact]
@@ -128,7 +128,7 @@ namespace GraphQL.Relay.Test.Types
             // Assert
             Assert.Equal(1000, slice.StartIndex);
             Assert.Equal(0, slice.SliceSize);
-            Assert.Equal(false, slice.HasNext);
+            Assert.False(slice.HasNext);
         }
 
         [Fact]
@@ -146,7 +146,7 @@ namespace GraphQL.Relay.Test.Types
             // Assert
             Assert.Equal(989, slice.StartIndex);
             Assert.Equal(10, slice.SliceSize);
-            Assert.Equal(true, slice.HasNext);
+            Assert.True(slice.HasNext);
         }
 
         [Fact]
@@ -164,7 +164,7 @@ namespace GraphQL.Relay.Test.Types
             // Assert
             Assert.Equal(990, slice.StartIndex);
             Assert.Equal(10, slice.SliceSize);
-            Assert.Equal(false, slice.HasNext);
+            Assert.False(slice.HasNext);
         }
 
         [Fact]
@@ -182,7 +182,7 @@ namespace GraphQL.Relay.Test.Types
             // Assert
             Assert.Equal(1, slice.StartIndex);
             Assert.Equal(10, slice.SliceSize);
-            Assert.Equal(true, slice.HasNext);
+            Assert.True(slice.HasNext);
         }
 
         [Fact]
@@ -200,7 +200,7 @@ namespace GraphQL.Relay.Test.Types
             // Assert
             Assert.Equal(10, slice.StartIndex);
             Assert.Equal(2, slice.SliceSize);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.True(slice.HasPrevious);
         }
 
         [Fact]
@@ -217,7 +217,7 @@ namespace GraphQL.Relay.Test.Types
             // Assert
             Assert.Equal(0, slice.StartIndex);
             Assert.Equal(2, slice.SliceSize);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasPrevious);
         }
 
         [Fact]
@@ -233,7 +233,7 @@ namespace GraphQL.Relay.Test.Types
 
             // Assert
             Assert.Equal(1, slice.StartIndex);
-            Assert.Equal(true, slice.HasPrevious);
+            Assert.True(slice.HasPrevious);
         }
 
         [Fact]
@@ -247,7 +247,7 @@ namespace GraphQL.Relay.Test.Types
 
             // Assert
             Assert.Equal(0, slice.StartIndex);
-            Assert.Equal(false, slice.HasPrevious);
+            Assert.False(slice.HasPrevious);
         }
     }
 }

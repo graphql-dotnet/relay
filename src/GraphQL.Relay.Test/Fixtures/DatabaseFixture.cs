@@ -1,13 +1,11 @@
-using System;
 using System.Data.Common;
-using System.Linq;
+using GraphQL.Relay.Test.Fixtures.Models;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Xunit;
 
 namespace GraphQL.Relay.Test.Fixtures
 {
-    public class DatabaseFixture : IDisposable
+    public partial class DatabaseFixture : IDisposable
     {
         private readonly DbConnection _connection;
         private readonly DbContextOptions<BloggingContext> _contextOptions;
@@ -29,7 +27,7 @@ namespace GraphQL.Relay.Test.Fixtures
 
             _ = Context.Database.EnsureCreated();
 
-            var blogs = Enumerable.Range(1, 1000).Select(i => new Blog
+            var blogs = Enumerable.Range(1, TotalCount).Select(i => new Blog
             {
                 Name = $"Blog{i}",
                 Url = $"http://sample.com/{i}"
@@ -51,18 +49,13 @@ namespace GraphQL.Relay.Test.Fixtures
             GC.SuppressFinalize(this);
         }
 
-        public BloggingContext Context { get; }
+        public int TotalCount => 1000;
 
-        public class Blog
-        {
-            public int BlogId { get; set; }
-            public string Name { get; set; }
-            public string Url { get; set; }
-        }
+        public BloggingContext Context { get; }
 
         public class BloggingContext : DbContext
         {
-            public BloggingContext(DbContextOptions<BloggingContext> options) : base(options) {}
+            public BloggingContext(DbContextOptions<BloggingContext> options) : base(options) { }
 
             public DbSet<Blog> Blogs => Set<Blog>();
         }
