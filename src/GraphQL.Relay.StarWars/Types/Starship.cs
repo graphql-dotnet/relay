@@ -1,3 +1,4 @@
+using GraphQL.Relay.Extensions;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.Types;
 
@@ -32,14 +33,14 @@ namespace GraphQL.Relay.StarWars.Types
                 .Name("pilots")
                 .ResolveAsync(async ctx => await api
                     .GetMany<People>(ctx.Source.Pilots)
-                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                    .ContinueWith(t => ctx.ToConnection(t.Result))
                 );
 
             Connection<FilmGraphType>()
                 .Name("films")
                 .ResolveAsync(async ctx => await api
                     .GetMany<Films>(ctx.Source.Films)
-                    .ContinueWith(t => ConnectionUtils.ToConnection(t.Result, ctx))
+                    .ContinueWith(t => ctx.ToConnection(t.Result))
                 );
         }
 

@@ -12,8 +12,7 @@ namespace GraphQL.Relay.StarWars.Utilities
         ) where TEntity : Entity
         {
             builder
-                .Bidirectional()
-                .Resolve(ctx => api
+                .ResolveAsync(async ctx => await api
                     .GetConnectionAsync<TEntity>(ctx.GetConnectionArguments())
                     .ContinueWith(t => ctx.ToConnection(t.Result.Entities, t.Result.TotalCount))
             );
