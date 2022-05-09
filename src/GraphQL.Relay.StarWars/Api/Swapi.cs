@@ -12,10 +12,7 @@ namespace GraphQL.Relay.StarWars.Api
         private const string API_BASE = "http://swapi.dev/api";
         private readonly ResponseCache _cache = new();
 
-        private string GetResource<T>() where T : Entity
-        {
-            return typeof(T).Name.ToLower();
-        }
+        private static string GetResource<T>() where T : Entity => typeof(T).Name.ToLower();
 
         public Swapi(ResponseCache cache)
         {
@@ -70,7 +67,7 @@ namespace GraphQL.Relay.StarWars.Api
             where T : Entity =>
             FetchManyAsync<T>(urls);
 
-        private bool DoneFetching(int count, ConnectionArguments args)
+        private static bool DoneFetching(int count, ConnectionArguments args)
         {
             if (args.After != null || args.Before != null || args.Last != null || args.First == null)
                 return false;
@@ -82,7 +79,7 @@ namespace GraphQL.Relay.StarWars.Api
         {
             var nextUrl = new Uri($"{API_BASE}/{typeof(T).Name.ToLower()}/");
             var entities = new List<T>();
-            var canStopEarly =
+            var canStopEarly =  // TODO: unused ?
                 args.After != null ||
                 args.Before != null ||
                 args.Last != null ||
@@ -99,7 +96,7 @@ namespace GraphQL.Relay.StarWars.Api
             return entities;
         }
 
-        private T DeserializeObject<T>(string payload)
+        private static T DeserializeObject<T>(string payload)
         {
             return JsonConvert.DeserializeObject<T>(
                 payload,

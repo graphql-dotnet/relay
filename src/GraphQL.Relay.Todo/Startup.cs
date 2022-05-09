@@ -11,7 +11,7 @@ namespace GraphQL.Relay.Todo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGraphQL(b => b
-                .AddServer(true)
+                .AddMetrics(true)
                 .AddHttpMiddleware<TodoSchema>()
                 .AddSchema<TodoSchema>()
                 .AddSystemTextJson()
