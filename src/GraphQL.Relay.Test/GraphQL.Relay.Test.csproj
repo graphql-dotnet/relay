@@ -7,11 +7,6 @@
 
   <ItemGroup>
     <PackageReference Include="GraphQL.SystemTextJson" Version="$(GraphQLTestVersion)" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.15" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="Shouldly" Version="4.0.3" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
