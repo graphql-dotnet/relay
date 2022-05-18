@@ -65,7 +65,7 @@ jobs:
           DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[GraphQL.Relay.StarWars]*,[GraphQL.Relay.Todo]*
       - name: Upload coverage to codecov
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v3
         with:
           files: '.coverage/**/coverage.opencover.xml'
 
