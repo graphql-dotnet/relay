@@ -52,9 +52,9 @@ jobs:
           dotnet format --no-restore --verify-no-changes --severity warn || (echo "Run 'dotnet format' to fix issues" && exit 1)
       - name: Build solution [Release]
         if: ${{ startsWith(matrix.os, 'ubuntu') }}
-        run: dotnet build --no-restore -c Release -p:GraphQLTestVersion=${{ matrix.graphqlversion }} /p:UseSharedCompilation=false
+        run: dotnet build --no-restore -c Release -p:GraphQLTestVersion=${{ matrix.graphqlversion }} -p:UseSharedCompilation=false
       - name: Build solution [Debug]
-        run: dotnet build --no-restore -c Debug -p:GraphQLTestVersion=${{ matrix.graphqlversion }} /p:UseSharedCompilation=false
+        run: dotnet build --no-restore -c Debug -p:GraphQLTestVersion=${{ matrix.graphqlversion }} -p:UseSharedCompilation=false
       - name: Test solution [Debug]
         run: >
           dotnet test
