@@ -42,7 +42,7 @@ namespace GraphQL.Relay.Types
             return (string)value.Value; // TODO: string allocation
         }
 
-        private bool IsCorrectSelection(IResolveFieldContext<TSource> context, GraphQLField field)
+        private static bool IsCorrectSelection(IResolveFieldContext<TSource> context, GraphQLField field)
         {
             return Enumerable.Any(field.SelectionSet.Selections,
                 s => s.Location.Equals(context.FieldAst.Location));
