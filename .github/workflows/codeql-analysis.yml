@@ -33,7 +33,7 @@ jobs:
     - name: Build CodeQL solution
       # https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/troubleshooting-the-codeql-workflow#reduce-the-amount-of-code-being-analyzed-in-a-single-workflow
       working-directory: codeql
-      run: dotnet build --no-restore /p:UseSharedCompilation=false
+      run: dotnet build --no-restore
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

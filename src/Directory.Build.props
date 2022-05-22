@@ -20,7 +20,6 @@
     <IsPackable>true</IsPackable>
     <!--<TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
     <GraphQLTestVersion>5.2.0</GraphQLTestVersion>
-    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
 </Project>
