@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solutio
 		src\Tests.props = src\Tests.props
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphQL.Relay.ApiTests", "src\GraphQL.Relay.ApiTests\GraphQL.Relay.ApiTests.csproj", "{40232599-AF52-440F-8EB9-F6B4ED184ECA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,18 @@ Global
 		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x64.Build.0 = Release|Any CPU
 		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x86.ActiveCfg = Release|Any CPU
 		{15AFC7EC-11E6-469F-87DF-D1E396463BE9}.Release|x86.Build.0 = Release|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Debug|x64.Build.0 = Debug|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Debug|x86.Build.0 = Debug|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Release|x64.ActiveCfg = Release|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Release|x64.Build.0 = Release|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Release|x86.ActiveCfg = Release|Any CPU
+		{40232599-AF52-440F-8EB9-F6B4ED184ECA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

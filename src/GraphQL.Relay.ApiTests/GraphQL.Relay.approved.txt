@@ -1,0 +1,164 @@
+namespace GraphQL.Relay.Types
+{
+    public static class ArraySliceMetrics
+    {
+        public static GraphQL.Relay.Types.ArraySliceMetrics<TSource> Create<TSource>(System.Collections.Generic.IList<TSource> slice, int? first = default, string after = null, int? last = default, string before = null, bool strictCheck = true) { }
+        public static GraphQL.Relay.Types.ArraySliceMetrics<TSource> Create<TSource>(System.Collections.Generic.IList<TSource> slice, int sliceStartIndex, int totalCount, int? first = default, string after = null, int? last = default, string before = null, bool strictCheck = true) { }
+        public static GraphQL.Relay.Types.ArraySliceMetrics<TSource> Create<TSource, TParent>(System.Collections.Generic.IList<TSource> slice, GraphQL.Builders.ResolveConnectionContext<TParent> context, bool strictCheck = true) { }
+        public static GraphQL.Relay.Types.ArraySliceMetrics<TSource> Create<TSource, TParent>(System.Collections.Generic.IList<TSource> slice, GraphQL.Builders.IResolveConnectionContext<TParent> context, int sliceStartIndex, int totalCount, bool strictCheck = true) { }
+    }
+    public class ArraySliceMetrics<TSource>
+    {
+        public ArraySliceMetrics(System.Collections.Generic.IList<TSource> slice, int? first, string after, int? last, string before, bool strictCheck = true) { }
+        public ArraySliceMetrics(System.Collections.Generic.IList<TSource> slice, int? first, string after, int? last, string before, int sliceStartIndex, int totalCount, bool strictCheck = true) { }
+        public int EndIndex { get; }
+        public int EndOffset { get; }
+        public int FirstValidOffset { get; }
+        public bool HasNext { get; }
+        public bool HasPrevious { get; }
+        public bool IsEmpty { get; }
+        public int LastValidOffset { get; }
+        public System.Collections.Generic.IEnumerable<TSource> Slice { get; }
+        public int SliceSize { get; }
+        public int StartIndex { get; }
+        public int StartOffset { get; }
+        public int TotalCount { get; }
+    }
+    [System.Obsolete("Use ArraySliceMetrics.Create instead")]
+    public class ArraySliceMetrics<TSource, TParent> : GraphQL.Relay.Types.ArraySliceMetrics<TSource>
+    {
+        [System.Obsolete("Use ArraySliceMetrics.Create instead")]
+        public ArraySliceMetrics(System.Collections.Generic.IList<TSource> slice, GraphQL.Builders.ResolveConnectionContext<TParent> context, bool strictCheck = true) { }
+        [System.Obsolete("Use ArraySliceMetrics.Create instead")]
+        public ArraySliceMetrics(System.Collections.Generic.IList<TSource> slice, GraphQL.Builders.ResolveConnectionContext<TParent> context, int sliceStartIndex, int totalCount, bool strictCheck = true) { }
+    }
+    public abstract class AsyncNodeGraphType<T> : GraphQL.Relay.Types.NodeGraphType<T, System.Threading.Tasks.Task<T>>
+    {
+        protected AsyncNodeGraphType() { }
+    }
+    public static class ConnectionUtils
+    {
+        public static string CursorForObjectInConnection<T>(System.Collections.Generic.IEnumerable<T> slice, T item) { }
+        public static int CursorToOffset(string cursor) { }
+        public static int OffsetOrDefault(string cursor, int defaultOffset) { }
+        public static string OffsetToCursor(int offset) { }
+        public static GraphQL.Types.Relay.DataObjects.Connection<TSource> ToConnection<TSource, TParent>(System.Collections.Generic.IEnumerable<TSource> items, GraphQL.Builders.IResolveConnectionContext<TParent> context, bool strictCheck = true) { }
+        public static GraphQL.Types.Relay.DataObjects.Connection<TSource> ToConnection<TSource, TParent>(System.Collections.Generic.IEnumerable<TSource> slice, GraphQL.Builders.IResolveConnectionContext<TParent> context, int sliceStartIndex, int totalCount, bool strictCheck = true) { }
+    }
+    public class DefaultNodeGraphType<TSource, TOut> : GraphQL.Relay.Types.NodeGraphType<TSource, TOut>
+    {
+        public DefaultNodeGraphType(System.Func<string, TOut> getById) { }
+        public override TOut GetById(GraphQL.IResolveFieldContext<object> context, string id) { }
+    }
+    public class GlobalId
+    {
+        public string Id;
+        public string Type;
+        public GlobalId() { }
+    }
+    public interface IMutationPayload<out T>
+    {
+        T MutateAndGetPayload(GraphQL.Relay.Types.MutationInputs inputs, GraphQL.IResolveFieldContext<object> context);
+    }
+    public interface IRelayNode<out T>
+    {
+        T GetById(GraphQL.IResolveFieldContext<object> context, string id);
+    }
+    [System.Serializable]
+    public class IncompleteSliceException : System.ArgumentException
+    {
+        public IncompleteSliceException() { }
+        public IncompleteSliceException(string message) { }
+        public IncompleteSliceException(string message, System.Exception innerException) { }
+        public IncompleteSliceException(string message, string paramName) { }
+        public IncompleteSliceException(string message, string paramName, System.Exception innerException) { }
+    }
+    public class MutationGraphType : GraphQL.Types.ObjectGraphType
+    {
+        public MutationGraphType() { }
+        public GraphQL.Types.FieldType Mutation<TMutationInput, TMutationType>(string name)
+            where TMutationInput : GraphQL.Relay.Types.MutationInputGraphType
+            where TMutationType : GraphQL.Relay.Types.IMutationPayload<object> { }
+    }
+    public class MutationInputGraphType : GraphQL.Types.InputObjectGraphType
+    {
+        public MutationInputGraphType() { }
+    }
+    public class MutationInputs : System.Collections.Generic.Dictionary<string, object>
+    {
+        public MutationInputs() { }
+        public MutationInputs(System.Collections.Generic.IDictionary<string, object> dict) { }
+        public object Get(string key) { }
+        public T Get<T>(string key, T defaultValue = default) { }
+    }
+    public abstract class MutationPayloadGraphType : GraphQL.Relay.Types.MutationPayloadGraphType<object>
+    {
+        protected MutationPayloadGraphType() { }
+    }
+    public abstract class MutationPayloadGraphType<TSource> : GraphQL.Relay.Types.MutationPayloadGraphType<TSource, TSource>
+    {
+        protected MutationPayloadGraphType() { }
+    }
+    public abstract class MutationPayloadGraphType<TSource, TOut> : GraphQL.Types.ObjectGraphType<TSource>, GraphQL.Relay.Types.IMutationPayload<TOut>
+    {
+        protected MutationPayloadGraphType() { }
+        public abstract TOut MutateAndGetPayload(GraphQL.Relay.Types.MutationInputs inputs, GraphQL.IResolveFieldContext<object> context);
+    }
+    public static class Node
+    {
+        public static GraphQL.Relay.Types.NodeGraphType<TSource, TOut> For<TSource, TOut>(System.Func<string, TOut> getById) { }
+        public static GraphQL.Relay.Types.GlobalId FromGlobalId(string globalId) { }
+        public static string ToGlobalId(string name, object id) { }
+    }
+    public abstract class NodeGraphType : GraphQL.Relay.Types.NodeGraphType<object>
+    {
+        protected NodeGraphType() { }
+    }
+    public abstract class NodeGraphType<TSource> : GraphQL.Relay.Types.NodeGraphType<TSource, TSource>
+    {
+        protected NodeGraphType() { }
+    }
+    public abstract class NodeGraphType<T, TOut> : GraphQL.Types.ObjectGraphType<T>, GraphQL.Relay.Types.IRelayNode<TOut>
+    {
+        protected NodeGraphType() { }
+        public static System.Type Connection { get; }
+        public static System.Type Edge { get; }
+        public abstract TOut GetById(GraphQL.IResolveFieldContext<object> context, string id);
+        public GraphQL.Types.FieldType Id<TReturnType>(System.Linq.Expressions.Expression<System.Func<T, TReturnType>> expression) { }
+        public GraphQL.Types.FieldType Id<TReturnType>(string name, System.Linq.Expressions.Expression<System.Func<T, TReturnType>> expression) { }
+    }
+    public class NodeInterface : GraphQL.Types.InterfaceGraphType
+    {
+        public NodeInterface() { }
+    }
+    public class QueryGraphType : GraphQL.Types.ObjectGraphType
+    {
+        public QueryGraphType() { }
+    }
+}
+namespace GraphQL.Relay.Utilities
+{
+    public struct EdgeRange
+    {
+        public EdgeRange(int startOffset, int endOffset) { }
+        public int Count { get; }
+        public int EndOffset { get; }
+        public bool IsEmpty { get; }
+        public int StartOffset { get; }
+        public void LimitCountFromStart(int maxLength) { }
+        public void LimitCountToEnd(int maxLength) { }
+    }
+    public static class EnumerableExtensions
+    {
+        public static System.Collections.Generic.IEnumerable<T> Slice<T>(this System.Collections.Generic.IEnumerable<T> collection, int start, int end) { }
+    }
+    public static class RelayPagination
+    {
+        public static GraphQL.Relay.Utilities.EdgeRange CalculateEdgeRange(int edgeCount, int? first = default, string after = null, int? last = default, string before = null) { }
+    }
+    public static class StringExtensions
+    {
+        public static string Base64Decode(this string value) { }
+        public static string Base64Encode(this string value) { }
+    }
+}
