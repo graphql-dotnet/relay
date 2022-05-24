@@ -1,9 +1,8 @@
 using GraphQL.Builders;
 using GraphQL.Relay.Types;
-using GraphQL.Relay.Utilities;
 using GraphQL.Types.Relay.DataObjects;
 
-namespace GraphQL.Relay.Extensions
+namespace GraphQL.Relay.Utilities
 {
     /// <summary>
     /// Provide extension methods for <see cref="IResolveConnectionContext{TSource}"/>.

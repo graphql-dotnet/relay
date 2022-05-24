@@ -1,6 +1,6 @@
 using GraphQL.Builders;
-using GraphQL.Relay.Extensions;
 using GraphQL.Relay.StarWars.Api;
+using GraphQL.Relay.Utilities;
 
 namespace GraphQL.Relay.StarWars.Utilities
 {
