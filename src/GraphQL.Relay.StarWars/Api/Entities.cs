@@ -13,7 +13,6 @@ namespace GraphQL.Relay.StarWars.Api
 
     public class EntityList<TEntity> : ISwapiResponse
     {
-
         public int Count { get; set; }
         public Uri Next { get; set; }
         public Uri Previous { get; set; }

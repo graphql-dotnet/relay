@@ -1,6 +1,24 @@
 # GraphQL.Relay
 
+![License](https://img.shields.io/github/license/graphql-dotnet/relay)
+
+[![CodeQL analysis](https://github.com/graphql-dotnet/relay/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/graphql-dotnet/relay/actions/workflows/codeql-analysis.yml)
+
+[![codecov](https://codecov.io/gh/graphql-dotnet/relay/branch/master/graph/badge.svg?token=wTEXq34OBT)](https://codecov.io/gh/graphql-dotnet/relay)
+
+![Activity](https://img.shields.io/github/commit-activity/w/graphql-dotnet/relay)
+![Activity](https://img.shields.io/github/commit-activity/m/graphql-dotnet/relay)
+![Activity](https://img.shields.io/github/commit-activity/y/graphql-dotnet/relay)
+
+![Size](https://img.shields.io/github/repo-size/graphql-dotnet/relay)
+
 A collection of classes, tools, and utilities for creating Relay.js compatible GraphQL servers in dotnet.
+
+Provides the following packages:
+
+| Package       | Downloads                                                                                               | NuGet Latest                                                                                           |
+|---------------|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| GraphQL.Relay | [![Nuget](https://img.shields.io/nuget/dt/GraphQL.Relay)](https://www.nuget.org/packages/GraphQL.Relay) | [![Nuget](https://img.shields.io/nuget/v/GraphQL.Relay)](https://www.nuget.org/packages/GraphQL.Relay) |
 
 ## Usage
 

@@ -5,6 +5,12 @@ updates:
   directory: "/"
   schedule:
     interval: "daily"
+  ignore:
+    - dependency-name: "GraphQL"
+    - dependency-name: "GraphQL.MicrosoftDI"
+    - dependency-name: "GraphQL.SystemTextJson"
+    - dependency-name: "GraphQL.Server.Transports.AspNetCore"
+    - dependency-name: "GraphQL.Server.Ui.GraphiQL"
 
 - package-ecosystem: "github-actions"
   directory: "/"

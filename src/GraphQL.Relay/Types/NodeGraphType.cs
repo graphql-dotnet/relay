@@ -74,9 +74,11 @@ namespace GraphQL.Relay.Types
                 if (name.ToLower() == "id")
                 {
                     if (string.IsNullOrWhiteSpace(Name))
+                    {
                         throw new InvalidOperationException(
                             "The parent GraphQL type must define a Name before declaring the Id field " +
                             "in order to properly prefix the local id field");
+                    }
 
                     name = (Name + "Id").ToCamelCase();
                 }

@@ -32,6 +32,7 @@ jobs:
           - windows-latest
         graphqlversion:
           - 5.0.0
+          - 5.2.0
     steps:
       - name: Checkout source
         uses: actions/checkout@v3

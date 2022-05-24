@@ -27,7 +27,7 @@ namespace GraphQL.Relay.StarWars
                 .AddSingleton<ResponseCache>();
 
             services.AddGraphQL(b => b
-                .AddServer(true)
+                .AddMetrics(true)
                 .AddHttpMiddleware<StarWarsSchema>()
                 .AddSchema<StarWarsSchema>()
                 .AddSystemTextJson()
