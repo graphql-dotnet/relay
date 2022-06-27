@@ -40,8 +40,7 @@ jobs:
       - name: Setup .NET Core SDKs
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: |
-            6.0.102
+          dotnet-version: '6.0.x'
           source-url: https://nuget.pkg.github.com/graphql-dotnet/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}

@@ -28,9 +28,9 @@ jobs:
           echo version=$version
           echo "version=$version" >> $GITHUB_ENV
       - name: Setup .NET Core 6.0 SDK
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.102'
+          dotnet-version: '6.0.x'
           source-url: https://api.nuget.org/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.RELAY_NUGET_TOKEN}}
@@ -57,7 +57,7 @@ jobs:
             const fs = require('fs').promises;
             const { repo: { owner, repo }, sha } = context;
 
-            for (let file of await fs.readdir('src/out')) {
+            for (let file of await fs.readdir('out')) {
               console.log('uploading', file);
 
               await github.rest.repos.uploadReleaseAsset({
