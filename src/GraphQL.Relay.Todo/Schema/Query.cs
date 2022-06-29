@@ -1,6 +1,6 @@
 using GraphQL.Relay.Types;
-using GraphQL.Types;
 using GraphQL.Relay.Utilities;
+using GraphQL.Types;
 
 namespace GraphQL.Relay.Todo.Schema
 {
