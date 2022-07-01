@@ -11,11 +11,6 @@ namespace GraphQL.Relay.Types
         /// <summary>
         /// Factory method to create an <see cref="SliceMetrics{TSource}"/>
         /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="source"></param>
-        /// <param name="context"></param>
-        /// <param name="totalCount"></param>
-        /// <returns></returns>
         public static SliceMetrics<TSource> Create<TSource>(
             IEnumerable<TSource> source,
             IResolveConnectionContext context,
