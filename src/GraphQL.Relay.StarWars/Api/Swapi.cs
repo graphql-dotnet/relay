@@ -74,16 +74,12 @@ namespace GraphQL.Relay.StarWars.Api
             return count >= args.First.Value;
         }
 
-        public async Task<List<T>> GetConnectionAsync<T>(ConnectionArguments args)
+        public async Task<ConnectionEntities<T>> GetConnectionAsync<T>(ConnectionArguments args)
             where T : Entity
         {
+            var count = 0;
             var nextUrl = new Uri($"{API_BASE}/{typeof(T).Name.ToLower()}/");
             var entities = new List<T>();
-            var canStopEarly =  // TODO: unused ?
-                args.After != null ||
-                args.Before != null ||
-                args.Last != null ||
-                args.First == null;
 
             EntityList<T> page;
             while (nextUrl != null && !DoneFetching(entities.Count, args))
@@ -91,9 +87,10 @@ namespace GraphQL.Relay.StarWars.Api
                 page = await Fetch<EntityList<T>>(nextUrl);
                 entities.AddRange(page.Results);
                 nextUrl = page.Next;
+                count = page.Count;
             }
 
-            return entities;
+            return ConnectionEntities.Create(entities, count);
         }
 
         private static T DeserializeObject<T>(string payload)

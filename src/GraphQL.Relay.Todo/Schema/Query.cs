@@ -1,4 +1,5 @@
 using GraphQL.Relay.Types;
+using GraphQL.Relay.Utilities;
 using GraphQL.Types;
 
 namespace GraphQL.Relay.Todo.Schema
@@ -46,12 +47,9 @@ namespace GraphQL.Relay.Todo.Schema
                     description: "Filter todos by their status",
                     defaultValue: "any"
                 )
-                .Resolve(ctx =>
-                    ConnectionUtils.ToConnection(
-                        Database.GetTodosByStatus(ctx.GetArgument<string>("status")),
-                        ctx
-                    )
-                );
+                .Resolve(ctx => ctx.ToConnection(
+                    Database.GetTodosByStatus(ctx.GetArgument<string>("status"))
+                ));
 
             Field<IntGraphType>(
                 name: "totalCount",

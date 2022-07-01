@@ -135,6 +135,21 @@ namespace GraphQL.Relay.Types
     {
         public QueryGraphType() { }
     }
+    public static class SliceMetrics
+    {
+        public static GraphQL.Relay.Types.SliceMetrics<TSource> Create<TSource>(System.Linq.IQueryable<TSource> source, GraphQL.Builders.IResolveConnectionContext context) { }
+        public static GraphQL.Relay.Types.SliceMetrics<TSource> Create<TSource>(System.Collections.Generic.IEnumerable<TSource> source, GraphQL.Builders.IResolveConnectionContext context, int? totalCount = default) { }
+    }
+    public class SliceMetrics<TSource>
+    {
+        public SliceMetrics(System.Collections.Generic.IList<TSource> source, GraphQL.Relay.Utilities.EdgeRange edges, int totalCount) { }
+        public bool HasNext { get; }
+        public bool HasPrevious { get; }
+        public System.Collections.Generic.IEnumerable<TSource> Slice { get; }
+        public int SliceSize { get; }
+        public int StartIndex { get; }
+        public int TotalCount { get; }
+    }
 }
 namespace GraphQL.Relay.Utilities
 {
@@ -155,6 +170,11 @@ namespace GraphQL.Relay.Utilities
     public static class RelayPagination
     {
         public static GraphQL.Relay.Utilities.EdgeRange CalculateEdgeRange(int edgeCount, int? first = default, string after = null, int? last = default, string before = null) { }
+    }
+    public static class ResolveConnectionContextExtensions
+    {
+        public static GraphQL.Relay.Utilities.EdgeRange EdgesToReturn(this GraphQL.Builders.IResolveConnectionContext context, int edgeCount) { }
+        public static GraphQL.Types.Relay.DataObjects.Connection<TSource> ToConnection<TSource>(this GraphQL.Builders.IResolveConnectionContext context, System.Collections.Generic.IEnumerable<TSource> items, int? totalCount = default) { }
     }
     public static class StringExtensions
     {
