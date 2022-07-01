@@ -2,7 +2,6 @@ namespace GraphQL.Relay.Test.Utilities
 {
     public class EnumerableExtensionsTests
     {
-
         [Fact]
         public void Slice_IfStartAndEndAreLessThanZero_ReturnsEnumerableStartingAtTheEnd()
         {

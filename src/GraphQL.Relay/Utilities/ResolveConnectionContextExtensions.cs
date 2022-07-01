@@ -10,8 +10,8 @@ namespace GraphQL.Relay.Utilities
     public static class ResolveConnectionContextExtensions
     {
         /// <summary>
-        /// Calculates an EdgeRange object based on the current
-        /// resolve connection context and the provided edge items count
+        /// Calculates an <see cref="EdgeRange"/> object based on the current
+        /// <see cref="IResolveConnectionContext"/> and the provided edge items count
         /// </summary>
         /// <param name="context"></param>
         /// <param name="edgeCount"></param>

@@ -60,7 +60,6 @@ namespace GraphQL.Relay.Types
     /// <summary>
     /// Relay connection slice metrics
     /// </summary>
-    /// <typeparam name="TSource"></typeparam>
     public class SliceMetrics<TSource>
     {
         /// <summary>
@@ -74,22 +73,22 @@ namespace GraphQL.Relay.Types
         public int SliceSize { get; }
 
         /// <summary>
-        /// Starting index for a slice of an IEnumerable item source
+        /// Starting index for a slice of an <see cref="IEnumerable{TSource}"/> item source
         /// </summary>
         public int StartIndex { get; }
 
         /// <summary>
-        /// When a slice of a larger IEnumerable source has any records before it, this will be true
+        /// When a slice of a larger <see cref="IEnumerable{TSource}"/>  source has any records before it, this will be <see langword="true"/>
         /// </summary>
         public bool HasPrevious { get; }
 
         /// <summary>
-        /// When a slice of a larger IEnumerable source has any records after it, this will be true
+        /// When a slice of a larger <see cref="IEnumerable{TSource}"/> source has any records after it, this will be <see langword="true"/>
         /// </summary>
         public bool HasNext { get; }
 
         /// <summary>
-        /// A particular section of a larger IEnumerable source
+        /// A particular section of a larger <see cref="IEnumerable{TSource}"/> source
         /// </summary>
         public IEnumerable<TSource> Slice { get; }
 
