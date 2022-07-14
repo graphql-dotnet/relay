@@ -21,9 +21,12 @@ namespace GraphQL.Relay.Types
         {
             if (!TryGetValue(key, out object value))
                 return defaultValue;
+            if (value is Dictionary<string, object> dictionary)
+            {
+                return dictionary.ToObject<T>();
+            }
 
-            var dictionary = value as Dictionary<string, object>;
-            return (dictionary ?? throw new InvalidOperationError("The argument could not be determined as a valid dictionary.")).ToObject<T>();
+            return (T)value;
         }
     }
 }
