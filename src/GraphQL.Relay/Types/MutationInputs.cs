@@ -21,12 +21,7 @@ namespace GraphQL.Relay.Types
         {
             if (!TryGetValue(key, out object value))
                 return defaultValue;
-            if (value is Dictionary<string, object> dictionary)
-            {
-                return dictionary.ToObject<T>();
-            }
-
-            return (T)value;
+            return value is Dictionary<string, object> dictionary ? dictionary.ToObject<T>() : (T)value;
         }
     }
 }
