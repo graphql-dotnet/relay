@@ -149,6 +149,7 @@ namespace GraphQL.Relay.Types
         public int SliceSize { get; }
         public int StartIndex { get; }
         public int TotalCount { get; }
+        public GraphQL.Types.Relay.DataObjects.Connection<TSource> ToConnection() { }
     }
 }
 namespace GraphQL.Relay.Utilities
@@ -174,6 +175,7 @@ namespace GraphQL.Relay.Utilities
     public static class ResolveConnectionContextExtensions
     {
         public static GraphQL.Relay.Utilities.EdgeRange EdgesToReturn(this GraphQL.Builders.IResolveConnectionContext context, int edgeCount) { }
+        public static GraphQL.Types.Relay.DataObjects.Connection<TSource> ToConnection<TSource>(this GraphQL.Builders.IResolveConnectionContext context, System.Linq.IQueryable<TSource> items) { }
         public static GraphQL.Types.Relay.DataObjects.Connection<TSource> ToConnection<TSource>(this GraphQL.Builders.IResolveConnectionContext context, System.Collections.Generic.IEnumerable<TSource> items, int? totalCount = default) { }
     }
     public static class StringExtensions
