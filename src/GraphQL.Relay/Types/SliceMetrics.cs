@@ -1,5 +1,6 @@
 using GraphQL.Builders;
 using GraphQL.Relay.Utilities;
+using GraphQL.Types.Relay.DataObjects;
 
 namespace GraphQL.Relay.Types
 {
@@ -105,6 +106,40 @@ namespace GraphQL.Relay.Types
             HasPrevious = edges.StartOffset > 0;
 
             StartIndex = edges.StartOffset;
+        }
+
+        /// <summary>
+        /// Converts current slice to a <see cref="Connection{TSource}"/>
+        /// </summary>
+        /// <returns></returns>
+        public Connection<TSource> ToConnection()
+        {
+            var edges = Slice
+                .Select(
+                    (item, i) =>
+                        new Edge<TSource>
+                        {
+                            Node = item,
+                            Cursor = ConnectionUtils.OffsetToCursor(StartIndex + i)
+                        }
+                )
+                .ToList();
+
+            var firstEdge = edges.FirstOrDefault();
+            var lastEdge = edges.LastOrDefault();
+
+            return new Connection<TSource>
+            {
+                Edges = edges,
+                TotalCount = TotalCount,
+                PageInfo = new PageInfo
+                {
+                    StartCursor = firstEdge?.Cursor,
+                    EndCursor = lastEdge?.Cursor,
+                    HasPreviousPage = HasPrevious,
+                    HasNextPage = HasNext,
+                }
+            };
         }
     }
 }
