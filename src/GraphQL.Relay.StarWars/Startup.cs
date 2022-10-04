@@ -1,9 +1,6 @@
-using GraphQL.MicrosoftDI;
 using GraphQL.Relay.StarWars.Api;
 using GraphQL.Relay.StarWars.Types;
 using GraphQL.Relay.Types;
-using GraphQL.Server;
-using GraphQL.SystemTextJson;
 using GraphQL.Types.Relay;
 
 namespace GraphQL.Relay.StarWars
@@ -28,8 +25,7 @@ namespace GraphQL.Relay.StarWars
 
             services.AddGraphQL(b => b
                 .AddApolloTracing(true)
-                .AddHttpMiddleware<StarWarsSchema>()
-                .AddSchema<StarWarsSchema>()
+                .AddAutoSchema<StarWarsSchema>()
                 .AddSystemTextJson()
                 .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)
                 .AddGraphTypes(typeof(StarWarsSchema).Assembly));

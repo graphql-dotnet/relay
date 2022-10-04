@@ -1,8 +1,5 @@
 using System.Text;
-using GraphQL.MicrosoftDI;
 using GraphQL.Relay.Todo.Schema;
-using GraphQL.Server;
-using GraphQL.SystemTextJson;
 
 namespace GraphQL.Relay.Todo
 {
@@ -12,11 +9,9 @@ namespace GraphQL.Relay.Todo
         {
             services.AddGraphQL(b => b
                 .AddApolloTracing(true)
-                .AddHttpMiddleware<TodoSchema>()
-                .AddSchema<TodoSchema>()
+                .AddAutoSchema<TodoSchema>()
                 .AddSystemTextJson()
-                .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)
-                .AddSystemTextJson());
+                .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
