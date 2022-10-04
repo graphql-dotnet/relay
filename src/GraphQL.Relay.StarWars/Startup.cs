@@ -25,7 +25,8 @@ namespace GraphQL.Relay.StarWars
 
             services.AddGraphQL(b => b
                 .AddApolloTracing(true)
-                .AddAutoSchema<StarWarsSchema>()
+                .AddSchema<StarWarsSchema>()
+                .AddAutoClrMappings()
                 .AddSystemTextJson()
                 .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)
                 .AddGraphTypes(typeof(StarWarsSchema).Assembly));
@@ -39,7 +40,7 @@ namespace GraphQL.Relay.StarWars
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseGraphQL<StarWarsSchema>();
+            app.UseGraphQL();
             app.UseGraphQLGraphiQL();
         }
     }

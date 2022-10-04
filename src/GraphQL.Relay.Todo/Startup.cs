@@ -9,7 +9,8 @@ namespace GraphQL.Relay.Todo
         {
             services.AddGraphQL(b => b
                 .AddApolloTracing(true)
-                .AddAutoSchema<TodoSchema>()
+                .AddSchema<TodoSchema>()
+                .AddAutoClrMappings()
                 .AddSystemTextJson()
                 .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true));
         }
@@ -34,7 +35,7 @@ namespace GraphQL.Relay.Todo
             app
                 .UseStaticFiles()
                 .UseDefaultFiles()
-                .UseGraphQL<TodoSchema>()
+                .UseGraphQL()
                 .UseGraphQLGraphiQL();
         }
     }
