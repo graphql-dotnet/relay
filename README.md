@@ -213,3 +213,31 @@ Convert a connection item cursor to the `int` index of the item in the set.
 #### `ConnectionUtils.OffsetToCursor(int offset)`
 
 Convert an index offset to a connection cursor.
+
+#### `ResolveConnectionContextExtensions.ToConnection<TSource>(this IResolveConnectionContext context, IQueryable<TSource> items)`
+
+Creates a connection from an IQueryable.
+
+```csharp
+public class Droid
+{
+  public string DroidId { get; set; }
+  public string Name { get; set; }
+  public IQueryable<Droid> Friends { get; set; }
+}
+
+public class DroidType : ObjectGraphType<Droid>
+{
+  public DroidType()
+  {
+    Name = "Droid";
+
+    Field<StringGraphType>("name", "The name of the droid.");
+
+    Connection<DroidType>()
+      .Name("friends")
+      .Resolve(context => context
+        .ToConnection(c.Source.Friends));
+  }
+}
+```
