@@ -88,13 +88,15 @@ namespace GraphQL.Relay.Types
                     .FieldType.Metadata["RelayLocalIdField"] = true;
             }
 
+            var fn = expression.Compile();
+
             var field = Field(
                 name: "id",
                 description: $"The Global Id of the {Name ?? "node"}",
                 type: typeof(NonNullGraphType<IdGraphType>),
                 resolve: context => Node.ToGlobalId(
                     context.ParentType.Name,
-                    expression.Compile()(context.Source)
+                    fn(context.Source)
                 )
             );
 
