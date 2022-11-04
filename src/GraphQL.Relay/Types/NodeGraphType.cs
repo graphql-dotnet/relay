@@ -90,15 +90,10 @@ namespace GraphQL.Relay.Types
 
             var fn = expression.Compile();
 
-            var field = Field(
-                name: "id",
-                description: $"The Global Id of the {Name ?? "node"}",
-                type: typeof(NonNullGraphType<IdGraphType>),
-                resolve: context => Node.ToGlobalId(
-                    context.ParentType.Name,
-                    fn(context.Source)
-                )
-            );
+            var field = Field<NonNullGraphType<IdGraphType>>("id")
+                .Description($"The Global Id of the {Name ?? "node"}")
+                .Resolve(context => Node.ToGlobalId(context.ParentType.Name, fn(context.Source)))
+                .FieldType;
 
             field.Metadata["RelayGlobalIdField"] = true;
 
