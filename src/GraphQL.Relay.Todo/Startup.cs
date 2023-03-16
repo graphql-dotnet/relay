@@ -8,11 +8,11 @@ namespace GraphQL.Relay.Todo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddGraphQL(b => b
-                .AddApolloTracing(true)
+                .UseApolloTracing(true)
                 .AddSchema<TodoSchema>()
                 .AddAutoClrMappings()
                 .AddSystemTextJson()
-                .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true));
+                .AddErrorInfoProvider(options => options.ExposeExceptionDetails = true));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

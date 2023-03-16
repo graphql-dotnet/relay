@@ -8,8 +8,7 @@ namespace GraphQL.Relay.Types
         {
             Name = "Query";
 
-            Field<NodeInterface>()
-                .Name("node")
+            Field<NodeInterface>("node")
                 .Description("Fetches an object given its global Id")
                 .Argument<NonNullGraphType<IdGraphType>>("id", "The global Id of the object")
                 .Resolve(ResolveObjectFromGlobalId);

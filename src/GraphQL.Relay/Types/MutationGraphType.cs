@@ -13,18 +13,14 @@ namespace GraphQL.Relay.Types
             where TMutationType : IMutationPayload<object>
             where TMutationInput : MutationInputGraphType
         {
-            return Field(
-                name: name,
-                type: typeof(TMutationType),
-                arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<TMutationInput>> { Name = "input" }
-                ),
-                resolve: c =>
+            return Field(name, typeof(TMutationType))
+                .Argument<NonNullGraphType<TMutationInput>>("input")
+                .Resolve(c =>
                 {
                     var inputs = c.GetArgument<Dictionary<string, object>>("input");
                     return ((TMutationType)c.FieldDefinition.ResolvedType).MutateAndGetPayload(new MutationInputs(inputs), c);
-                }
-            );
+                })
+                .FieldType;
         }
     }
 }
