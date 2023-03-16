@@ -24,11 +24,11 @@ namespace GraphQL.Relay.StarWars
                 .AddSingleton<ResponseCache>();
 
             services.AddGraphQL(b => b
-                .AddApolloTracing(true)
+                .UseApolloTracing(true)
                 .AddSchema<StarWarsSchema>()
                 .AddAutoClrMappings()
                 .AddSystemTextJson()
-                .AddErrorInfoProvider(options => options.ExposeExceptionStackTrace = true)
+                .AddErrorInfoProvider(options => options.ExposeExceptionDetails = true)
                 .AddGraphTypes(typeof(StarWarsSchema).Assembly));
         }
 

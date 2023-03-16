@@ -23,11 +23,7 @@ namespace GraphQL.Relay.StarWars.Types
             Field(p => p.EyeColor);
             Field(p => p.BirthYear);
             Field(p => p.Gender);
-            FieldAsync(
-              name: "homeworld",
-              type: typeof(PlanetGraphType),
-              resolve: async ctx => await _api.GetEntity<Planets>(ctx.Source.Homeworld)
-            );
+            Field("homeworld", typeof(PlanetGraphType)).ResolveAsync(async ctx => await _api.GetEntity<Planets>(ctx.Source.Homeworld));
 
             Connection<FilmGraphType>()
                 .Name("films")

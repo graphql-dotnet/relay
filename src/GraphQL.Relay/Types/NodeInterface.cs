@@ -8,7 +8,7 @@ namespace GraphQL.Relay.Types
         {
             Name = "Node";
 
-            Field<IdGraphType>("id", "Global node Id");
+            Field<IdGraphType>("id").Description("Global node Id");
         }
     }
 }

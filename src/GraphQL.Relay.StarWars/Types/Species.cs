@@ -25,11 +25,7 @@ namespace GraphQL.Relay.StarWars.Types
             Field(p => p.EyeColors);
             Field(p => p.AverageLifespan);
             Field(p => p.Language);
-            FieldAsync(
-              name: "homeworld",
-              type: typeof(PlanetGraphType),
-              resolve: async ctx => await _api.GetEntity<Planets>(ctx.Source.Homeworld)
-            );
+            Field("homeworld", typeof(PlanetGraphType)).ResolveAsync(async ctx => await _api.GetEntity<Planets>(ctx.Source.Homeworld));
 
             Connection<PeopleGraphType>()
                 .Name("people")

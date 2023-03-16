@@ -12,10 +12,7 @@ namespace GraphQL.Relay.Types
     {
         protected MutationPayloadGraphType()
         {
-            Field(
-                name: "clientMutationId",
-                type: typeof(StringGraphType),
-                resolve: GetClientId);
+            Field("clientMutationId", typeof(StringGraphType)).Resolve(GetClientId);
         }
 
         public abstract TOut MutateAndGetPayload(MutationInputs inputs, IResolveFieldContext<object> context);

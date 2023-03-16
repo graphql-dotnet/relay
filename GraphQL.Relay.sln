@@ -16,15 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{2F92
 		.github\dependabot.yml = .github\dependabot.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{FA0A321D-0F73-478E-9B1D-495A96F4BF6D}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build-artifacts-code.yml = .github\workflows\build-artifacts-code.yml
-		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
-		.github\workflows\publish-code.yml = .github\workflows\publish-code.yml
-		.github\workflows\test-code.yml = .github\workflows\test-code.yml
-		.github\workflows\wipcheck.yml = .github\workflows\wipcheck.yml
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Solution Items", ".Solution Items", "{5EBDC740-68FC-451D-9F02-B81314A5059E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -109,9 +100,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{FA0A321D-0F73-478E-9B1D-495A96F4BF6D} = {2F92B771-95CF-4FC3-AE9A-52E9273349F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {26C9760C-72D8-43A7-B0D6-FA4AE10D5F06}

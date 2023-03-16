@@ -10,10 +10,7 @@ namespace GraphQL.Relay.Todo.Schema
         {
             Name = "Query";
 
-            Field<UserGraphType>(
-                name: "viewer",
-                resolve: ctx => Database.GetViewer()
-            );
+            Field<UserGraphType>("viewer").Resolve(ctx => Database.GetViewer());
         }
     }
 
@@ -51,17 +48,10 @@ namespace GraphQL.Relay.Todo.Schema
                     Database.GetTodosByStatus(ctx.GetArgument<string>("status"))
                 ));
 
-            Field<IntGraphType>(
-                name: "totalCount",
-                resolve: ctx => Database.GetTodos().Count()
-            );
-            Field<IntGraphType>(
-                name: "completedCount",
-                resolve: ctx => Database.GetTodosByStatus("completed").Count()
-            );
+            Field<IntGraphType>("totalCount").Resolve(ctx => Database.GetTodos().Count());
+            Field<IntGraphType>("completedCount").Resolve(ctx => Database.GetTodosByStatus("completed").Count());
         }
 
-        public override User GetById(IResolveFieldContext<object> context, string id) =>
-            Database.GetUserById(id);
+        public override User GetById(IResolveFieldContext<object> context, string id) => Database.GetUserById(id);
     }
 }
