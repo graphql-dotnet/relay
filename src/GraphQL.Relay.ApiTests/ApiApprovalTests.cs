@@ -3,14 +3,13 @@ using PublicApiGenerator;
 
 namespace GraphQL.Relay.ApiTests;
 
-/// <see href="https://github.com/JakeGinnivan/ApiApprover"/>
 public class ApiApprovalTests
 {
     [Theory]
     [InlineData(typeof(NodeInterface))]
     public void public_api_should_not_change_unintentionally(Type type)
     {
-        string publicApi = type.Assembly.GeneratePublicApi(new ApiGeneratorOptions
+        string publicApi = type.Assembly.GeneratePublicApi(new()
         {
             IncludeAssemblyAttributes = false,
         });

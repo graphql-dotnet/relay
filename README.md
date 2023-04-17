@@ -241,3 +241,13 @@ public class DroidType : ObjectGraphType<Droid>
   }
 }
 ```
+
+## Contributors
+
+This project exists thanks to all the people who contribute. 
+<a href="https://github.com/graphql-dotnet/relay/graphs/contributors"><img src="https://contributors-img.web.app/image?repo=graphql-dotnet/relay" /></a>
+
+PRs are welcome! Looking for something to work on? The list of [open issues](https://github.com/graphql-dotnet/relay/issues)
+is a great place to start. You can help the project by simply responding to some of the [asked questions](https://github.com/graphql-dotnet/relay/issues?q=is%3Aissue+is%3Aopen+label%3Aquestion).
+
+
