@@ -1,3 +1,5 @@
+using GraphQL.Execution;
+
 namespace GraphQL.Relay.Types
 {
     public class MutationInputs : Dictionary<string, object>
@@ -15,9 +17,11 @@ namespace GraphQL.Relay.Types
             return this[key];
         }
 
-        public T Get<T>(string key, T defaultValue = default)
+        public T Get<T>(string key, T defaultValue = default) where T : class
         {
-            return TryGetValue(key, out object value) ? (T)value : defaultValue;
+            if (!TryGetValue(key, out object value))
+                return defaultValue;
+            return value is Dictionary<string, object> dictionary ? dictionary.ToObject<T>() : (T)value;
         }
     }
 }
